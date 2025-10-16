@@ -1,0 +1,74 @@
+[
+    {
+        "question": "In 'The Lion King', what is the name of Simba's evil uncle?",
+        "answers": [
+            { "text": "Mufasa", "correct": false },
+            { "text": "Zazu", "correct": false },
+            { "text": "Scar", "correct": true },
+            { "text": "Timon", "correct": false }
+        ]
+    },
+    {
+        "question": "Which Disney Princess sings the song 'A Whole New World'?",
+        "answers": [
+            { "text": "Belle", "correct": false },
+            { "text": "Jasmine", "correct": true },
+            { "text": "Ariel", "correct": false },
+            { "text": "Cinderella", "correct": false }
+        ]
+    },
+    {
+        "question": "What is the name of the lovable snowman in Disney's 'Frozen'?",
+        "answers": [
+            { "text": "Sven", "correct": false },
+            { "text": "Hans", "correct": false },
+            { "text": "Kristoff", "correct": false },
+            { "text": "Olaf", "correct": true }
+        ]
+    },
+    {
+        "question": "In 'Beauty and the Beast', what is the name of the enchanted candelabra?",
+        "answers": [
+            { "text": "Cogsworth", "correct": false },
+            { "text": "Gaston", "correct": false },
+            { "text": "Lumiere", "correct": true },
+            { "text": "Chip", "correct": false }
+        ]
+    },
+    {
+        "question": "Who is the villainous sea witch in 'The Little Mermaid'?",
+        "answers": [
+            { "text": "Flounder", "correct": false },
+            { "text": "King Triton", "correct": false },
+            { "text": "Ursula", "correct": true },
+            { "text": "Sebastian", "correct": false }
+        ]
+    },
+    {
+        "question": "What does Cinderella's fairy godmother turn into a magnificent carriage?",
+        "answers": [
+            { "text": "A mouse", "correct": false },
+            { "text": "A pumpkin", "correct": true },
+            { "text": "A shoe", "correct": false },
+            { "text": "A broom", "correct": false }
+        ]
+    },
+    {
+        "question": "In 'Aladdin', what is the name of Jafar's sarcastic parrot sidekick?",
+        "answers": [
+            { "text": "Abu", "correct": false },
+            { "text": "Rajah", "correct": false },
+            { "text": "Iago", "correct": true },
+            { "text": "Genie", "correct": false }
+        ]
+    },
+    {
+        "question": "What is Buzz Lightyear's famous catchphrase in 'Toy Story'?",
+        "answers": [
+            { "text": "There's a snake in my boot!", "correct": false },
+            { "text": "Reach for the sky!", "correct": false },
+            { "text": "To infinity and beyond!", "correct": true },
+            { "text": "You are a toy!", "correct": false }
+        ]
+    }
+]
