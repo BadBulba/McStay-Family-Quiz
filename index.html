@@ -91,10 +91,8 @@
 
     <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-2xl p-6 md:p-8 text-center">
 
-        <!-- Content wrapper for z-index stacking -->
         <div class="relative z-10">
             
-            <!-- Title Screen -->
             <div id="title-screen">
                 <h1 class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Select Your Hero</h1>
                 <div id="name-selection-buttons" class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
@@ -114,30 +112,25 @@
                 <button id="reset-scores-btn" class="text-stone-400 hover:text-white transition-colors mt-8 text-sm underline">Reset All Scores</button>
             </div>
 
-            <!-- Start Screen -->
-            <div id="start-screen" class="hidden">
-                <h1 class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-2">A Trivia Challenge</h1>
-                <h2 id="welcome-header" class="ff9-font text-xl md:text-2xl text-stone-300 mb-8">Final Fantasy IX</h2>
-                <p class="text-lg mb-8">Test your knowledge of Gaia. Are you ready for an adventure?</p>
-                <button id="start-btn" class="btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full md:w-auto">Begin Quest</button>
+            <div id="quiz-selection-screen" class="hidden">
+                <h1 id="quest-log-title" class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Player's Quest Log</h1>
+                <div id="quiz-set-buttons" class="grid grid-cols-1 gap-6">
+                    </div>
             </div>
 
-            <!-- Quiz Screen -->
             <div id="quiz-screen" class="hidden">
                 <div id="progress-container" class="mb-4">
-                     <p id="question-counter" class="text-sm text-stone-300 mb-2"></p>
-                     <div class="w-full progress-bar-bg rounded-full h-2.5">
-                        <div id="progress-bar" class="progress-bar-fill h-2.5 rounded-full" style="width: 0%"></div>
-                     </div>
+                        <p id="question-counter" class="text-sm text-stone-300 mb-2"></p>
+                        <div class="w-full progress-bar-bg rounded-full h-2.5">
+                            <div id="progress-bar" class="progress-bar-fill h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
                 </div>
                 <h2 id="question-text" class="text-2xl md:text-3xl font-bold mb-6 min-h-[100px]">Question text goes here...</h2>
                 <div id="answer-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Answer buttons will be generated here -->
-                </div>
+                    </div>
                 <button id="next-btn" class="btn-primary ff9-font text-lg font-bold py-3 px-8 rounded-lg mt-8 w-full md:w-auto hidden">Next</button>
             </div>
 
-            <!-- End Screen -->
             <div id="end-screen" class="hidden">
                 <h1 class="ff9-font text-4xl font-bold text-yellow-300 mb-4">Quest Complete!</h1>
                 <p class="text-2xl mb-2">Your Final Score:</p>
@@ -151,7 +144,6 @@
 
     </div>
     
-    <!-- Custom Sound Effects -->
     <audio id="sfx-menu" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b4065609b.mp3" preload="auto"></audio>
     <audio id="sfx-correct" src="sounds/Select.mp3" preload="auto"></audio>
     <audio id="sfx-incorrect" src="sounds/Cancel.mp3" preload="auto"></audio>
@@ -268,18 +260,20 @@
 
         // --- ELEMENT REFERENCES ---
         const titleScreen = document.getElementById('title-screen');
-        const startScreen = document.getElementById('start-screen');
+        const quizSelectionScreen = document.getElementById('quiz-selection-screen'); // <-- RENAMED
         const quizScreen = document.getElementById('quiz-screen');
         const endScreen = document.getElementById('end-screen');
         
         const nameSelectionButtons = document.querySelectorAll('.name-btn');
-        const startBtn = document.getElementById('start-btn');
+        // const startBtn = document.getElementById('start-btn'); // <-- REMOVED
         const nextBtn = document.getElementById('next-btn');
         const restartBtn = document.getElementById('restart-btn');
         const backToSelectBtn = document.getElementById('back-to-select-btn');
         const resetScoresBtn = document.getElementById('reset-scores-btn');
 
-        const welcomeHeader = document.getElementById('welcome-header');
+        // const welcomeHeader = document.getElementById('welcome-header'); // <-- REMOVED
+        const questLogTitle = document.getElementById('quest-log-title'); // <-- NEW
+        const quizSetButtons = document.getElementById('quiz-set-buttons'); // <-- NEW
         const questionText = document.getElementById('question-text');
         const answerButtons = document.getElementById('answer-buttons');
         const scoreText = document.getElementById('score-text');
@@ -303,6 +297,7 @@
         // --- STATE VARIABLES ---
         let selectedQuestions = [];
         let currentPlayerName = '';
+        let currentQuizTheme = ''; // <-- NEW: To track which quiz set is played
         let currentQuestionIndex;
         let score;
 
@@ -325,20 +320,20 @@
                 playSound(sfxMenu);
                 currentPlayerName = e.target.dataset.name;
                 const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
-                selectedQuestions = quizData[currentPlayerName];
                 
-                welcomeHeader.innerText = `Final Fantasy IX - ${capitalizedName}'s Quest`;
+                // Set the title for the new quest selection screen
+                questLogTitle.innerText = `${capitalizedName}'s Quest Log`;
+                
+                // Create the buttons for the quiz sets
+                populateQuizSetButtons(); 
 
                 titleScreen.classList.add('hidden');
-                startScreen.classList.remove('hidden');
+                quizSelectionScreen.classList.remove('hidden'); // <-- UPDATED
                 backToSelectBtn.classList.remove('hidden');
             });
         });
 
-        startBtn.addEventListener('click', () => {
-            playSound(sfxStart);
-            startQuiz();
-        });
+        // startBtn.addEventListener('click', ...); // <-- REMOVED
 
         nextBtn.addEventListener('click', () => {
             playSound(sfxMenu);
@@ -347,12 +342,14 @@
         
         restartBtn.addEventListener('click', () => {
              playSound(sfxMenu);
-             startQuiz();
+             // Restarting now goes back to the quiz selection for the current player
+             endScreen.classList.add('hidden');
+             quizSelectionScreen.classList.remove('hidden');
         });
 
         backToSelectBtn.addEventListener('click', () => {
             playSound(sfxMenu);
-            startScreen.classList.add('hidden');
+            quizSelectionScreen.classList.add('hidden'); // <-- UPDATED
             quizScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
             titleScreen.classList.remove('hidden');
@@ -372,10 +369,35 @@
             jillianScoreSpan.innerText = playerScores.jillian;
         }
 
+        // --- NEW FUNCTION ---
+        // Creates the 3 quiz set buttons on the quiz-selection-screen
+        function populateQuizSetButtons() {
+            quizSetButtons.innerHTML = ''; // Clear old buttons
+            
+            // Loop through the keys of quizData (patrick, hannah, jillian)
+            Object.keys(quizData).forEach(themeName => {
+                const capitalizedTheme = themeName.charAt(0).toUpperCase() + themeName.slice(1);
+                const button = document.createElement('button');
+                button.innerText = `${capitalizedTheme}'s Questions`;
+                button.dataset.theme = themeName; // Store the theme name
+                button.classList.add('btn-primary', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full');
+                
+                // Add click listener to start the selected quiz
+                button.addEventListener('click', () => {
+                    playSound(sfxStart);
+                    currentQuizTheme = themeName; // Set the theme for scoring
+                    selectedQuestions = quizData[themeName]; // Set the questions
+                    startQuiz(); // Start the quiz
+                });
+                
+                quizSetButtons.appendChild(button);
+            });
+        }
+
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
-            startScreen.classList.add('hidden');
+            quizSelectionScreen.classList.add('hidden'); // <-- UPDATED
             endScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
             nextBtn.classList.add('hidden');
@@ -424,7 +446,14 @@
             const isCorrect = selectedBtn.dataset.correct === 'true';
 
             if (isCorrect) {
-                score++;
+                // --- TRIPLE SCORE LOGIC ---
+                if (currentPlayerName !== currentQuizTheme) {
+                    score += 3; // 3 points if player and theme don't match
+                } else {
+                    score++; // 1 point if they do match
+                }
+                // --- END TRIPLE SCORE LOGIC ---
+
                 selectedBtn.classList.add('correct');
                 playSound(sfxCorrect);
             } else {
@@ -447,26 +476,33 @@
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
 
+            // Add the session score to the player's total
             playerScores[currentPlayerName] += score;
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
 
-            scoreText.innerText = `${score} / ${selectedQuestions.length}`;
+            // Calculate max possible score for this round (for display)
+            const maxScore = (currentPlayerName !== currentQuizTheme) 
+                ? selectedQuestions.length * 3 
+                : selectedQuestions.length;
+
+            scoreText.innerText = `${score} / ${maxScore}`;
             
-            const percentage = (score / selectedQuestions.length) * 100;
+            const percentage = (score / maxScore) * 100;
             if (percentage >= 50) {
                 playSound(sfxEnd);
             }
 
+            // --- GENERIC FEEDBACK ---
             let feedback = '';
             if (percentage === 100) {
-                feedback = "Perfect! You're a true child of Gaia!";
+                feedback = "Perfect Score! You're a true master!";
             } else if (percentage >= 75) {
-                feedback = "Excellent! You know your way around the Mist Continent.";
+                feedback = "Excellent! A fantastic result.";
             } else if (percentage >= 50) {
-                feedback = "Not bad! A worthy member of Tantalus.";
+                feedback = "Not bad! A solid effort.";
             } else {
-                feedback = "Perhaps a quick trip to the library in Alexandria is in order?";
+                feedback = "Better luck next time! Keep trying.";
             }
             scoreFeedback.innerText = feedback;
         }
@@ -477,4 +513,3 @@
     </script>
 </body>
 </html>
-
