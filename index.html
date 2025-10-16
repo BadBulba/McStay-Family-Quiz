@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>McStay Christmas Time Quiz</title>
+    <title>Final Fantasy IX - A Trivia Challenge</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,7 +123,7 @@
             <div id="quiz-selection-screen" class="hidden">
                 <h1 id="quest-log-title" class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Player's Quest Log</h1>
                 <div id="quiz-set-buttons" class="grid grid-cols-1 gap-6">
-                    </div>
+                </div>
             </div>
 
             <div id="quiz-screen" class="hidden">
@@ -135,7 +135,7 @@
                 </div>
                 <h2 id="question-text" class="text-2xl md:text-3xl font-bold mb-6 min-h-[100px]">Question text goes here...</h2>
                 <div id="answer-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    </div>
+                </div>
                 <button id="next-btn" class="btn-primary ff9-font text-lg font-bold py-3 px-8 rounded-lg mt-8 w-full md:w-auto hidden">Next</button>
             </div>
 
@@ -152,14 +152,13 @@
 
     </div>
     
-<audio id="sfx-menu" src="https://cdn.pixabay.com/audio/2021/08/04/audio_12b0c7443c.mp3" preload="auto"></audio>
+    <audio id="sfx-menu" src="https://cdn.pixabay.com/audio/2021/08/04/audio_12b0c7443c.mp3" preload="auto"></audio>
     <audio id="sfx-correct" src="sounds/Select.mp3" preload="auto"></audio>
     <audio id="sfx-incorrect" src="sounds/Cancel.mp3" preload="auto"></audio>
     <audio id="sfx-start" src="sounds/Moogle.mp3" preload="auto"></audio>
     <audio id="sfx-end" src="sounds/Moogle.mp3" preload="auto"></audio>
 
     <audio id="bgm" src="https://cdn.pixabay.com/audio/2022/10/11/audio_1e1130e54c.mp3" loop preload="auto"></audio>
-
     <script>
     // --- WRAP ALL LOGIC IN 'load' EVENT ---
     window.addEventListener('load', () => {
@@ -169,7 +168,7 @@
         const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
         const quizScreen = document.getElementById('quiz-screen');
         const endScreen = document.getElementById('end-screen');
-        const loadingOverlay = document.getElementById('loading-overlay'); // <-- NEW
+        const loadingOverlay = document.getElementById('loading-overlay'); 
         
         const nameSelectionButtons = document.querySelectorAll('.name-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -197,14 +196,16 @@
         const sfxIncorrect = document.getElementById('sfx-incorrect');
         const sfxStart = document.getElementById('sfx-start');
         const sfxEnd = document.getElementById('sfx-end');
+        const bgm = document.getElementById('bgm'); // <-- ADDED BGM
 
         // --- STATE VARIABLES ---
-        let quizData = { patrick: [], hannah: [], jillian: [] }; // <-- Empty shell
+        let quizData = { patrick: [], hannah: [], jillian: [] }; 
         let selectedQuestions = [];
         let currentPlayerName = '';
         let currentQuizTheme = ''; 
         let currentQuestionIndex;
         let score;
+        let musicStarted = false; // <-- ADDED BGM FLAG
 
         // --- PERSISTENT SCORES ---
         let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || {
@@ -215,7 +216,7 @@
         
         // --- FUNCTIONS ---
 
-        // --- NEW: FUNCTION TO LOAD ALL QUIZ DATA ---
+        // --- FUNCTION TO LOAD ALL QUIZ DATA ---
         async function loadAllQuizData() {
             try {
                 // Fetch all three files at the same time
@@ -255,7 +256,6 @@
                 `;
             }
         }
-        // --- END NEW FUNCTION ---
 
         function playSound(sound) {
             sound.currentTime = 0; // Rewind to the start
@@ -266,6 +266,15 @@
         nameSelectionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 playSound(sfxMenu);
+
+                // --- NEW BGM LOGIC ---
+                if (!musicStarted) {
+                    bgm.volume = 0.3; // Set a reasonable volume (30%)
+                    bgm.play().catch(e => console.error("BGM playback failed", e));
+                    musicStarted = true;
+                }
+                // --- END BGM LOGIC ---
+                
                 currentPlayerName = e.target.dataset.name;
                 const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
                 
@@ -325,7 +334,7 @@
                     playSound(sfxStart);
                     currentQuizTheme = themeName; 
 
-                    // --- NEW: SHUFFLE QUESTIONS ("Read Randomly") ---
+                    // --- SHUFFLE QUESTIONS ---
                     const originalQuestions = quizData[themeName];
                     selectedQuestions = [...originalQuestions].sort(() => Math.random() - 0.5); 
                     // --- END SHUFFLE ---
@@ -356,11 +365,11 @@
             questionCounter.innerText = `Question ${questionNumber} of ${selectedQuestions.length}`;
             progressBar.style.width = `${(questionNumber / selectedQuestions.length) * 100}%`;
 
-            // --- NEW: SHUFFLE ANSWERS ("Read Randomly") ---
+            // --- SHUFFLE ANSWERS ---
             const shuffledAnswers = [...question.answers].sort(() => Math.random() - 0.5);
             // --- END SHUFFLE ---
 
-            shuffledAnswers.forEach(answer => { // <-- Use shuffledAnswers
+            shuffledAnswers.forEach(answer => { 
                 const button = document.createElement('button');
                 button.innerText = answer.text;
                 button.classList.add('answer-btn', 'p-4', 'rounded-lg', 'text-lg');
@@ -388,7 +397,7 @@
             }
         }
 
-function selectAnswer(e) {
+        function selectAnswer(e) {
             const selectedBtn = e.target;
             const isCorrect = selectedBtn.dataset.correct === 'true';
 
@@ -424,9 +433,7 @@ function selectAnswer(e) {
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
 
-            // --- IMPORTANT: WE REMOVED THE SCORE ADDITION LINE FROM HERE ---
-            // The localStorage and updateDisplay calls are fine to leave,
-            // as they just ensure everything is synced one last time.
+            // --- SCORE IS NOW ADDED IN selectAnswer() ---
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
 
@@ -461,7 +468,3 @@ function selectAnswer(e) {
     </script>
 </body>
 </html>
-
-
-
-
