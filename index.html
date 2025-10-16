@@ -94,6 +94,11 @@
         <p class="text-sm text-stone-300">Patrick: <span id="patrick-score">0</span></p>
         <p class="text-sm text-stone-300">Hannah: <span id="hannah-score">0</span></p>
         <p class="text-sm text-stone-300">Jillian: <span id="jillian-score">0</span></p>
+
+        <div class="mt-3">
+            <label for="volume-slider" class="text-sm text-stone-300">Music Vol:</label>
+            <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.1" class="w-24 align-middle">
+        </div>
     </div>
     <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-2xl p-6 md:p-8 text-center">
 
@@ -189,6 +194,7 @@
         const patrickScoreSpan = document.getElementById('patrick-score');
         const hannahScoreSpan = document.getElementById('hannah-score');
         const jillianScoreSpan = document.getElementById('jillian-score');
+        const volumeSlider = document.getElementById('volume-slider'); // <-- ADDED SLIDER
 
         // --- AUDIO ---
         const sfxMenu = document.getElementById('sfx-menu');
@@ -196,7 +202,7 @@
         const sfxIncorrect = document.getElementById('sfx-incorrect');
         const sfxStart = document.getElementById('sfx-start');
         const sfxEnd = document.getElementById('sfx-end');
-        const bgm = document.getElementById('bgm'); // <-- ADDED BGM
+        const bgm = document.getElementById('bgm'); 
 
         // --- STATE VARIABLES ---
         let quizData = { patrick: [], hannah: [], jillian: [] }; 
@@ -205,7 +211,7 @@
         let currentQuizTheme = ''; 
         let currentQuestionIndex;
         let score;
-        let musicStarted = false; // <-- ADDED BGM FLAG
+        let musicStarted = false; 
 
         // --- PERSISTENT SCORES ---
         let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || {
@@ -267,11 +273,17 @@
             button.addEventListener('click', (e) => {
                 playSound(sfxMenu);
 
-                // --- NEW BGM LOGIC ---
+                // --- UPDATED BGM LOGIC WITH SLIDER ---
                 if (!musicStarted) {
-                    bgm.volume = 0.3; // Set a reasonable volume (30%)
+                    // Set volume from the slider's CURRENT value
+                    bgm.volume = volumeSlider.value; 
                     bgm.play().catch(e => console.error("BGM playback failed", e));
                     musicStarted = true;
+
+                    // Add a listener to update volume when slider moves
+                    volumeSlider.addEventListener('input', (e) => {
+                        bgm.volume = e.target.value;
+                    });
                 }
                 // --- END BGM LOGIC ---
                 
@@ -402,14 +414,14 @@
             const isCorrect = selectedBtn.dataset.correct === 'true';
 
             if (isCorrect) {
-                // --- NEW REAL-TIME SCORE LOGIC ---
+                // --- REAL-TIME SCORE LOGIC ---
                 const pointsEarned = (currentPlayerName !== currentQuizTheme) ? 3 : 1;
-                score += pointsEarned; // Add to session score
-                playerScores[currentPlayerName] += pointsEarned; // Add to persistent total
+                score += pointsEarned; 
+                playerScores[currentPlayerName] += pointsEarned; 
                 
-                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); // Save to storage
-                updateScoreDisplay(); // Update the scoreboard UI
-                // --- END NEW LOGIC ---
+                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); 
+                updateScoreDisplay(); 
+                // --- END ---
 
                 selectedBtn.classList.add('correct');
                 playSound(sfxCorrect);
@@ -433,7 +445,6 @@
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
 
-            // --- SCORE IS NOW ADDED IN selectAnswer() ---
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
 
