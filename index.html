@@ -89,24 +89,28 @@
 
     <button id="back-to-select-btn" class="hidden btn-primary ff9-font absolute top-5 left-5 py-2 px-4 rounded-lg z-20 text-sm md:text-base">Hero Select</button>
 
+    <div id="persistent-scores-container" class="absolute top-5 right-5 z-20 text-right p-4 rounded-lg quiz-container ff9-font">
+        <h3 class="text-yellow-300 text-lg mb-2">Total Scores</h3>
+        <p class="text-sm text-stone-300">Patrick: <span id="patrick-score">0</span></p>
+        <p class="text-sm text-stone-300">Hannah: <span id="hannah-score">0</span></p>
+        <p class="text-sm text-stone-300">Jillian: <span id="jillian-score">0</span></p>
+    </div>
     <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-2xl p-6 md:p-8 text-center">
 
         <div class="relative z-10">
             
             <div id="title-screen">
                 <h1 class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Select Your Hero</h1>
+                
                 <div id="name-selection-buttons" class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
                     <div class="text-center">
                         <button data-name="patrick" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full">Patrick</button>
-                        <p class="text-sm mt-2 text-stone-300">Total Score: <span id="patrick-score">0</span></p>
                     </div>
                     <div class="text-center">
                         <button data-name="hannah" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full">Hannah</button>
-                        <p class="text-sm mt-2 text-stone-300">Total Score: <span id="hannah-score">0</span></p>
                     </div>
                     <div class="text-center">
                         <button data-name="jillian" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full">Jillian</button>
-                        <p class="text-sm mt-2 text-stone-300">Total Score: <span id="jillian-score">0</span></p>
                     </div>
                 </div>
                 <button id="reset-scores-btn" class="text-stone-400 hover:text-white transition-colors mt-8 text-sm underline">Reset All Scores</button>
@@ -173,7 +177,7 @@
                 },
                 {
                     question: "What is the name of the main antagonist who works for Kuja?",
-                    answers: [{ text: "Sephiroth", correct: false }, { text: "Garland", correct: false }, { text: "Queen Brahne", correct: false }, { text: "Zorn and Thorn", correct: true }]
+                    answers: [{ text: "Sephiroth", correct: false }, { text: "Garland", correct: false }, { text: "Queen Brahne", correct: false }, { text:Zorn and Thorn", correct: true }]
                 },
                 {
                     question: "The first city the party explores after the Evil Forest is...",
@@ -207,7 +211,7 @@
                 },
                 {
                     question: "Who is the villainous sea witch in 'The Little Mermaid'?",
-                    answers: [{ text: "Flounder", correct: false }, { text: "King Triton", correct: false }, { text: "Ursula", correct: true }, { text: "Sebastian", correct: false }]
+                    answers: [{ text: "Flounder", correct: false }, { text: "King Triton", correct: false }, { text: "Ursula", correct: true }, { text: "Sebastian", correct:false }]
                 },
                 {
                     question: "What does Cinderella's fairy godmother turn into a magnificent carriage?",
@@ -240,7 +244,7 @@
                     answers: [{ text: "Jack Reacher", correct: false }, { text: "Harry Bosch", correct: false }, { text: "Alex Cross", correct: true }, { text: "Michael Bennett", correct: false }]
                 },
                 {
-                    question: "Which Dan Brown book was the first to feature the character Robert Langdon?",
+                    question:"Which Dan Brown book was the first to feature the character Robert Langdon?",
                     answers: [{ text: "The Da Vinci Code", correct: false }, { text: "The Lost Symbol", correct: false }, { text: "Angels & Demons", correct: true }, { text: "Inferno", correct: false }]
                 },
                 {
@@ -260,20 +264,18 @@
 
         // --- ELEMENT REFERENCES ---
         const titleScreen = document.getElementById('title-screen');
-        const quizSelectionScreen = document.getElementById('quiz-selection-screen'); // <-- RENAMED
+        const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
         const quizScreen = document.getElementById('quiz-screen');
         const endScreen = document.getElementById('end-screen');
         
         const nameSelectionButtons = document.querySelectorAll('.name-btn');
-        // const startBtn = document.getElementById('start-btn'); // <-- REMOVED
         const nextBtn = document.getElementById('next-btn');
         const restartBtn = document.getElementById('restart-btn');
         const backToSelectBtn = document.getElementById('back-to-select-btn');
         const resetScoresBtn = document.getElementById('reset-scores-btn');
 
-        // const welcomeHeader = document.getElementById('welcome-header'); // <-- REMOVED
-        const questLogTitle = document.getElementById('quest-log-title'); // <-- NEW
-        const quizSetButtons = document.getElementById('quiz-set-buttons'); // <-- NEW
+        const questLogTitle = document.getElementById('quest-log-title'); 
+        const quizSetButtons = document.getElementById('quiz-set-buttons'); 
         const questionText = document.getElementById('question-text');
         const answerButtons = document.getElementById('answer-buttons');
         const scoreText = document.getElementById('score-text');
@@ -282,7 +284,7 @@
         const questionCounter = document.getElementById('question-counter');
         const progressBar = document.getElementById('progress-bar');
 
-        // --- SCORE DISPLAY SPANS ---
+        // --- SCORE DISPLAY SPANS (IDs are the same, so this works!) ---
         const patrickScoreSpan = document.getElementById('patrick-score');
         const hannahScoreSpan = document.getElementById('hannah-score');
         const jillianScoreSpan = document.getElementById('jillian-score');
@@ -297,7 +299,7 @@
         // --- STATE VARIABLES ---
         let selectedQuestions = [];
         let currentPlayerName = '';
-        let currentQuizTheme = ''; // <-- NEW: To track which quiz set is played
+        let currentQuizTheme = ''; 
         let currentQuestionIndex;
         let score;
 
@@ -321,19 +323,14 @@
                 currentPlayerName = e.target.dataset.name;
                 const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
                 
-                // Set the title for the new quest selection screen
                 questLogTitle.innerText = `${capitalizedName}'s Quest Log`;
-                
-                // Create the buttons for the quiz sets
                 populateQuizSetButtons(); 
 
                 titleScreen.classList.add('hidden');
-                quizSelectionScreen.classList.remove('hidden'); // <-- UPDATED
+                quizSelectionScreen.classList.remove('hidden'); 
                 backToSelectBtn.classList.remove('hidden');
             });
         });
-
-        // startBtn.addEventListener('click', ...); // <-- REMOVED
 
         nextBtn.addEventListener('click', () => {
             playSound(sfxMenu);
@@ -342,14 +339,13 @@
         
         restartBtn.addEventListener('click', () => {
              playSound(sfxMenu);
-             // Restarting now goes back to the quiz selection for the current player
              endScreen.classList.add('hidden');
              quizSelectionScreen.classList.remove('hidden');
         });
 
         backToSelectBtn.addEventListener('click', () => {
             playSound(sfxMenu);
-            quizSelectionScreen.classList.add('hidden'); // <-- UPDATED
+            quizSelectionScreen.classList.add('hidden'); 
             quizScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
             titleScreen.classList.remove('hidden');
@@ -369,25 +365,21 @@
             jillianScoreSpan.innerText = playerScores.jillian;
         }
 
-        // --- NEW FUNCTION ---
-        // Creates the 3 quiz set buttons on the quiz-selection-screen
         function populateQuizSetButtons() {
-            quizSetButtons.innerHTML = ''; // Clear old buttons
+            quizSetButtons.innerHTML = ''; 
             
-            // Loop through the keys of quizData (patrick, hannah, jillian)
             Object.keys(quizData).forEach(themeName => {
                 const capitalizedTheme = themeName.charAt(0).toUpperCase() + themeName.slice(1);
                 const button = document.createElement('button');
                 button.innerText = `${capitalizedTheme}'s Questions`;
-                button.dataset.theme = themeName; // Store the theme name
+                button.dataset.theme = themeName; 
                 button.classList.add('btn-primary', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full');
                 
-                // Add click listener to start the selected quiz
                 button.addEventListener('click', () => {
                     playSound(sfxStart);
-                    currentQuizTheme = themeName; // Set the theme for scoring
-                    selectedQuestions = quizData[themeName]; // Set the questions
-                    startQuiz(); // Start the quiz
+                    currentQuizTheme = themeName; 
+                    selectedQuestions = quizData[themeName]; 
+                    startQuiz(); 
                 });
                 
                 quizSetButtons.appendChild(button);
@@ -397,7 +389,7 @@
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
-            quizSelectionScreen.classList.add('hidden'); // <-- UPDATED
+            quizSelectionScreen.classList.add('hidden'); 
             endScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
             nextBtn.classList.add('hidden');
@@ -446,14 +438,11 @@
             const isCorrect = selectedBtn.dataset.correct === 'true';
 
             if (isCorrect) {
-                // --- TRIPLE SCORE LOGIC ---
                 if (currentPlayerName !== currentQuizTheme) {
-                    score += 3; // 3 points if player and theme don't match
+                    score += 3; 
                 } else {
-                    score++; // 1 point if they do match
+                    score++; 
                 }
-                // --- END TRIPLE SCORE LOGIC ---
-
                 selectedBtn.classList.add('correct');
                 playSound(sfxCorrect);
             } else {
@@ -476,12 +465,10 @@
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
 
-            // Add the session score to the player's total
             playerScores[currentPlayerName] += score;
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
 
-            // Calculate max possible score for this round (for display)
             const maxScore = (currentPlayerName !== currentQuizTheme) 
                 ? selectedQuestions.length * 3 
                 : selectedQuestions.length;
@@ -493,7 +480,6 @@
                 playSound(sfxEnd);
             }
 
-            // --- GENERIC FEEDBACK ---
             let feedback = '';
             if (percentage === 100) {
                 feedback = "Perfect Score! You're a true master!";
