@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Fantasy IX - A Trivia Challenge</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -38,7 +37,6 @@
             position: relative; /* For pseudo-element positioning */
             overflow: hidden; /* To contain the pseudo-element */
         }
-        /* The ::before pseudo-element is no longer needed */
         .btn-primary {
             background-color: #3b5998;
             border: 2px solid #a4b7d8;
@@ -152,6 +150,13 @@
         </div>
 
     </div>
+    
+    <!-- Custom Sound Effects -->
+    <audio id="sfx-menu" src="https://cdn.pixabay.com/audio/2022/03/15/audio_2b4065609b.mp3" preload="auto"></audio>
+    <audio id="sfx-correct" src="https://cdn.pixabay.com/audio/2022/03/10/audio_c3b1b93d39.mp3" preload="auto"></audio>
+    <audio id="sfx-incorrect" src="https://cdn.pixabay.com/audio/2022/03/10/audio_905234547f.mp3" preload="auto"></audio>
+    <audio id="sfx-start" src="https://cdn.pixabay.com/audio/2022/08/17/audio_88c039716e.mp3" preload="auto"></audio>
+    <audio id="sfx-end" src="https://cdn.pixabay.com/audio/2022/11/17/audio_887e217c30.mp3" preload="auto"></audio>
 
     <script>
     window.addEventListener('load', () => {
@@ -288,6 +293,12 @@
         const hannahScoreSpan = document.getElementById('hannah-score');
         const jillianScoreSpan = document.getElementById('jillian-score');
 
+        // --- AUDIO ---
+        const sfxMenu = document.getElementById('sfx-menu');
+        const sfxCorrect = document.getElementById('sfx-correct');
+        const sfxIncorrect = document.getElementById('sfx-incorrect');
+        const sfxStart = document.getElementById('sfx-start');
+        const sfxEnd = document.getElementById('sfx-end');
 
         // --- STATE VARIABLES ---
         let selectedQuestions = [];
@@ -301,35 +312,22 @@
             hannah: 0,
             jillian: 0
         };
-
-        // --- AUDIO ---
-        let audioReady = false;
-        let menuSynth, correctSynth, incorrectSynth, fanfareSynth;
-
-        function initAudio() {
-            if (audioReady || typeof Tone === 'undefined') return;
-            try {
-                menuSynth = new Tone.Synth({ oscillator: { type: "sine" }, envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.1 } }).toDestination();
-                correctSynth = new Tone.Synth({ oscillator: { type: "triangle" }, envelope: { attack: 0.005, decay: 0.2, sustain: 0.1, release: 0.1 } }).toDestination();
-                incorrectSynth = new Tone.Synth({ oscillator: { type: "square" }, envelope: { attack: 0.01, decay: 0.4, sustain: 0.0, release: 0.1 } }).toDestination();
-                fanfareSynth = new Tone.PolySynth(Tone.Synth, { envelope: { attack: 0.01, decay: 0.2, sustain: 0.2, release: 0.1 } }).toDestination();
-                audioReady = true;
-            } catch (e) {
-                console.error("Could not initialize audio context.", e);
-            }
+        
+        // --- FUNCTIONS ---
+        function playSound(sound) {
+            sound.currentTime = 0; // Rewind to the start
+            sound.play().catch(e => console.error("Audio playback failed. User may need to interact with the page first.", e));
         }
 
         // --- EVENT LISTENERS ---
         nameSelectionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                initAudio(); // Initialize audio on first user interaction
+                playSound(sfxMenu);
                 currentPlayerName = e.target.dataset.name;
                 const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
                 selectedQuestions = quizData[currentPlayerName];
                 
                 welcomeHeader.innerText = `Final Fantasy IX - ${capitalizedName}'s Quest`;
-
-                if (audioReady) menuSynth.triggerAttackRelease("A3", "8n");
 
                 titleScreen.classList.add('hidden');
                 startScreen.classList.remove('hidden');
@@ -338,26 +336,22 @@
         });
 
         startBtn.addEventListener('click', () => {
-            if (audioReady) {
-                const now = Tone.now();
-                fanfareSynth.triggerAttackRelease(["C4", "E4", "G4"], "8n", now);
-            }
+            playSound(sfxStart);
             startQuiz();
         });
 
         nextBtn.addEventListener('click', () => {
-            if (audioReady) menuSynth.triggerAttackRelease("C4", "8n");
+            playSound(sfxMenu);
             showNextQuestion();
         });
         
         restartBtn.addEventListener('click', () => {
-             if (audioReady) menuSynth.triggerAttackRelease("C4", "8n");
-             // Restarts the current character's quiz
+             playSound(sfxMenu);
              startQuiz();
         });
 
         backToSelectBtn.addEventListener('click', () => {
-            if (audioReady) menuSynth.triggerAttackRelease("A2", "8n"); // Lower note for 'back'
+            playSound(sfxMenu);
             startScreen.classList.add('hidden');
             quizScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
@@ -369,10 +363,9 @@
             playerScores = { patrick: 0, hannah: 0, jillian: 0 };
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
-            if (audioReady) menuSynth.triggerAttackRelease("A2", "8n");
+            playSound(sfxMenu);
         });
 
-        // --- FUNCTIONS ---
         function updateScoreDisplay() {
             patrickScoreSpan.innerText = playerScores.patrick;
             hannahScoreSpan.innerText = playerScores.hannah;
@@ -433,10 +426,10 @@
             if (isCorrect) {
                 score++;
                 selectedBtn.classList.add('correct');
-                if (audioReady) correctSynth.triggerAttackRelease("C5", "8n");
+                playSound(sfxCorrect);
             } else {
                 selectedBtn.classList.add('incorrect');
-                if (audioReady) incorrectSynth.triggerAttackRelease("F#3", "8n");
+                playSound(sfxIncorrect);
             }
 
             Array.from(answerButtons.children).forEach(button => {
@@ -454,23 +447,17 @@
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
 
-            // Add the new score to the player's cumulative total
             playerScores[currentPlayerName] += score;
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-            updateScoreDisplay(); // Update scores on the title screen for when the user goes back
+            updateScoreDisplay();
 
             scoreText.innerText = `${score} / ${selectedQuestions.length}`;
             
-            if (audioReady) {
-                const now = Tone.now();
-                const percentage = (score / selectedQuestions.length) * 100;
-                if (percentage >= 50) {
-                    fanfareSynth.triggerAttackRelease(["G4", "C5", "E5"], "8n", now);
-                    fanfareSynth.triggerAttackRelease("G5", "4n", now + 0.25);
-                }
+            const percentage = (score / selectedQuestions.length) * 100;
+            if (percentage >= 50) {
+                playSound(sfxEnd);
             }
 
-            const percentage = (score / selectedQuestions.length) * 100;
             let feedback = '';
             if (percentage === 100) {
                 feedback = "Perfect! You're a true child of Gaia!";
