@@ -451,19 +451,6 @@ function selectAnswer(e) {
             }
             scoreFeedback.innerText = feedback;
         }
-        
-        let feedback = '';
-            if (percentage === 100) {
-                feedback = "Perfect Score! You're a true master!";
-            } else if (percentage >= 75) {
-                feedback = "Excellent! A fantastic result.";
-            } else if (percentage >= 50) {
-                feedback = "Not bad! A solid effort.";
-            } else {
-                feedback = "Better luck next time! Keep trying.";
-            }
-            scoreFeedback.innerText = feedback;
-        }
 
         // --- INITIALIZATION ---
         updateScoreDisplay();
@@ -472,4 +459,5 @@ function selectAnswer(e) {
     </script>
 </body>
 </html>
+
 
