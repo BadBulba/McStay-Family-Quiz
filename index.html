@@ -386,16 +386,20 @@
             }
         }
 
-        function selectAnswer(e) {
+function selectAnswer(e) {
             const selectedBtn = e.target;
             const isCorrect = selectedBtn.dataset.correct === 'true';
 
             if (isCorrect) {
-                if (currentPlayerName !== currentQuizTheme) {
-                    score += 3; 
-                } else {
-                    score++; 
-                }
+                // --- NEW REAL-TIME SCORE LOGIC ---
+                const pointsEarned = (currentPlayerName !== currentQuizTheme) ? 3 : 1;
+                score += pointsEarned; // Add to session score
+                playerScores[currentPlayerName] += pointsEarned; // Add to persistent total
+                
+                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); // Save to storage
+                updateScoreDisplay(); // Update the scoreboard UI
+                // --- END NEW LOGIC ---
+
                 selectedBtn.classList.add('correct');
                 playSound(sfxCorrect);
             } else {
@@ -418,7 +422,9 @@
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
 
-            playerScores[currentPlayerName] += score;
+            // --- IMPORTANT: WE REMOVED THE SCORE ADDITION LINE FROM HERE ---
+            // The localStorage and updateDisplay calls are fine to leave,
+            // as they just ensure everything is synced one last time.
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
 
@@ -445,6 +451,19 @@
             }
             scoreFeedback.innerText = feedback;
         }
+        
+        let feedback = '';
+            if (percentage === 100) {
+                feedback = "Perfect Score! You're a true master!";
+            } else if (percentage >= 75) {
+                feedback = "Excellent! A fantastic result.";
+            } else if (percentage >= 50) {
+                feedback = "Not bad! A solid effort.";
+            } else {
+                feedback = "Better luck next time! Keep trying.";
+            }
+            scoreFeedback.innerText = feedback;
+        }
 
         // --- INITIALIZATION ---
         updateScoreDisplay();
@@ -453,3 +472,4 @@
     </script>
 </body>
 </html>
+
