@@ -1,0 +1,74 @@
+[
+    {
+        "question": "What is the name of the princess of Alexandria?",
+        "answers": [
+            { "text": "Beatrix", "correct": false },
+            { "text": "Freya", "correct": false },
+            { "text": "Garnet Til Alexandros XVII", "correct": true },
+            { "text": "Eiko", "correct": false }
+        ]
+    },
+    {
+        "question": "What is Zidane's thieving troupe called?",
+        "answers": [
+            { "text": "The Vipers", "correct": false },
+            { "text": "Tantalus", "correct": true },
+            { "text": "The Red Wings", "correct": false },
+            { "text": "AVALANCHE", "correct": false }
+        ]
+    },
+    {
+        "question": "Which character is a Dragoon from Burmecia?",
+        "answers": [
+            { "text": "Amarant", "correct": false },
+            { "text": "Steiner", "correct": false },
+            { "text": "Quina", "correct": false },
+            { "text": "Freya Crescent", "correct": true }
+        ]
+    },
+    {
+        "question": "Vivi is what type of being?",
+        "answers": [
+            { "text": "A prototype Black Mage", "correct": true },
+            { "text": "A Genome", "correct": false },
+            { "text": "A Summoner", "correct": false },
+            { "text": "A Moogle", "correct": false }
+        ]
+    },
+    {
+        "question": "What is the name of the main antagonist who works for Kuja?",
+        "answers": [
+            { "text": "Sephiroth", "correct": false },
+            { "text": "Garland", "correct": false },
+            { "text": "Queen Brahne", "correct": false },
+            { "text": "Zorn and Thorn", "correct": true }
+        ]
+    },
+    {
+        "question": "The first city the party explores after the Evil Forest is...",
+        "answers": [
+            { "text": "Lindblum", "correct": false },
+            { "text": "Dali", "correct": true },
+            { "text": "Treno", "correct": false },
+            { "text": "Cleyra", "correct": false }
+        ]
+    },
+    {
+        "question": "What must Quina Quen eat to learn a Blue Magic spell?",
+        "answers": [
+            { "text": "A specific gem", "correct": false },
+            { "text": "A magic scroll", "correct": false },
+            { "text": "An enemy", "correct": true },
+            { "text": "A frog", "correct": false }
+        ]
+    },
+    {
+        "question": "Adelbert Steiner holds what title in the Alexandrian army?",
+        "answers": [
+            { "text": "General", "correct": false },
+            { "text": "Captain of the Knights of Pluto", "correct": true },
+            { "text": "Lord Regent", "correct": false },
+            { "text": "Chief of the Guard", "correct": false }
+        ]
+    }
+]
