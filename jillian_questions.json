@@ -1,0 +1,74 @@
+[
+    {
+        "question": "What is the capital city of Australia?",
+        "answers": [
+            { "text": "Sydney", "correct": false },
+            { "text": "Melbourne", "correct": false },
+            { "text": "Canberra", "correct": true },
+            { "text": "Perth", "correct": false }
+        ]
+    },
+    {
+        "question": "In Dan Brown's novel 'The Da Vinci Code', what is Robert Langdon's profession?",
+        "answers": [
+            { "text": "Historian", "correct": false },
+            { "text": "Symbologist", "correct": true },
+            { "text": "Cryptographer", "correct": false },
+            { "text": "Priest", "correct": false }
+        ]
+    },
+    {
+        "question": "Which planet is known as the 'Red Planet'?",
+        "answers": [
+            { "text": "Venus", "correct": false },
+            { "text": "Jupiter", "correct": false },
+            { "text": "Mars", "correct": true },
+            { "text": "Saturn", "correct": false }
+        ]
+    },
+    {
+        "question": "Who is the detective protagonist in James Patterson's popular book series?",
+        "answers": [
+            { "text": "Jack Reacher", "correct": false },
+            { "text": "Harry Bosch", "correct": false },
+            { "text": "Alex Cross", "correct": true },
+            { "text": "Michael Bennett", "correct": false }
+        ]
+    },
+    {
+        "question": "Which Dan Brown book was the first to feature the character Robert Langdon?",
+        "answers": [
+            { "text": "The Da Vinci Code", "correct": false },
+            { "text": "The Lost Symbol", "correct": false },
+            { "text": "Angels & Demons", "correct": true },
+            { "text": "Inferno", "correct": false }
+        ]
+    },
+    {
+        "question": "What is the largest ocean on Earth?",
+        "answers": [
+            { "text": "Atlantic Ocean", "correct": false },
+            { "text": "Indian Ocean", "correct": false },
+            { "text": "Pacific Ocean", "correct": true },
+            { "text": "Arctic Ocean", "correct": false }
+        ]
+    },
+    {
+        "question": "James Patterson co-authors the 'Women's Murder Club' series with which author?",
+        "answers": [
+            { "text": "David Baldacci", "correct": false },
+            { "text": "Maxine Paetro", "correct": true },
+            { "text": "Andrew Gross", "correct": false },
+            { "text": "Michael Connelly", "correct": false }
+        ]
+    },
+    {
+        "question": "Who painted the Mona Lisa?",
+        "answers": [
+            { "text": "Vincent van Gogh", "correct": false },
+            { "text": "Pablo Picasso", "correct": false },
+            { "text": "Leonardo da Vinci", "correct": true },
+            { "text": "Michelangelo", "correct": false }
+        ]
+    }
+]
