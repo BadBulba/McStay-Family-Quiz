@@ -16,8 +16,15 @@
             /* A gradient that mimics the FFIX menu blue */
             background-color: #1a237e; /* Fallback color */
             background-image: 
+                /* Layer 1: Texture */
                 url('https://www.transparenttextures.com/patterns/diagmonds.png'),
+                /* Layer 2: Ragtime Mouse Image */
+                url('https://static.wikia.nocookie.net/finalfantasy/images/e/ee/RagtimeMouse-ffix.png/revision/latest?cb=20130626201437'),
+                /* Layer 3: Gradient */
                 radial-gradient(ellipse at center, #303f9f 0%, #1a237e 100%);
+            background-position: top left, center bottom, center;
+            background-repeat: repeat, no-repeat, no-repeat;
+            background-size: auto, 80%, cover;
             background-attachment: fixed;
         }
         .ff9-font {
@@ -31,20 +38,7 @@
             position: relative; /* For pseudo-element positioning */
             overflow: hidden; /* To contain the pseudo-element */
         }
-        .quiz-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('https://static.wikia.nocookie.net/finalfantasy/images/e/e9/Ragtime_Mouse_FFIX.png/revision/latest?cb=20120803185501');
-            background-position: center bottom;
-            background-repeat: no-repeat;
-            background-size: 80%;
-            opacity: 0.1;
-            z-index: 0;
-        }
+        /* The ::before pseudo-element is no longer needed */
         .btn-primary {
             background-color: #3b5998;
             border: 2px solid #a4b7d8;
@@ -95,6 +89,8 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
+    <button id="back-to-select-btn" class="hidden btn-primary ff9-font absolute top-5 left-5 py-2 px-4 rounded-lg z-20 text-sm md:text-base">Hero Select</button>
+
     <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-2xl p-6 md:p-8 text-center">
 
         <!-- Content wrapper for z-index stacking -->
@@ -103,11 +99,21 @@
             <!-- Title Screen -->
             <div id="title-screen">
                 <h1 class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Select Your Hero</h1>
-                <div id="name-selection-buttons" class="flex flex-col md:flex-row gap-4 justify-center">
-                    <button data-name="patrick" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full md:w-auto">Patrick</button>
-                    <button data-name="hannah" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full md:w-auto">Hannah</button>
-                    <button data-name="jillian" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full md:w-auto">Jillian</button>
+                <div id="name-selection-buttons" class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
+                    <div class="text-center">
+                        <button data-name="patrick" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full">Patrick</button>
+                        <p class="text-sm mt-2 text-stone-300">Total Score: <span id="patrick-score">0</span></p>
+                    </div>
+                    <div class="text-center">
+                        <button data-name="hannah" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full">Hannah</button>
+                        <p class="text-sm mt-2 text-stone-300">Total Score: <span id="hannah-score">0</span></p>
+                    </div>
+                    <div class="text-center">
+                        <button data-name="jillian" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full">Jillian</button>
+                        <p class="text-sm mt-2 text-stone-300">Total Score: <span id="jillian-score">0</span></p>
+                    </div>
                 </div>
+                <button id="reset-scores-btn" class="text-stone-400 hover:text-white transition-colors mt-8 text-sm underline">Reset All Scores</button>
             </div>
 
             <!-- Start Screen -->
@@ -139,7 +145,9 @@
                 <p class="text-2xl mb-2">Your Final Score:</p>
                 <p id="score-text" class="text-5xl font-bold mb-8">0 / 0</p>
                 <p id="score-feedback" class="text-lg mb-8"></p>
-                <button id="restart-btn" class="btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full md:w-auto">Try Again?</button>
+                <div class="flex justify-center">
+                    <button id="restart-btn" class="btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full md:w-auto">Restart Quest</button>
+                </div>
             </div>
         </div>
 
@@ -185,70 +193,70 @@
             ],
             hannah: [
                 {
-                    question: "Who is Garnet's biological mother?",
-                    answers: [{ text: "Queen Brahne", correct: false }, { text: "An unnamed Summoner", correct: false }, { text: "Jane", correct: true }, { text: "Hilda", correct: false }]
+                    question: "In 'The Lion King', what is the name of Simba's evil uncle?",
+                    answers: [{ text: "Mufasa", correct: false }, { text: "Zazu", correct: false }, { text: "Scar", correct: true }, { text: "Timon", correct: false }]
                 },
                 {
-                    question: "What is the name of Kuja's home planet?",
-                    answers: [{ text: "Gaia", correct: false }, { text: "Terra", correct: true }, { text: "Memoria", correct: false }, { text: "Oeilvert", correct: false }]
+                    question: "Which Disney Princess sings the song 'A Whole New World'?",
+                    answers: [{ text: "Belle", correct: false }, { text: "Jasmine", correct: true }, { text: "Ariel", correct: false }, { text: "Cinderella", correct: false }]
                 },
                 {
-                    question: "Eiko is the last survivor of which village of Summoners?",
-                    answers: [{ text: "Conde Petie", correct: false }, { text: "Cleyra", correct: false }, { text: "Esto Gaza", correct: false }, { text: "Madain Sari", correct: true }]
+                    question: "What is the name of the lovable snowman in Disney's 'Frozen'?",
+                    answers: [{ text: "Sven", correct: false }, { text: "Hans", correct: false }, { text: "Kristoff", correct: false }, { text: "Olaf", correct: true }]
                 },
                 {
-                    question: "What tragic event happened to Freya's home, Burmecia?",
-                    answers: [{ text: "It was flooded", correct: false }, { text: "It was attacked by Brahne's army", correct: true }, { text: "It sank into the ground", correct: false }, { text: "It was covered by the Mist", correct: false }]
+                    question: "In 'Beauty and the Beast', what is the name of the enchanted candelabra?",
+                    answers: [{ text: "Cogsworth", correct: false }, { text: "Gaston", correct: false }, { text: "Lumiere", correct: true }, { text: "Chip", correct: false }]
                 },
                 {
-                    question: "What is the true purpose of the Genomes, like Zidane and Kuja?",
-                    answers: [{ text: "To be Garland's servants", correct: false }, { text: "To be vessels for Terran souls", correct: true }, { text: "To conquer other planets", correct: false }, { text: "To absorb the Mist", correct: false }]
+                    question: "Who is the villainous sea witch in 'The Little Mermaid'?",
+                    answers: [{ text: "Flounder", correct: false }, { text: "King Triton", correct: false }, { text: "Ursula", correct: true }, { text: "Sebastian", correct: false }]
                 },
                 {
-                    question: "Who gave Vivi his name after finding him in a shipwreck?",
-                    answers: [{ text: "Zidane", correct: false }, { text: "Puck", correct: false }, { text: "Quan", correct: true }, { text: "Garnet", correct: false }]
+                    question: "What does Cinderella's fairy godmother turn into a magnificent carriage?",
+                    answers: [{ text: "A mouse", correct: false }, { text: "A pumpkin", correct: true }, { text: "A shoe", correct: false }, { text: "A broom", correct: false }]
                 },
                 {
-                    question: "Amarant Coral, the 'Flaming Amarant', was first encountered working as a...",
-                    answers: [{ text: "A royal guard", correct: false }, { text: "A bounty hunter hired by Brahne", correct: true }, { text: "A thief", correct: false }, { text: "A member of Tantalus", correct: false }]
+                    question: "In 'Aladdin', what is the name of Jafar's sarcastic parrot sidekick?",
+                    answers: [{ text: "Abu", correct: false }, { text: "Rajah", correct: false }, { text: "Iago", correct: true }, { text: "Genie", correct: false }]
                 },
                 {
-                    question: "Who is Sir Fratley, Freya's long-lost love?",
-                    answers: [{ text: "The King of Burmecia", correct: false }, { text: "A fellow Dragoon who lost his memory", correct: true }, { text: "Her brother", correct: false }, { text: "A Cleyran oracle", correct: false }]
+                    question: "What is Buzz Lightyear's famous catchphrase in 'Toy Story'?",
+                    answers: [{ text: "There's a snake in my boot!", correct: false }, { text: "Reach for the sky!", correct: false }, { text: "To infinity and beyond!", correct: true }, { text: "You are a toy!", correct: false }]
                 }
             ],
             jillian: [
                 {
-                    question: "How many Stellazzio coins must be found to complete the side quest?",
-                    answers: [{ text: "12", correct: false }, { text: "10", correct: false }, { text: "13", correct: true }, { text: "9", correct: false }]
+                    question: "What is the capital city of Australia?",
+                    answers: [{ text: "Sydney", correct: false }, { text: "Melbourne", correct: false }, { text: "Canberra", correct: true }, { text: "Perth", correct: false }]
                 },
                 {
-                    question: "What item must you give to the 'Friendly Garuda' monster in the forest above Gizamaluke's Grotto?",
-                    answers: [{ text: "A Diamond", correct: false }, { text: "A Lapis Lazuli", correct: true }, { text: "An Emerald", correct: false }, { text: "An Ore", correct: false }]
+                    question: "In Dan Brown's novel 'The Da Vinci Code', what is Robert Langdon's profession?",
+                    answers: [{ text: "Historian", correct: false }, { text: "Symbologist", correct: true }, { text: "Cryptographer", correct: false }, { text: "Priest", correct: false }]
                 },
                 {
-                    question: "In the Tetra Master card game, what does the first number/letter on a card represent?",
-                    answers: [{ text: "Magical Defense", correct: false }, { text: "Card HP", correct: false }, { text: "Attack Power", correct: true }, { text: "Physical Defense", correct: false }]
+                    question: "Which planet is known as the 'Red Planet'?",
+                    answers: [{ text: "Venus", correct: false }, { text: "Jupiter", correct: false }, { text: "Mars", correct: true }, { text: "Saturn", correct: false }]
                 },
                 {
-                    question: "What is the ultimate weapon for Zidane, forged by Hades?",
-                    answers: [{ text: "Excalibur II", correct: false }, { text: "The Ogre", correct: false }, { text: "Ragnarok", correct: false }, { text: "Ultima Weapon", correct: true }]
+                    question: "Who is the detective protagonist in James Patterson's popular book series?",
+                    answers: [{ text: "Jack Reacher", correct: false }, { text: "Harry Bosch", correct: false }, { text: "Alex Cross", correct: true }, { text: "Michael Bennett", correct: false }]
                 },
                 {
-                    question: "To reach the floating Chocobo's Paradise, what color must your Chocobo be?",
-                    answers: [{ text: "Sky Blue", correct: false }, { text: "Gold", correct: true }, { text: "Ruby Red", correct: false }, { text: "Pearl White", correct: false }]
+                    question: "Which Dan Brown book was the first to feature the character Robert Langdon?",
+                    answers: [{ text: "The Da Vinci Code", correct: false }, { text: "The Lost Symbol", correct: false }, { text: "Angels & Demons", correct: true }, { text: "Inferno", correct: false }]
                 },
                 {
-                    question: "What is the name of the optional superboss found in Memoria?",
-                    answers: [{ text: "Ozma", correct: false }, { text: "Behemoth", correct: false }, { text: "Hades", correct: true }, { text: "Necron", correct: false }]
+                    question: "What is the largest ocean on Earth?",
+                    answers: [{ text: "Atlantic Ocean", correct: false }, { text: "Indian Ocean", correct: false }, { text: "Pacific Ocean", correct: true }, { text: "Arctic Ocean", correct: false }]
                 },
                 {
-                    question: "Which Support Ability allows a character to automatically use a Potion when damaged?",
-                    answers: [{ text: "Auto-Regen", correct: false }, { text: "Auto-Life", correct: false }, { text: "Auto-Potion", correct: true }, { text: "Cover", correct: false }]
+                    question: "James Patterson co-authors the 'Women's Murder Club' series with which author?",
+                    answers: [{ text: "David Baldacci", correct: false }, { text: "Maxine Paetro", correct: true }, { text: "Andrew Gross", correct: false }, { text: "Michael Connelly", correct: false }]
                 },
                 {
-                    question: "The 'Excalibur II' is a powerful weapon for Steiner, but how do you obtain it?",
-                    answers: [{ text: "Defeat Ozma", correct: false }, { text: "Reach the final room of Memoria in under 12 hours", correct: true }, { text: "Win 100 card games", correct: false }, { text: "Catch 99 frogs", correct: false }]
+                    question: "Who painted the Mona Lisa?",
+                    answers: [{ text: "Vincent van Gogh", correct: false }, { text: "Pablo Picasso", correct: false }, { text: "Leonardo da Vinci", correct: true }, { text: "Michelangelo", correct: false }]
                 }
             ]
         };
@@ -263,6 +271,8 @@
         const startBtn = document.getElementById('start-btn');
         const nextBtn = document.getElementById('next-btn');
         const restartBtn = document.getElementById('restart-btn');
+        const backToSelectBtn = document.getElementById('back-to-select-btn');
+        const resetScoresBtn = document.getElementById('reset-scores-btn');
 
         const welcomeHeader = document.getElementById('welcome-header');
         const questionText = document.getElementById('question-text');
@@ -273,11 +283,24 @@
         const questionCounter = document.getElementById('question-counter');
         const progressBar = document.getElementById('progress-bar');
 
+        // --- SCORE DISPLAY SPANS ---
+        const patrickScoreSpan = document.getElementById('patrick-score');
+        const hannahScoreSpan = document.getElementById('hannah-score');
+        const jillianScoreSpan = document.getElementById('jillian-score');
+
 
         // --- STATE VARIABLES ---
         let selectedQuestions = [];
+        let currentPlayerName = '';
         let currentQuestionIndex;
         let score;
+
+        // --- PERSISTENT SCORES ---
+        let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || {
+            patrick: 0,
+            hannah: 0,
+            jillian: 0
+        };
 
         // --- AUDIO ---
         let audioReady = false;
@@ -300,9 +323,9 @@
         nameSelectionButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 initAudio(); // Initialize audio on first user interaction
-                const selectedName = e.target.dataset.name;
-                const capitalizedName = selectedName.charAt(0).toUpperCase() + selectedName.slice(1);
-                selectedQuestions = quizData[selectedName];
+                currentPlayerName = e.target.dataset.name;
+                const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
+                selectedQuestions = quizData[currentPlayerName];
                 
                 welcomeHeader.innerText = `Final Fantasy IX - ${capitalizedName}'s Quest`;
 
@@ -310,6 +333,7 @@
 
                 titleScreen.classList.add('hidden');
                 startScreen.classList.remove('hidden');
+                backToSelectBtn.classList.remove('hidden');
             });
         });
 
@@ -328,12 +352,33 @@
         
         restartBtn.addEventListener('click', () => {
              if (audioReady) menuSynth.triggerAttackRelease("C4", "8n");
-             // Go back to the title screen instead of restarting the same quiz
-             endScreen.classList.add('hidden');
-             titleScreen.classList.remove('hidden');
+             // Restarts the current character's quiz
+             startQuiz();
+        });
+
+        backToSelectBtn.addEventListener('click', () => {
+            if (audioReady) menuSynth.triggerAttackRelease("A2", "8n"); // Lower note for 'back'
+            startScreen.classList.add('hidden');
+            quizScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            titleScreen.classList.remove('hidden');
+            backToSelectBtn.classList.add('hidden');
+        });
+
+        resetScoresBtn.addEventListener('click', () => {
+            playerScores = { patrick: 0, hannah: 0, jillian: 0 };
+            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+            updateScoreDisplay();
+            if (audioReady) menuSynth.triggerAttackRelease("A2", "8n");
         });
 
         // --- FUNCTIONS ---
+        function updateScoreDisplay() {
+            patrickScoreSpan.innerText = playerScores.patrick;
+            hannahScoreSpan.innerText = playerScores.hannah;
+            jillianScoreSpan.innerText = playerScores.jillian;
+        }
+
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
@@ -408,6 +453,12 @@
         function showResults() {
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
+
+            // Add the new score to the player's cumulative total
+            playerScores[currentPlayerName] += score;
+            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+            updateScoreDisplay(); // Update scores on the title screen for when the user goes back
+
             scoreText.innerText = `${score} / ${selectedQuestions.length}`;
             
             if (audioReady) {
@@ -432,8 +483,10 @@
             }
             scoreFeedback.innerText = feedback;
         }
+
+        // --- INITIALIZATION ---
+        updateScoreDisplay();
     });
     </script>
 </body>
 </html>
-
