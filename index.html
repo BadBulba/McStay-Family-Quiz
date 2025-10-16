@@ -100,6 +100,9 @@
         <div class="relative z-10">
             
             <div id="title-screen">
+                <div id="loading-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-75 flex flex-col items-center justify-center z-30 rounded-2xl">
+                    <h2 class="ff9-font text-2xl text-yellow-300 animate-pulse">Loading Quests...</h2>
+                </div>
                 <h1 class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Select Your Hero</h1>
                 
                 <div id="name-selection-buttons" class="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
@@ -113,6 +116,7 @@
                         <button data-name="jillian" class="name-btn btn-primary ff9-font text-xl font-bold py-3 px-8 rounded-lg w-full">Jillian</button>
                     </div>
                 </div>
+
                 <button id="reset-scores-btn" class="text-stone-400 hover:text-white transition-colors mt-8 text-sm underline">Reset All Scores</button>
             </div>
 
@@ -155,118 +159,15 @@
     <audio id="sfx-end" src="sounds/Moogle.mp3" preload="auto"></audio>
 
     <script>
+    // --- WRAP ALL LOGIC IN 'load' EVENT ---
     window.addEventListener('load', () => {
-        // --- QUIZ DATA ---
-        const quizData = {
-            patrick: [
-                {
-                    question: "What is the name of the princess of Alexandria?",
-                    answers: [{ text: "Beatrix", correct: false }, { text: "Freya", correct: false }, { text: "Garnet Til Alexandros XVII", correct: true }, { text: "Eiko", correct: false }]
-                },
-                {
-                    question: "What is Zidane's thieving troupe called?",
-                    answers: [{ text: "The Vipers", correct: false }, { text: "Tantalus", correct: true }, { text: "The Red Wings", correct: false }, { text: "AVALANCHE", correct: false }]
-                },
-                {
-                    question: "Which character is a Dragoon from Burmecia?",
-                    answers: [{ text: "Amarant", correct: false }, { text: "Steiner", correct: false }, { text: "Quina", correct: false }, { text: "Freya Crescent", correct: true }]
-                },
-                {
-                    question: "Vivi is what type of being?",
-                    answers: [{ text: "A prototype Black Mage", correct: true }, { text: "A Genome", correct: false }, { text: "A Summoner", correct: false }, { text: "A Moogle", correct: false }]
-                },
-                {
-                    question: "What is the name of the main antagonist who works for Kuja?",
-                    answers: [{ text: "Sephiroth", correct: false }, { text: "Garland", correct: false }, { text: "Queen Brahne", correct: false }, { text:Zorn and Thorn", correct: true }]
-                },
-                {
-                    question: "The first city the party explores after the Evil Forest is...",
-                    answers: [{ text: "Lindblum", correct: false }, { text: "Dali", correct: true }, { text: "Treno", correct: false }, { text: "Cleyra", correct: false }]
-                },
-                {
-                    question: "What must Quina Quen eat to learn a Blue Magic spell?",
-                    answers: [{ text: "A specific gem", correct: false }, { text: "A magic scroll", correct: false }, { text: "An enemy", correct: true }, { text: "A frog", correct: false }]
-                },
-                {
-                    question: "Adelbert Steiner holds what title in the Alexandrian army?",
-                    answers: [{ text: "General", correct: false }, { text: "Captain of the Knights of Pluto", correct: true }, { text: "Lord Regent", correct: false }, { text: "Chief of the Guard", correct: false }]
-                }
-            ],
-            hannah: [
-                {
-                    question: "In 'The Lion King', what is the name of Simba's evil uncle?",
-                    answers: [{ text: "Mufasa", correct: false }, { text: "Zazu", correct: false }, { text: "Scar", correct: true }, { text: "Timon", correct: false }]
-                },
-                {
-                    question: "Which Disney Princess sings the song 'A Whole New World'?",
-                    answers: [{ text: "Belle", correct: false }, { text: "Jasmine", correct: true }, { text: "Ariel", correct: false }, { text: "Cinderella", correct: false }]
-                },
-                {
-                    question: "What is the name of the lovable snowman in Disney's 'Frozen'?",
-                    answers: [{ text: "Sven", correct: false }, { text: "Hans", correct: false }, { text: "Kristoff", correct: false }, { text: "Olaf", correct: true }]
-                },
-                {
-                    question: "In 'Beauty and the Beast', what is the name of the enchanted candelabra?",
-                    answers: [{ text: "Cogsworth", correct: false }, { text: "Gaston", correct: false }, { text: "Lumiere", correct: true }, { text: "Chip", correct: false }]
-                },
-                {
-                    question: "Who is the villainous sea witch in 'The Little Mermaid'?",
-                    answers: [{ text: "Flounder", correct: false }, { text: "King Triton", correct: false }, { text: "Ursula", correct: true }, { text: "Sebastian", correct:false }]
-                },
-                {
-                    question: "What does Cinderella's fairy godmother turn into a magnificent carriage?",
-                    answers: [{ text: "A mouse", correct: false }, { text: "A pumpkin", correct: true }, { text: "A shoe", correct: false }, { text: "A broom", correct: false }]
-                },
-                {
-                    question: "In 'Aladdin', what is the name of Jafar's sarcastic parrot sidekick?",
-                    answers: [{ text: "Abu", correct: false }, { text: "Rajah", correct: false }, { text: "Iago", correct: true }, { text: "Genie", correct: false }]
-                },
-                {
-                    question: "What is Buzz Lightyear's famous catchphrase in 'Toy Story'?",
-                    answers: [{ text: "There's a snake in my boot!", correct: false }, { text: "Reach for the sky!", correct: false }, { text: "To infinity and beyond!", correct: true }, { text: "You are a toy!", correct: false }]
-                }
-            ],
-            jillian: [
-                {
-                    question: "What is the capital city of Australia?",
-                    answers: [{ text: "Sydney", correct: false }, { text: "Melbourne", correct: false }, { text: "Canberra", correct: true }, { text: "Perth", correct: false }]
-                },
-                {
-                    question: "In Dan Brown's novel 'The Da Vinci Code', what is Robert Langdon's profession?",
-                    answers: [{ text: "Historian", correct: false }, { text: "Symbologist", correct: true }, { text: "Cryptographer", correct: false }, { text: "Priest", correct: false }]
-                },
-                {
-                    question: "Which planet is known as the 'Red Planet'?",
-                    answers: [{ text: "Venus", correct: false }, { text: "Jupiter", correct: false }, { text: "Mars", correct: true }, { text: "Saturn", correct: false }]
-                },
-                {
-                    question: "Who is the detective protagonist in James Patterson's popular book series?",
-                    answers: [{ text: "Jack Reacher", correct: false }, { text: "Harry Bosch", correct: false }, { text: "Alex Cross", correct: true }, { text: "Michael Bennett", correct: false }]
-                },
-                {
-                    question:"Which Dan Brown book was the first to feature the character Robert Langdon?",
-                    answers: [{ text: "The Da Vinci Code", correct: false }, { text: "The Lost Symbol", correct: false }, { text: "Angels & Demons", correct: true }, { text: "Inferno", correct: false }]
-                },
-                {
-                    question: "What is the largest ocean on Earth?",
-                    answers: [{ text: "Atlantic Ocean", correct: false }, { text: "Indian Ocean", correct: false }, { text: "Pacific Ocean", correct: true }, { text: "Arctic Ocean", correct: false }]
-                },
-                {
-                    question: "James Patterson co-authors the 'Women's Murder Club' series with which author?",
-                    answers: [{ text: "David Baldacci", correct: false }, { text: "Maxine Paetro", correct: true }, { text: "Andrew Gross", correct: false }, { text: "Michael Connelly", correct: false }]
-                },
-                {
-                    question: "Who painted the Mona Lisa?",
-                    answers: [{ text: "Vincent van Gogh", correct: false }, { text: "Pablo Picasso", correct: false }, { text: "Leonardo da Vinci", correct: true }, { text: "Michelangelo", correct: false }]
-                }
-            ]
-        };
 
         // --- ELEMENT REFERENCES ---
         const titleScreen = document.getElementById('title-screen');
         const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
         const quizScreen = document.getElementById('quiz-screen');
         const endScreen = document.getElementById('end-screen');
+        const loadingOverlay = document.getElementById('loading-overlay'); // <-- NEW
         
         const nameSelectionButtons = document.querySelectorAll('.name-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -284,7 +185,6 @@
         const questionCounter = document.getElementById('question-counter');
         const progressBar = document.getElementById('progress-bar');
 
-        // --- SCORE DISPLAY SPANS (IDs are the same, so this works!) ---
         const patrickScoreSpan = document.getElementById('patrick-score');
         const hannahScoreSpan = document.getElementById('hannah-score');
         const jillianScoreSpan = document.getElementById('jillian-score');
@@ -297,6 +197,7 @@
         const sfxEnd = document.getElementById('sfx-end');
 
         // --- STATE VARIABLES ---
+        let quizData = { patrick: [], hannah: [], jillian: [] }; // <-- Empty shell
         let selectedQuestions = [];
         let currentPlayerName = '';
         let currentQuizTheme = ''; 
@@ -311,6 +212,49 @@
         };
         
         // --- FUNCTIONS ---
+
+        // --- NEW: FUNCTION TO LOAD ALL QUIZ DATA ---
+        async function loadAllQuizData() {
+            try {
+                // Fetch all three files at the same time
+                const [patrickRes, hannahRes, jillianRes] = await Promise.all([
+                    fetch('patrick_questions.json'),
+                    fetch('hannah_questions.json'),
+                    fetch('jillian_questions.json')
+                ]);
+
+                // Check if all requests are "ok"
+                if (!patrickRes.ok || !hannahRes.ok || !jillianRes.ok) {
+                    throw new Error(`Failed to load question files. Status: ${patrickRes.status}, ${hannahRes.status}, ${jillianRes.status}`);
+                }
+
+                // Parse all three files as JSON
+                const [patrickData, hannahData, jillianData] = await Promise.all([
+                    patrickRes.json(),
+                    hannahRes.json(),
+                    jillianRes.json()
+                ]);
+
+                // Populate the quizData object
+                quizData.patrick = patrickData;
+                quizData.hannah = hannahData;
+                quizData.jillian = jillianData;
+
+                // Data is loaded, hide the overlay
+                loadingOverlay.classList.add('hidden');
+                
+            } catch (error) {
+                console.error("Error loading quiz data:", error);
+                // Display a user-friendly error message
+                loadingOverlay.innerHTML = `
+                    <h1 class="ff9-font text-2xl text-red-400 mb-4">Error Loading Quests</h1>
+                    <p class="text-stone-300">Could not load question files.</p>
+                    <p class="text-stone-300 mt-2 text-sm">Please ensure you are running this from a web server (not a local file) and the .json files are present.</p>
+                `;
+            }
+        }
+        // --- END NEW FUNCTION ---
+
         function playSound(sound) {
             sound.currentTime = 0; // Rewind to the start
             sound.play().catch(e => console.error("Audio playback failed. User may need to interact with the page first.", e));
@@ -378,7 +322,12 @@
                 button.addEventListener('click', () => {
                     playSound(sfxStart);
                     currentQuizTheme = themeName; 
-                    selectedQuestions = quizData[themeName]; 
+
+                    // --- NEW: SHUFFLE QUESTIONS ("Read Randomly") ---
+                    const originalQuestions = quizData[themeName];
+                    selectedQuestions = [...originalQuestions].sort(() => Math.random() - 0.5); 
+                    // --- END SHUFFLE ---
+
                     startQuiz(); 
                 });
                 
@@ -405,7 +354,11 @@
             questionCounter.innerText = `Question ${questionNumber} of ${selectedQuestions.length}`;
             progressBar.style.width = `${(questionNumber / selectedQuestions.length) * 100}%`;
 
-            question.answers.forEach(answer => {
+            // --- NEW: SHUFFLE ANSWERS ("Read Randomly") ---
+            const shuffledAnswers = [...question.answers].sort(() => Math.random() - 0.5);
+            // --- END SHUFFLE ---
+
+            shuffledAnswers.forEach(answer => { // <-- Use shuffledAnswers
                 const button = document.createElement('button');
                 button.innerText = answer.text;
                 button.classList.add('answer-btn', 'p-4', 'rounded-lg', 'text-lg');
@@ -495,6 +448,7 @@
 
         // --- INITIALIZATION ---
         updateScoreDisplay();
+        loadAllQuizData(); // <-- This is the new starting point!
     });
     </script>
 </body>
