@@ -9,6 +9,16 @@
         ]
     },
     {
+    "question": "Which area is this theme from?",
+    "audioSrc": "sounds/VermilionCity.mp3",
+    "answers": [
+      { "text": "Vermilion City", "correct": true },
+      { "text": "Viridian City", "correct": false },
+      { "text": "Pallet Town", "correct": false },
+      { "text": "Cinnabar Island", "correct": false }
+    ]
+    },
+    {
         "question": "What is Zidane's thieving troupe called?",
         "answers": [
             { "text": "The Vipers", "correct": false },
