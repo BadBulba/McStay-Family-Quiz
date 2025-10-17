@@ -314,13 +314,17 @@
             });
         });
     
-        // --- Next button returns to category selection ---
+// --- Next button returns to category selection ---
         nextBtn.addEventListener('click', () => {
             playSound(sfxMenu);
             quizScreen.classList.add('hidden');
             quizSelectionScreen.classList.remove('hidden');
             populateQuizSetButtons(); // Re-populate to show new options
-    
+            
+            // --- NEW: Stop and clear the question audio player ---
+            questionAudioPlayer.pause();
+            questionAudioPlayer.src = '';
+            
             // Resume BGM when going back to category select
             if (musicStarted) {
                 bgm.play().catch(e => console.error("BGM playback failed", e));
@@ -497,8 +501,10 @@
             questionAudioPlayer.pause();
             questionAudioPlayer.src = '';
         }
-    
+        
         function selectAnswer(e) {
+            questionAudioPlayer.pause(); // --- THIS IS THE NEW LINE ---
+            
             const selectedBtn = e.target;
             const isCorrect = selectedBtn.dataset.correct === 'true';
     
@@ -516,7 +522,7 @@
                 
                 localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); 
                 updateScoreDisplay(); 
-    
+
                 selectedBtn.classList.add('correct');
                 playSound(sfxCorrect);
             } else {
@@ -537,7 +543,6 @@
     
             nextBtn.classList.remove('hidden');
         }
-    
         function showResults() {
             quizScreen.classList.add('hidden');
             quizSelectionScreen.classList.add('hidden'); // Hide category screen
@@ -584,3 +589,4 @@
     </script>
 </body>
 </html>
+
