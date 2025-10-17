@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Fantasy IX - A Trivia Challenge</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Custom styles for the FFIX theme */
         body {
             font-family: 'Inter', sans-serif;
             color: #f0e8d8;
@@ -34,8 +37,8 @@
             border: 2px solid #a4b7d8;
             box-shadow: 0 0 20px rgba(164, 183, 216, 0.5), inset 0 0 15px rgba(18, 28, 80, 0.7);
             backdrop-filter: blur(5px);
-            position: relative; /* For pseudo-element positioning */
-            overflow: hidden; /* To contain the pseudo-element */
+            position: relative;
+            overflow: hidden;
         }
         .btn-primary {
             background-color: #3b5998;
@@ -100,6 +103,7 @@
             <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.1" class="w-24 align-middle">
         </div>
     </div>
+    
     <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-2xl p-6 md:p-8 text-center">
 
         <div class="relative z-10">
@@ -128,19 +132,24 @@
             <div id="quiz-selection-screen" class="hidden">
                 <h1 id="quest-log-title" class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Player's Quest Log</h1>
                 <div id="quiz-set-buttons" class="grid grid-cols-1 gap-6">
-                </div>
+                    </div>
             </div>
 
             <div id="quiz-screen" class="hidden">
                 <div id="progress-container" class="mb-4">
                         <p id="question-counter" class="text-sm text-stone-300 mb-2"></p>
-                        <div class="w-full progress-bar-bg rounded-full h-2.5">
+                        <div class="w-full progress-bar-bg rounded-full h-2.5 hidden">
                             <div id="progress-bar" class="progress-bar-fill h-2.5 rounded-full" style="width: 0%"></div>
                         </div>
                 </div>
                 <h2 id="question-text" class="text-2xl md:text-3xl font-bold mb-6 min-h-[100px]">Question text goes here...</h2>
+                
+                <audio id="question-audio-player" class="w-full mb-6 hidden" controls preload="auto">
+                    Your browser does not support the audio element.
+                </audio>
+
                 <div id="answer-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                </div>
+                    </div>
                 <button id="next-btn" class="btn-primary ff9-font text-lg font-bold py-3 px-8 rounded-lg mt-8 w-full md:w-auto hidden">Next</button>
             </div>
 
@@ -164,389 +173,414 @@
     <audio id="sfx-end" src="sounds/Moogle.mp3" preload="auto"></audio>
 
     <audio id="bgm" src="sounds/FBattle.mp3" loop preload="auto"></audio>
-<script>
-// --- WRAP ALL LOGIC IN 'load' EVENT ---
-window.addEventListener('load', () => {
 
-    // --- ELEMENT REFERENCES ---
-    const titleScreen = document.getElementById('title-screen');
-    const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
-    const quizScreen = document.getElementById('quiz-screen');
-    const endScreen = document.getElementById('end-screen');
-    const loadingOverlay = document.getElementById('loading-overlay'); 
+    <script>
+    // --- WRAP ALL LOGIC IN 'load' EVENT ---
+    window.addEventListener('load', () => {
     
-    const nameSelectionButtons = document.querySelectorAll('.name-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const restartBtn = document.getElementById('restart-btn');
-    const backToSelectBtn = document.getElementById('back-to-select-btn');
-    const resetScoresBtn = document.getElementById('reset-scores-btn');
-
-    const questLogTitle = document.getElementById('quest-log-title'); 
-    const quizSetButtons = document.getElementById('quiz-set-buttons'); 
-    
-    const questionText = document.getElementById('question-text');
-    const answerButtons = document.getElementById('answer-buttons');
-    const scoreText = document.getElementById('score-text');
-    const scoreFeedback = document.getElementById('score-feedback');
-    
-    // --- CHANGED: Progress bar is hidden as quiz length is no longer fixed
-    const progressContainer = document.getElementById('progress-container');
-    const questionCounter = document.getElementById('question-counter');
-    // const progressBar = document.getElementById('progress-bar');
-
-    const patrickScoreSpan = document.getElementById('patrick-score');
-    const hannahScoreSpan = document.getElementById('hannah-score');
-    const jillianScoreSpan = document.getElementById('jillian-score');
-    const volumeSlider = document.getElementById('volume-slider'); 
-
-    // --- AUDIO ---
-    const sfxMenu = document.getElementById('sfx-menu');
-    const sfxCorrect = document.getElementById('sfx-correct');
-    const sfxIncorrect = document.getElementById('sfx-incorrect');
-    const sfxStart = document.getElementById('sfx-start');
-    const sfxEnd = document.getElementById('sfx-end');
-    const bgm = document.getElementById('bgm'); 
-
-    // --- STATE VARIABLES ---
-    // --- CHANGED: We now use the quizData object to hold themed questions
-    let quizData = { patrick: [], hannah: [], jillian: [] }; 
-    let askedQuestions = new Set(); // --- NEW: Tracks asked questions to prevent repeats
-    let currentQuestion; // --- NEW: Holds the single active question
-    let currentPlayerName = '';
-    
-    // --- NEW: Session-specific scores
-    let currentSessionScore = 0;
-    let maxSessionScore = 0;
-    let totalQuestionsAnswered = 0;
-
-    let musicStarted = false; 
-
-    // --- PERSISTENT SCORES ---
-    let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || {
-        patrick: 0,
-        hannah: 0,
-        jillian: 0
-    };
-    
-    // --- FUNCTIONS ---
-
-    // --- Fisher-Yates shuffle algorithm ---
-    function shuffleArray(array) {
-        let newArray = [...array]; 
-        for (let i = newArray.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        return newArray;
-    }
-
-    // --- FUNCTION TO LOAD ALL QUIZ DATA ---
-    async function loadAllQuizData() {
-        try {
-            const [patrickRes, hannahRes, jillianRes] = await Promise.all([
-                fetch('patrick_questions.json'),
-                fetch('hannah_questions.json'),
-                fetch('jillian_questions.json')
-            ]);
-
-            if (!patrickRes.ok || !hannahRes.ok || !jillianRes.ok) {
-                throw new Error(`Failed to load question files.`);
-            }
-
-            const [patrickData, hannahData, jillianData] = await Promise.all([
-                patrickRes.json(),
-                hannahRes.json(),
-                jillianRes.json()
-            ]);
-
-            // --- CHANGED: Populate the quizData object, tagging each question with its theme
-            quizData.patrick = patrickData.map(q => ({ ...q, theme: 'patrick' }));
-            quizData.hannah = hannahData.map(q => ({ ...q, theme: 'hannah' }));
-            quizData.jillian = jillianData.map(q => ({ ...q, theme: 'jillian' }));
-            // --- END CHANGED ---
-
-            loadingOverlay.classList.add('hidden');
-            
-        } catch (error) {
-            console.error("Error loading quiz data:", error);
-            loadingOverlay.innerHTML = `
-                <h1 class="ff9-font text-2xl text-red-400 mb-4">Error Loading Quests</h1>
-                <p class="text-stone-300">Could not load question files.</p>
-            `;
-        }
-    }
-
-    function playSound(sound) {
-        sound.currentTime = 0; 
-        sound.play().catch(e => console.error("Audio playback failed.", e));
-    }
-
-    // --- EVENT LISTENERS ---
-    nameSelectionButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            playSound(sfxMenu);
-
-            if (!musicStarted) {
-                bgm.volume = volumeSlider.value; 
-                bgm.play().catch(e => console.error("BGM playback failed", e));
-                musicStarted = true;
-                volumeSlider.addEventListener('input', (e) => {
-                    bgm.volume = e.target.value;
-                });
-            }
-            
-            currentPlayerName = e.target.dataset.name;
-            const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
-            questLogTitle.innerText = `${capitalizedName}'s Quest Log`;
-
-            // --- CHANGED: Go to the quiz selection screen first
-            titleScreen.classList.add('hidden');
-            backToSelectBtn.classList.remove('hidden');
-            startQuiz(); // This will reset state and show the category screen
-        });
-    });
-
-    // --- CHANGED: Next button now returns to category selection ---
-    nextBtn.addEventListener('click', () => {
-        playSound(sfxMenu);
-        quizScreen.classList.add('hidden');
-        quizSelectionScreen.classList.remove('hidden');
-        populateQuizSetButtons(); // Re-populate to show new options
-    });
-    
-    restartBtn.addEventListener('click', () => {
-         playSound(sfxMenu);
-         endScreen.classList.add('hidden');
-         titleScreen.classList.remove('hidden'); 
-         backToSelectBtn.classList.add('hidden');
-         bgm.pause();
-         bgm.currentTime = 0; 
-         musicStarted = false;
-    });
-
-    backToSelectBtn.addEventListener('click', () => {
-        playSound(sfxMenu);
-        quizSelectionScreen.classList.add('hidden'); 
-        quizScreen.classList.add('hidden');
-        endScreen.classList.add('hidden');
-        titleScreen.classList.remove('hidden');
-        backToSelectBtn.classList.add('hidden');
-        bgm.pause();
-        bgm.currentTime = 0; 
-        musicStarted = false;
-    });
-
-    resetScoresBtn.addEventListener('click', () => {
-        playerScores = { patrick: 0, hannah: 0, jillian: 0 };
-        localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-        updateScoreDisplay();
-        playSound(sfxMenu);
-    });
-
-    function updateScoreDisplay() {
-        patrickScoreSpan.innerText = playerScores.patrick;
-        hannahScoreSpan.innerText = playerScores.hannah;
-        jillianScoreSpan.innerText = playerScores.jillian;
-    }
-
-    // --- NEW: This function dynamically creates the category buttons
-    function populateQuizSetButtons() {
-        quizSetButtons.innerHTML = ''; // Clear old buttons
+        // --- ELEMENT REFERENCES ---
+        const titleScreen = document.getElementById('title-screen');
+        const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
+        const quizScreen = document.getElementById('quiz-screen');
+        const endScreen = document.getElementById('end-screen');
+        const loadingOverlay = document.getElementById('loading-overlay'); 
         
-        let allQuestionsAsked = true; // Assume all are asked
-
-        // --- Create buttons for each theme ---
-        Object.keys(quizData).forEach(themeName => {
-            const capitalizedTheme = themeName.charAt(0).toUpperCase() + themeName.slice(1);
-            const button = document.createElement('button');
-            button.innerText = `${capitalizedTheme}'s Questions`;
-            button.dataset.theme = themeName; 
-            button.classList.add('btn-primary', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full');
-            
-            // --- Check if there are any unasked questions left in this theme ---
-            const availableQuestions = quizData[themeName].filter(q => !askedQuestions.has(q.question));
-            
-            if (availableQuestions.length === 0) {
-                button.disabled = true; // Disable if no questions left
-                button.innerText += " (Complete!)";
-                button.classList.add('opacity-50', 'cursor-not-allowed');
-            } else {
-                allQuestionsAsked = false; // Found at least one available question
+        const nameSelectionButtons = document.querySelectorAll('.name-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const backToSelectBtn = document.getElementById('back-to-select-btn');
+        const resetScoresBtn = document.getElementById('reset-scores-btn');
+    
+        const questLogTitle = document.getElementById('quest-log-title'); 
+        const quizSetButtons = document.getElementById('quiz-set-buttons'); 
+        
+        const questionText = document.getElementById('question-text');
+        const answerButtons = document.getElementById('answer-buttons');
+        const scoreText = document.getElementById('score-text');
+        const scoreFeedback = document.getElementById('score-feedback');
+        
+        const progressContainer = document.getElementById('progress-container');
+        const questionCounter = document.getElementById('question-counter');
+    
+        const patrickScoreSpan = document.getElementById('patrick-score');
+        const hannahScoreSpan = document.getElementById('hannah-score');
+        const jillianScoreSpan = document.getElementById('jillian-score');
+        const volumeSlider = document.getElementById('volume-slider'); 
+    
+        // --- Audio question player ---
+        const questionAudioPlayer = document.getElementById('question-audio-player');
+    
+        // --- AUDIO ---
+        const sfxMenu = document.getElementById('sfx-menu');
+        const sfxCorrect = document.getElementById('sfx-correct');
+        const sfxIncorrect = document.getElementById('sfx-incorrect');
+        const sfxStart = document.getElementById('sfx-start');
+        const sfxEnd = document.getElementById('sfx-end');
+        const bgm = document.getElementById('bgm'); 
+    
+        // --- STATE VARIABLES ---
+        let quizData = { patrick: [], hannah: [], jillian: [] }; 
+        let askedQuestions = new Set(); // Tracks asked questions to prevent repeats
+        let currentQuestion; // Holds the single active question
+        let currentPlayerName = '';
+        
+        // --- Session-specific scores ---
+        let currentSessionScore = 0;
+        let maxSessionScore = 0;
+        let totalQuestionsAnswered = 0;
+    
+        let musicStarted = false; 
+    
+        // --- PERSISTENT SCORES ---
+        let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || {
+            patrick: 0,
+            hannah: 0,
+            jillian: 0
+        };
+        
+        // --- FUNCTIONS ---
+    
+        // --- Fisher-Yates shuffle algorithm ---
+        function shuffleArray(array) {
+            let newArray = [...array]; 
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
             }
-            
-            button.addEventListener('click', () => {
-                selectQuestionFromTheme(themeName);
+            return newArray;
+        }
+    
+        // --- FUNCTION TO LOAD ALL QUIZ DATA ---
+        async function loadAllQuizData() {
+            try {
+                const [patrickRes, hannahRes, jillianRes] = await Promise.all([
+                    fetch('patrick_questions.json'),
+                    fetch('hannah_questions.json'),
+                    fetch('jillian_questions.json')
+                ]);
+    
+                if (!patrickRes.ok || !hannahRes.ok || !jillianRes.ok) {
+                    throw new Error(`Failed to load question files.`);
+                }
+    
+                const [patrickData, hannahData, jillianData] = await Promise.all([
+                    patrickRes.json(),
+                    hannahRes.json(),
+                    jillianRes.json()
+                ]);
+    
+                // Populate the quizData object, tagging each question with its theme
+                quizData.patrick = patrickData.map(q => ({ ...q, theme: 'patrick' }));
+                quizData.hannah = hannahData.map(q => ({ ...q, theme: 'hannah' }));
+                quizData.jillian = jillianData.map(q => ({ ...q, theme: 'jillian' }));
+    
+                loadingOverlay.classList.add('hidden');
+                
+            } catch (error) {
+                console.error("Error loading quiz data:", error);
+                loadingOverlay.innerHTML = `
+                    <h1 class="ff9-font text-2xl text-red-400 mb-4">Error Loading Quests</h1>
+                    <p class="text-stone-300">Could not load question files.</p>
+                `;
+            }
+        }
+    
+        function playSound(sound) {
+            sound.currentTime = 0; 
+            sound.play().catch(e => console.error("Audio playback failed.", e));
+        }
+    
+        // --- EVENT LISTENERS ---
+        nameSelectionButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                playSound(sfxMenu);
+    
+                if (!musicStarted) {
+                    bgm.volume = volumeSlider.value; 
+                    bgm.play().catch(e => console.error("BGM playback failed", e));
+                    musicStarted = true;
+                    volumeSlider.addEventListener('input', (e) => {
+                        bgm.volume = e.target.value;
+                    });
+                }
+                
+                currentPlayerName = e.target.dataset.name;
+                const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
+                questLogTitle.innerText = `${capitalizedName}'s Quest Log`;
+    
+                titleScreen.classList.add('hidden');
+                backToSelectBtn.classList.remove('hidden');
+                startQuiz(); // This will reset state and show the category screen
             });
-            
-            quizSetButtons.appendChild(button);
         });
-
-        // --- Add a "Finish Quiz" button ---
-        if (totalQuestionsAnswered > 0) { // Only show after 1+ questions
-            const finishButton = document.createElement('button');
-            finishButton.innerText = "Finish Quest & See Score";
-            // Use different styling to distinguish it
-            finishButton.classList.add('bg-yellow-600', 'hover:bg-yellow-500', 'text-white', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full', 'mt-4');
-            finishButton.addEventListener('click', showResults);
-            quizSetButtons.appendChild(finishButton);
-        }
-        
-        // --- If all questions from all sets are asked, end the quiz
-        if (allQuestionsAsked && totalQuestionsAnswered > 0) {
-            showResults();
-        }
-    }
-
-    // --- NEW: This function picks a question and starts the question screen
-    function selectQuestionFromTheme(themeName) {
-        playSound(sfxStart);
-        
-        // Find an unasked question from the chosen theme
-        const availableQuestions = quizData[themeName].filter(q => !askedQuestions.has(q.question));
-        
-        if (availableQuestions.length > 0) {
-            // Pick a random one from the available list
-            currentQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
-            
-            // Add its text to the 'asked' set to prevent repeats
-            askedQuestions.add(currentQuestion.question);
-            
-            // Show the quiz screen
-            quizSelectionScreen.classList.add('hidden'); 
-            quizScreen.classList.remove('hidden');
-            showQuestion();
-        }
-    }
-
-    // --- CHANGED: This function now resets session state and shows category selection
-    function startQuiz() {
-        currentSessionScore = 0;
-        maxSessionScore = 0;
-        totalQuestionsAnswered = 0;
-        askedQuestions.clear(); // Clear the set of asked questions
-
-        quizScreen.classList.add('hidden');
-        endScreen.classList.add('hidden');
-        quizSelectionScreen.classList.remove('hidden'); // Show category selection
-        
-        populateQuizSetButtons(); // Create the first set of category buttons
-    }
-
-    // --- CHANGED: This function now just shows the single 'currentQuestion'
-    function showQuestion() {
-        resetState();
-        questionText.innerText = currentQuestion.question;
-
-        // --- Update progress text (progress bar is hidden) ---
-        progressContainer.classList.remove('hidden'); // Show it
-        questionCounter.innerText = `Question ${totalQuestionsAnswered + 1}`;
-        document.querySelector('.progress-bar-bg').classList.add('hidden'); // Hide bar
-
-        // --- Shuffle answers for the current question ---
-        const shuffledAnswers = shuffleArray(currentQuestion.answers);
-
-        shuffledAnswers.forEach(answer => { 
-            const button = document.createElement('button');
-            button.innerText = answer.text;
-            button.classList.add('answer-btn', 'p-4', 'rounded-lg', 'text-lg');
-            if (answer.correct) {
-                button.dataset.correct = answer.correct;
-            }
-            button.addEventListener('click', selectAnswer);
-            answerButtons.appendChild(button);
-        });
-    }
     
-    // --- REMOVED: showNextQuestion() is no longer needed ---
-
-    function resetState() {
-        nextBtn.classList.add('hidden');
-        while (answerButtons.firstChild) {
-            answerButtons.removeChild(answerButtons.firstChild);
-        }
-    }
-
-    function selectAnswer(e) {
-        const selectedBtn = e.target;
-        const isCorrect = selectedBtn.dataset.correct === 'true';
-
-        // Get theme from the *current question* to check for bonus
-        const questionTheme = currentQuestion.theme;
-        const pointsPossible = (currentPlayerName !== questionTheme) ? 3 : 1;
-        
-        // --- Add to session max score *regardless* of answer ---
-        maxSessionScore += pointsPossible;
-
-        if (isCorrect) {
-            // --- Add to session *and* persistent score if correct ---
-            currentSessionScore += pointsPossible; 
-            playerScores[currentPlayerName] += pointsPossible; 
-            
-            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); 
-            updateScoreDisplay(); 
-
-            selectedBtn.classList.add('correct');
-            playSound(sfxCorrect);
-        } else {
-            selectedBtn.classList.add('incorrect');
-            playSound(sfxIncorrect);
-        }
-        
-        // Increment total questions *after* answering
-        totalQuestionsAnswered++;
-
-        Array.from(answerButtons.children).forEach(button => {
-            if (button.dataset.correct === 'true') {
-                button.classList.add('correct');
+        // --- Next button returns to category selection ---
+        nextBtn.addEventListener('click', () => {
+            playSound(sfxMenu);
+            quizScreen.classList.add('hidden');
+            quizSelectionScreen.classList.remove('hidden');
+            populateQuizSetButtons(); // Re-populate to show new options
+    
+            // Resume BGM when going back to category select
+            if (musicStarted) {
+                bgm.play().catch(e => console.error("BGM playback failed", e));
             }
-            button.disabled = true;
-            button.classList.remove('hover:bg-blue-500');
         });
-
-        nextBtn.classList.remove('hidden');
-    }
-
-    function showResults() {
-        quizScreen.classList.add('hidden');
-        quizSelectionScreen.classList.add('hidden'); // Hide category screen
-        endScreen.classList.remove('hidden');
-
-        localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+        
+        restartBtn.addEventListener('click', () => {
+             playSound(sfxMenu);
+             endScreen.classList.add('hidden');
+             titleScreen.classList.remove('hidden'); 
+             backToSelectBtn.classList.add('hidden');
+             bgm.pause();
+             bgm.currentTime = 0; 
+             musicStarted = false;
+             // Make sure to stop question audio
+             questionAudioPlayer.pause();
+             questionAudioPlayer.src = '';
+        });
+    
+        backToSelectBtn.addEventListener('click', () => {
+            playSound(sfxMenu);
+            quizSelectionScreen.classList.add('hidden'); 
+            quizScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            titleScreen.classList.remove('hidden');
+            backToSelectBtn.classList.add('hidden');
+            bgm.pause();
+            bgm.currentTime = 0; 
+            musicStarted = false;
+            // Make sure to stop question audio
+            questionAudioPlayer.pause();
+            questionAudioPlayer.src = '';
+        });
+    
+        resetScoresBtn.addEventListener('click', () => {
+            playerScores = { patrick: 0, hannah: 0, jillian: 0 };
+            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+            updateScoreDisplay();
+            playSound(sfxMenu);
+        });
+    
+        function updateScoreDisplay() {
+            patrickScoreSpan.innerText = playerScores.patrick;
+            hannahScoreSpan.innerText = playerScores.hannah;
+            jillianScoreSpan.innerText = playerScores.jillian;
+        }
+    
+        // --- Dynamically creates the category buttons ---
+        function populateQuizSetButtons() {
+            quizSetButtons.innerHTML = ''; // Clear old buttons
+            
+            let allQuestionsAsked = true; // Assume all are asked
+    
+            // --- Create buttons for each theme ---
+            Object.keys(quizData).forEach(themeName => {
+                const capitalizedTheme = themeName.charAt(0).toUpperCase() + themeName.slice(1);
+                const button = document.createElement('button');
+                button.innerText = `${capitalizedTheme}'s Questions`;
+                button.dataset.theme = themeName; 
+                button.classList.add('btn-primary', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full');
+                
+                // --- Check if there are any unasked questions left in this theme ---
+                // Use audioSrc as part of the unique key
+                const availableQuestions = quizData[themeName].filter(q => !askedQuestions.has(q.question + (q.audioSrc || ''))); 
+                
+                if (availableQuestions.length === 0) {
+                    button.disabled = true; // Disable if no questions left
+                    button.innerText += " (Complete!)";
+                    button.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    allQuestionsAsked = false; // Found at least one available question
+                }
+                
+                button.addEventListener('click', () => {
+                    selectQuestionFromTheme(themeName);
+                });
+                
+                quizSetButtons.appendChild(button);
+            });
+    
+            // --- Add a "Finish Quiz" button ---
+            if (totalQuestionsAnswered > 0) { // Only show after 1+ questions
+                const finishButton = document.createElement('button');
+                finishButton.innerText = "Finish Quest & See Score";
+                finishButton.classList.add('bg-yellow-600', 'hover:bg-yellow-500', 'text-white', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full', 'mt-4');
+                finishButton.addEventListener('click', showResults);
+                quizSetButtons.appendChild(finishButton);
+            }
+            
+            // --- If all questions from all sets are asked, end the quiz
+            if (allQuestionsAsked && totalQuestionsAnswered > 0) {
+                showResults();
+            }
+        }
+    
+        // --- Picks a question and starts the question screen ---
+        function selectQuestionFromTheme(themeName) {
+            playSound(sfxStart);
+            
+            // Find an unasked question from the chosen theme
+            const availableQuestions = quizData[themeName].filter(q => !askedQuestions.has(q.question + (q.audioSrc || '')));
+            
+            if (availableQuestions.length > 0) {
+                // Pick a random one from the available list
+                currentQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+                
+                // Add its text to the 'asked' set to prevent repeats
+                askedQuestions.add(currentQuestion.question + (currentQuestion.audioSrc || ''));
+                
+                // Show the quiz screen
+                quizSelectionScreen.classList.add('hidden'); 
+                quizScreen.classList.remove('hidden');
+                showQuestion();
+            }
+        }
+    
+        // --- Resets session state and shows category selection ---
+        function startQuiz() {
+            currentSessionScore = 0;
+            maxSessionScore = 0;
+            totalQuestionsAnswered = 0;
+            askedQuestions.clear(); // Clear the set of asked questions
+    
+            quizScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            quizSelectionScreen.classList.remove('hidden'); // Show category selection
+            
+            populateQuizSetButtons(); // Create the first set of category buttons
+        }
+    
+        // --- Shows the single 'currentQuestion', handling audio ---
+        function showQuestion() {
+            resetState(); // This will now also hide/stop the audio player
+            questionText.innerText = currentQuestion.question;
+    
+            // --- NEW AUDIO PLAYER LOGIC ---
+            if (currentQuestion.audioSrc) {
+                questionAudioPlayer.src = currentQuestion.audioSrc;
+                questionAudioPlayer.classList.remove('hidden');
+                // Pause the main BGM so the user can hear the clip
+                bgm.pause(); 
+            }
+            // --- END NEW LOGIC ---
+    
+            // --- Update progress text (progress bar is hidden) ---
+            progressContainer.classList.remove('hidden'); // Show it
+            questionCounter.innerText = `Question ${totalQuestionsAnswered + 1}`;
+            document.querySelector('.progress-bar-bg').classList.add('hidden'); // Hide bar
+    
+            // --- Shuffle answers for the current question ---
+            const shuffledAnswers = shuffleArray(currentQuestion.answers);
+    
+            shuffledAnswers.forEach(answer => { 
+                const button = document.createElement('button');
+                button.innerText = answer.text;
+                button.classList.add('answer-btn', 'p-4', 'rounded-lg', 'text-lg');
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct;
+                }
+                button.addEventListener('click', selectAnswer);
+                answerButtons.appendChild(button);
+            });
+        }
+    
+        // --- Resets the state of the question screen ---
+        function resetState() {
+            nextBtn.classList.add('hidden');
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+    
+            // --- Hide and stop the audio player between questions ---
+            questionAudioPlayer.classList.add('hidden');
+            questionAudioPlayer.pause();
+            questionAudioPlayer.src = '';
+        }
+    
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct === 'true';
+    
+            // Get theme from the *current question* to check for bonus
+            const questionTheme = currentQuestion.theme;
+            const pointsPossible = (currentPlayerName !== questionTheme) ? 3 : 1;
+            
+            // --- Add to session max score *regardless* of answer ---
+            maxSessionScore += pointsPossible;
+    
+            if (isCorrect) {
+                // --- Add to session *and* persistent score if correct ---
+                currentSessionScore += pointsPossible; 
+                playerScores[currentPlayerName] += pointsPossible; 
+                
+                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); 
+                updateScoreDisplay(); 
+    
+                selectedBtn.classList.add('correct');
+                playSound(sfxCorrect);
+            } else {
+                selectedBtn.classList.add('incorrect');
+                playSound(sfxIncorrect);
+            }
+            
+            // Increment total questions *after* answering
+            totalQuestionsAnswered++;
+    
+            Array.from(answerButtons.children).forEach(button => {
+                if (button.dataset.correct === 'true') {
+                    button.classList.add('correct');
+                }
+                button.disabled = true;
+                button.classList.remove('hover:bg-blue-500');
+            });
+    
+            nextBtn.classList.remove('hidden');
+        }
+    
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            quizSelectionScreen.classList.add('hidden'); // Hide category screen
+            endScreen.classList.remove('hidden');
+    
+            // Resume BGM on results screen
+            if (musicStarted) {
+                bgm.play().catch(e => console.error("BGM playback failed", e));
+            }
+    
+            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+            updateScoreDisplay();
+    
+            // --- Show session score ---
+            scoreText.innerText = `${currentSessionScore} / ${maxSessionScore}`;
+            
+            // Prevent divide-by-zero if user finishes with 0 questions
+            const percentage = (maxSessionScore > 0) ? (currentSessionScore / maxSessionScore) * 100 : 0;
+            
+            if (percentage >= 50) {
+                playSound(sfxEnd);
+            }
+    
+            let feedback = '';
+            if (totalQuestionsAnswered === 0) {
+                feedback = "You didn't answer any questions!";
+            } else if (percentage === 100) {
+                feedback = "Perfect Score! You're a true master!";
+            } else if (percentage >= 75) {
+                feedback = "Excellent! A fantastic result.";
+            } else if (percentage >= 50) {
+                feedback = "Not bad! A solid effort.";
+            } else {
+                feedback = "Better luck next time! Keep trying.";
+            }
+            scoreFeedback.innerText = feedback;
+        }
+    
+        // --- INITIALIZATION ---
+        progressContainer.classList.add('hidden'); // Hide progress bar by default
         updateScoreDisplay();
-
-        // --- Show session score ---
-        scoreText.innerText = `${currentSessionScore} / ${maxSessionScore}`;
-        
-        // Prevent divide-by-zero if user finishes with 0 questions
-        const percentage = (maxSessionScore > 0) ? (currentSessionScore / maxSessionScore) * 100 : 0;
-        
-        if (percentage >= 50) {
-            playSound(sfxEnd);
-        }
-
-        let feedback = '';
-        if (totalQuestionsAnswered === 0) {
-            feedback = "You didn't answer any questions!";
-        } else if (percentage === 100) {
-            feedback = "Perfect Score! You're a true master!";
-        } else if (percentage >= 75) {
-            feedback = "Excellent! A fantastic result.";
-        } else if (percentage >= 50) {
-            feedback = "Not bad! A solid effort.";
-        } else {
-            feedback = "Better luck next time! Keep trying.";
-        }
-        scoreFeedback.innerText = feedback;
-    }
-
-    // --- INITIALIZATION ---
-    progressContainer.classList.add('hidden'); // Hide progress bar by default
-    updateScoreDisplay();
-    loadAllQuizData();
-});
-</script>
+        loadAllQuizData();
+    });
+    </script>
 </body>
 </html>
-
-
-
