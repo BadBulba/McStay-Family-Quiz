@@ -164,12 +164,13 @@
     <audio id="sfx-end" src="sounds/Moogle.mp3" preload="auto"></audio>
 
     <audio id="bgm" src="sounds/FBattle.mp3" loop preload="auto"></audio>
-    <script>
+<script>
     // --- WRAP ALL LOGIC IN 'load' EVENT ---
     window.addEventListener('load', () => {
 
         // --- ELEMENT REFERENCES ---
         const titleScreen = document.getElementById('title-screen');
+        // --- CHANGED: This screen is no longer used, but we'll keep the reference for 'back' button logic
         const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
         const quizScreen = document.getElementById('quiz-screen');
         const endScreen = document.getElementById('end-screen');
@@ -181,8 +182,10 @@
         const backToSelectBtn = document.getElementById('back-to-select-btn');
         const resetScoresBtn = document.getElementById('reset-scores-btn');
 
-        const questLogTitle = document.getElementById('quest-log-title'); 
-        const quizSetButtons = document.getElementById('quiz-set-buttons'); 
+        // --- CHANGED: These elements are no longer used
+        // const questLogTitle = document.getElementById('quest-log-title'); 
+        // const quizSetButtons = document.getElementById('quiz-set-buttons'); 
+        
         const questionText = document.getElementById('question-text');
         const answerButtons = document.getElementById('answer-buttons');
         const scoreText = document.getElementById('score-text');
@@ -205,10 +208,11 @@
         const bgm = document.getElementById('bgm'); 
 
         // --- STATE VARIABLES ---
-        let quizData = { patrick: [], hannah: [], jillian: [] }; 
+        let allQuestions = []; // --- NEW: This will hold all questions from all files
         let selectedQuestions = [];
         let currentPlayerName = '';
-        let currentQuizTheme = ''; 
+        // --- CHANGED: We no longer have a single theme for the whole quiz
+        // let currentQuizTheme = ''; 
         let currentQuestionIndex;
         let score;
         let musicStarted = false; 
@@ -221,6 +225,16 @@
         };
         
         // --- FUNCTIONS ---
+
+        // --- NEW: Fisher-Yates shuffle algorithm for a truly random shuffle
+        function shuffleArray(array) {
+            let newArray = [...array]; 
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
 
         // --- FUNCTION TO LOAD ALL QUIZ DATA ---
         async function loadAllQuizData() {
@@ -244,10 +258,13 @@
                     jillianRes.json()
                 ]);
 
-                // Populate the quizData object
-                quizData.patrick = patrickData;
-                quizData.hannah = hannahData;
-                quizData.jillian = jillianData;
+                // --- NEW: "Tag" each question with its theme and combine into one array
+                const patrickQuestions = patrickData.map(q => ({ ...q, theme: 'patrick' }));
+                const hannahQuestions = hannahData.map(q => ({ ...q, theme: 'hannah' }));
+                const jillianQuestions = jillianData.map(q => ({ ...q, theme: 'jillian' }));
+                
+                allQuestions = [...patrickQuestions, ...hannahQuestions, ...jillianQuestions];
+                // --- END NEW ---
 
                 // Data is loaded, hide the overlay
                 loadingOverlay.classList.add('hidden');
@@ -273,14 +290,12 @@
             button.addEventListener('click', (e) => {
                 playSound(sfxMenu);
 
-                // --- UPDATED BGM LOGIC WITH SLIDER ---
+                // --- BGM LOGIC ---
                 if (!musicStarted) {
-                    // Set volume from the slider's CURRENT value
                     bgm.volume = volumeSlider.value; 
                     bgm.play().catch(e => console.error("BGM playback failed", e));
                     musicStarted = true;
 
-                    // Add a listener to update volume when slider moves
                     volumeSlider.addEventListener('input', (e) => {
                         bgm.volume = e.target.value;
                     });
@@ -288,14 +303,13 @@
                 // --- END BGM LOGIC ---
                 
                 currentPlayerName = e.target.dataset.name;
-                const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
                 
-                questLogTitle.innerText = `${capitalizedName}'s Quest Log`;
-                populateQuizSetButtons(); 
-
+                // --- CHANGED: Skip the quiz selection screen and start the quiz
                 titleScreen.classList.add('hidden');
-                quizSelectionScreen.classList.remove('hidden'); 
+                quizScreen.classList.remove('hidden'); // Go straight to the quiz
                 backToSelectBtn.classList.remove('hidden');
+                
+                startQuiz(); // --- NEW: Start the quiz immediately
             });
         });
 
@@ -345,35 +359,16 @@
             jillianScoreSpan.innerText = playerScores.jillian;
         }
 
-        function populateQuizSetButtons() {
-            quizSetButtons.innerHTML = ''; 
-            
-            Object.keys(quizData).forEach(themeName => {
-                const capitalizedTheme = themeName.charAt(0).toUpperCase() + themeName.slice(1);
-                const button = document.createElement('button');
-                button.innerText = `${capitalizedTheme}'s Questions`;
-                button.dataset.theme = themeName; 
-                button.classList.add('btn-primary', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full');
-                
-                button.addEventListener('click', () => {
-                    playSound(sfxStart);
-                    currentQuizTheme = themeName; 
-
-                    // --- SHUFFLE QUESTIONS ---
-                    const originalQuestions = quizData[themeName];
-                    selectedQuestions = [...originalQuestions].sort(() => Math.random() - 0.5); 
-                    // --- END SHUFFLE ---
-
-                    startQuiz(); 
-                });
-                
-                quizSetButtons.appendChild(button);
-            });
-        }
+        // --- CHANGED: This function is no longer needed
+        // function populateQuizSetButtons() { ... }
 
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
+
+            // --- CHANGED: Shuffle the combined 'allQuestions' array
+            selectedQuestions = shuffleArray(allQuestions); 
+            
             quizSelectionScreen.classList.add('hidden'); 
             endScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
@@ -390,9 +385,8 @@
             questionCounter.innerText = `Question ${questionNumber} of ${selectedQuestions.length}`;
             progressBar.style.width = `${(questionNumber / selectedQuestions.length) * 100}%`;
 
-            // --- SHUFFLE ANSWERS ---
-            const shuffledAnswers = [...question.answers].sort(() => Math.random() - 0.5);
-            // --- END SHUFFLE ---
+            // --- SHUFFLE ANSWERS (using new function) ---
+            const shuffledAnswers = shuffleArray(question.answers);
 
             shuffledAnswers.forEach(answer => { 
                 const button = document.createElement('button');
@@ -426,9 +420,12 @@
             const selectedBtn = e.target;
             const isCorrect = selectedBtn.dataset.correct === 'true';
 
+            // --- CHANGED: Get the theme from the *current question*
+            const questionTheme = selectedQuestions[currentQuestionIndex].theme;
+
             if (isCorrect) {
-                // --- REAL-TIME SCORE LOGIC ---
-                const pointsEarned = (currentPlayerName !== currentQuizTheme) ? 3 : 1;
+                // --- CHANGED: REAL-TIME SCORE LOGIC based on question's theme
+                const pointsEarned = (currentPlayerName !== questionTheme) ? 3 : 1;
                 score += pointsEarned; 
                 playerScores[currentPlayerName] += pointsEarned; 
                 
@@ -461,13 +458,17 @@
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
 
-            const maxScore = (currentPlayerName !== currentQuizTheme) 
-                ? selectedQuestions.length * 3 
-                : selectedQuestions.length;
+            // --- CHANGED: Calculate Max Score based on the dynamic points of each question
+            let calculatedMaxScore = 0;
+            selectedQuestions.forEach(question => {
+                const points = (currentPlayerName !== question.theme) ? 3 : 1;
+                calculatedMaxScore += points;
+            });
+            // --- END ---
 
-            scoreText.innerText = `${score} / ${maxScore}`;
+            scoreText.innerText = `${score} / ${calculatedMaxScore}`;
             
-            const percentage = (score / maxScore) * 100;
+            const percentage = (score / calculatedMaxScore) * 100;
             if (percentage >= 50) {
                 playSound(sfxEnd);
             }
@@ -487,9 +488,10 @@
 
         // --- INITIALIZATION ---
         updateScoreDisplay();
-        loadAllQuizData(); // <-- This is the new starting point!
+        loadAllQuizData(); // <-- This is the starting point!
     });
     </script>
 </body>
 </html>
+
 
