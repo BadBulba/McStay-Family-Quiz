@@ -165,333 +165,388 @@
 
     <audio id="bgm" src="sounds/FBattle.mp3" loop preload="auto"></audio>
 <script>
-    // --- WRAP ALL LOGIC IN 'load' EVENT ---
-    window.addEventListener('load', () => {
+// --- WRAP ALL LOGIC IN 'load' EVENT ---
+window.addEventListener('load', () => {
 
-        // --- ELEMENT REFERENCES ---
-        const titleScreen = document.getElementById('title-screen');
-        // --- CHANGED: This screen is no longer used, but we'll keep the reference for 'back' button logic
-        const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
-        const quizScreen = document.getElementById('quiz-screen');
-        const endScreen = document.getElementById('end-screen');
-        const loadingOverlay = document.getElementById('loading-overlay'); 
-        
-        const nameSelectionButtons = document.querySelectorAll('.name-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const backToSelectBtn = document.getElementById('back-to-select-btn');
-        const resetScoresBtn = document.getElementById('reset-scores-btn');
+    // --- ELEMENT REFERENCES ---
+    const titleScreen = document.getElementById('title-screen');
+    const quizSelectionScreen = document.getElementById('quiz-selection-screen'); 
+    const quizScreen = document.getElementById('quiz-screen');
+    const endScreen = document.getElementById('end-screen');
+    const loadingOverlay = document.getElementById('loading-overlay'); 
+    
+    const nameSelectionButtons = document.querySelectorAll('.name-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const backToSelectBtn = document.getElementById('back-to-select-btn');
+    const resetScoresBtn = document.getElementById('reset-scores-btn');
 
-        // --- CHANGED: These elements are no longer used
-        // const questLogTitle = document.getElementById('quest-log-title'); 
-        // const quizSetButtons = document.getElementById('quiz-set-buttons'); 
-        
-        const questionText = document.getElementById('question-text');
-        const answerButtons = document.getElementById('answer-buttons');
-        const scoreText = document.getElementById('score-text');
-        const scoreFeedback = document.getElementById('score-feedback');
-        
-        const questionCounter = document.getElementById('question-counter');
-        const progressBar = document.getElementById('progress-bar');
+    const questLogTitle = document.getElementById('quest-log-title'); 
+    const quizSetButtons = document.getElementById('quiz-set-buttons'); 
+    
+    const questionText = document.getElementById('question-text');
+    const answerButtons = document.getElementById('answer-buttons');
+    const scoreText = document.getElementById('score-text');
+    const scoreFeedback = document.getElementById('score-feedback');
+    
+    // --- CHANGED: Progress bar is hidden as quiz length is no longer fixed
+    const progressContainer = document.getElementById('progress-container');
+    const questionCounter = document.getElementById('question-counter');
+    // const progressBar = document.getElementById('progress-bar');
 
-        const patrickScoreSpan = document.getElementById('patrick-score');
-        const hannahScoreSpan = document.getElementById('hannah-score');
-        const jillianScoreSpan = document.getElementById('jillian-score');
-        const volumeSlider = document.getElementById('volume-slider'); 
+    const patrickScoreSpan = document.getElementById('patrick-score');
+    const hannahScoreSpan = document.getElementById('hannah-score');
+    const jillianScoreSpan = document.getElementById('jillian-score');
+    const volumeSlider = document.getElementById('volume-slider'); 
 
-        // --- AUDIO ---
-        const sfxMenu = document.getElementById('sfx-menu');
-        const sfxCorrect = document.getElementById('sfx-correct');
-        const sfxIncorrect = document.getElementById('sfx-incorrect');
-        const sfxStart = document.getElementById('sfx-start');
-        const sfxEnd = document.getElementById('sfx-end');
-        const bgm = document.getElementById('bgm'); 
+    // --- AUDIO ---
+    const sfxMenu = document.getElementById('sfx-menu');
+    const sfxCorrect = document.getElementById('sfx-correct');
+    const sfxIncorrect = document.getElementById('sfx-incorrect');
+    const sfxStart = document.getElementById('sfx-start');
+    const sfxEnd = document.getElementById('sfx-end');
+    const bgm = document.getElementById('bgm'); 
 
-        // --- STATE VARIABLES ---
-        let allQuestions = []; // --- NEW: This will hold all questions from all files
-        let selectedQuestions = [];
-        let currentPlayerName = '';
-        // --- CHANGED: We no longer have a single theme for the whole quiz
-        // let currentQuizTheme = ''; 
-        let currentQuestionIndex;
-        let score;
-        let musicStarted = false; 
+    // --- STATE VARIABLES ---
+    // --- CHANGED: We now use the quizData object to hold themed questions
+    let quizData = { patrick: [], hannah: [], jillian: [] }; 
+    let askedQuestions = new Set(); // --- NEW: Tracks asked questions to prevent repeats
+    let currentQuestion; // --- NEW: Holds the single active question
+    let currentPlayerName = '';
+    
+    // --- NEW: Session-specific scores
+    let currentSessionScore = 0;
+    let maxSessionScore = 0;
+    let totalQuestionsAnswered = 0;
 
-        // --- PERSISTENT SCORES ---
-        let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || {
-            patrick: 0,
-            hannah: 0,
-            jillian: 0
-        };
-        
-        // --- FUNCTIONS ---
+    let musicStarted = false; 
 
-        // --- NEW: Fisher-Yates shuffle algorithm for a truly random shuffle
-        function shuffleArray(array) {
-            let newArray = [...array]; 
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    // --- PERSISTENT SCORES ---
+    let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || {
+        patrick: 0,
+        hannah: 0,
+        jillian: 0
+    };
+    
+    // --- FUNCTIONS ---
+
+    // --- Fisher-Yates shuffle algorithm ---
+    function shuffleArray(array) {
+        let newArray = [...array]; 
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    // --- FUNCTION TO LOAD ALL QUIZ DATA ---
+    async function loadAllQuizData() {
+        try {
+            const [patrickRes, hannahRes, jillianRes] = await Promise.all([
+                fetch('patrick_questions.json'),
+                fetch('hannah_questions.json'),
+                fetch('jillian_questions.json')
+            ]);
+
+            if (!patrickRes.ok || !hannahRes.ok || !jillianRes.ok) {
+                throw new Error(`Failed to load question files.`);
             }
-            return newArray;
-        }
 
-        // --- FUNCTION TO LOAD ALL QUIZ DATA ---
-        async function loadAllQuizData() {
-            try {
-                // Fetch all three files at the same time
-                const [patrickRes, hannahRes, jillianRes] = await Promise.all([
-                    fetch('patrick_questions.json'),
-                    fetch('hannah_questions.json'),
-                    fetch('jillian_questions.json')
-                ]);
+            const [patrickData, hannahData, jillianData] = await Promise.all([
+                patrickRes.json(),
+                hannahRes.json(),
+                jillianRes.json()
+            ]);
 
-                // Check if all requests are "ok"
-                if (!patrickRes.ok || !hannahRes.ok || !jillianRes.ok) {
-                    throw new Error(`Failed to load question files. Status: ${patrickRes.status}, ${hannahRes.status}, ${jillianRes.status}`);
-                }
+            // --- CHANGED: Populate the quizData object, tagging each question with its theme
+            quizData.patrick = patrickData.map(q => ({ ...q, theme: 'patrick' }));
+            quizData.hannah = hannahData.map(q => ({ ...q, theme: 'hannah' }));
+            quizData.jillian = jillianData.map(q => ({ ...q, theme: 'jillian' }));
+            // --- END CHANGED ---
 
-                // Parse all three files as JSON
-                const [patrickData, hannahData, jillianData] = await Promise.all([
-                    patrickRes.json(),
-                    hannahRes.json(),
-                    jillianRes.json()
-                ]);
-
-                // --- NEW: "Tag" each question with its theme and combine into one array
-                const patrickQuestions = patrickData.map(q => ({ ...q, theme: 'patrick' }));
-                const hannahQuestions = hannahData.map(q => ({ ...q, theme: 'hannah' }));
-                const jillianQuestions = jillianData.map(q => ({ ...q, theme: 'jillian' }));
-                
-                allQuestions = [...patrickQuestions, ...hannahQuestions, ...jillianQuestions];
-                // --- END NEW ---
-
-                // Data is loaded, hide the overlay
-                loadingOverlay.classList.add('hidden');
-                
-            } catch (error) {
-                console.error("Error loading quiz data:", error);
-                // Display a user-friendly error message
-                loadingOverlay.innerHTML = `
-                    <h1 class="ff9-font text-2xl text-red-400 mb-4">Error Loading Quests</h1>
-                    <p class="text-stone-300">Could not load question files.</p>
-                    <p class="text-stone-300 mt-2 text-sm">Please ensure you are running this from a web server (not a local file) and the .json files are present.</p>
-                `;
-            }
-        }
-
-        function playSound(sound) {
-            sound.currentTime = 0; // Rewind to the start
-            sound.play().catch(e => console.error("Audio playback failed. User may need to interact with the page first.", e));
-        }
-
-        // --- EVENT LISTENERS ---
-        nameSelectionButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                playSound(sfxMenu);
-
-                // --- BGM LOGIC ---
-                if (!musicStarted) {
-                    bgm.volume = volumeSlider.value; 
-                    bgm.play().catch(e => console.error("BGM playback failed", e));
-                    musicStarted = true;
-
-                    volumeSlider.addEventListener('input', (e) => {
-                        bgm.volume = e.target.value;
-                    });
-                }
-                // --- END BGM LOGIC ---
-                
-                currentPlayerName = e.target.dataset.name;
-                
-                // --- CHANGED: Skip the quiz selection screen and start the quiz
-                titleScreen.classList.add('hidden');
-                quizScreen.classList.remove('hidden'); // Go straight to the quiz
-                backToSelectBtn.classList.remove('hidden');
-                
-                startQuiz(); // --- NEW: Start the quiz immediately
-            });
-        });
-
-        nextBtn.addEventListener('click', () => {
-            playSound(sfxMenu);
-            showNextQuestion();
-        });
-        
-        // --- UPDATED RESTART BUTTON ---
-        restartBtn.addEventListener('click', () => {
-             playSound(sfxMenu);
-             endScreen.classList.add('hidden');
-             titleScreen.classList.remove('hidden'); // Go to title
-             backToSelectBtn.classList.add('hidden'); // Hide back button
-
-             // STOP MUSIC
-             bgm.pause();
-             bgm.currentTime = 0; 
-             musicStarted = false;
-        });
-
-        // --- UPDATED BACK TO SELECT BUTTON ---
-        backToSelectBtn.addEventListener('click', () => {
-            playSound(sfxMenu);
-            quizSelectionScreen.classList.add('hidden'); 
-            quizScreen.classList.add('hidden');
-            endScreen.classList.add('hidden');
-            titleScreen.classList.remove('hidden');
-            backToSelectBtn.classList.add('hidden');
-
-            // STOP MUSIC
-            bgm.pause();
-            bgm.currentTime = 0; 
-            musicStarted = false;
-        });
-
-        resetScoresBtn.addEventListener('click', () => {
-            playerScores = { patrick: 0, hannah: 0, jillian: 0 };
-            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-            updateScoreDisplay();
-            playSound(sfxMenu);
-        });
-
-        function updateScoreDisplay() {
-            patrickScoreSpan.innerText = playerScores.patrick;
-            hannahScoreSpan.innerText = playerScores.hannah;
-            jillianScoreSpan.innerText = playerScores.jillian;
-        }
-
-        // --- CHANGED: This function is no longer needed
-        // function populateQuizSetButtons() { ... }
-
-        function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-
-            // --- CHANGED: Shuffle the combined 'allQuestions' array
-            selectedQuestions = shuffleArray(allQuestions); 
+            loadingOverlay.classList.add('hidden');
             
+        } catch (error) {
+            console.error("Error loading quiz data:", error);
+            loadingOverlay.innerHTML = `
+                <h1 class="ff9-font text-2xl text-red-400 mb-4">Error Loading Quests</h1>
+                <p class="text-stone-300">Could not load question files.</p>
+            `;
+        }
+    }
+
+    function playSound(sound) {
+        sound.currentTime = 0; 
+        sound.play().catch(e => console.error("Audio playback failed.", e));
+    }
+
+    // --- EVENT LISTENERS ---
+    nameSelectionButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            playSound(sfxMenu);
+
+            if (!musicStarted) {
+                bgm.volume = volumeSlider.value; 
+                bgm.play().catch(e => console.error("BGM playback failed", e));
+                musicStarted = true;
+                volumeSlider.addEventListener('input', (e) => {
+                    bgm.volume = e.target.value;
+                });
+            }
+            
+            currentPlayerName = e.target.dataset.name;
+            const capitalizedName = currentPlayerName.charAt(0).toUpperCase() + currentPlayerName.slice(1);
+            questLogTitle.innerText = `${capitalizedName}'s Quest Log`;
+
+            // --- CHANGED: Go to the quiz selection screen first
+            titleScreen.classList.add('hidden');
+            backToSelectBtn.classList.remove('hidden');
+            startQuiz(); // This will reset state and show the category screen
+        });
+    });
+
+    // --- CHANGED: Next button now returns to category selection ---
+    nextBtn.addEventListener('click', () => {
+        playSound(sfxMenu);
+        quizScreen.classList.add('hidden');
+        quizSelectionScreen.classList.remove('hidden');
+        populateQuizSetButtons(); // Re-populate to show new options
+    });
+    
+    restartBtn.addEventListener('click', () => {
+         playSound(sfxMenu);
+         endScreen.classList.add('hidden');
+         titleScreen.classList.remove('hidden'); 
+         backToSelectBtn.classList.add('hidden');
+         bgm.pause();
+         bgm.currentTime = 0; 
+         musicStarted = false;
+    });
+
+    backToSelectBtn.addEventListener('click', () => {
+        playSound(sfxMenu);
+        quizSelectionScreen.classList.add('hidden'); 
+        quizScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        titleScreen.classList.remove('hidden');
+        backToSelectBtn.classList.add('hidden');
+        bgm.pause();
+        bgm.currentTime = 0; 
+        musicStarted = false;
+    });
+
+    resetScoresBtn.addEventListener('click', () => {
+        playerScores = { patrick: 0, hannah: 0, jillian: 0 };
+        localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+        updateScoreDisplay();
+        playSound(sfxMenu);
+    });
+
+    function updateScoreDisplay() {
+        patrickScoreSpan.innerText = playerScores.patrick;
+        hannahScoreSpan.innerText = playerScores.hannah;
+        jillianScoreSpan.innerText = playerScores.jillian;
+    }
+
+    // --- NEW: This function dynamically creates the category buttons
+    function populateQuizSetButtons() {
+        quizSetButtons.innerHTML = ''; // Clear old buttons
+        
+        let allQuestionsAsked = true; // Assume all are asked
+
+        // --- Create buttons for each theme ---
+        Object.keys(quizData).forEach(themeName => {
+            const capitalizedTheme = themeName.charAt(0).toUpperCase() + themeName.slice(1);
+            const button = document.createElement('button');
+            button.innerText = `${capitalizedTheme}'s Questions`;
+            button.dataset.theme = themeName; 
+            button.classList.add('btn-primary', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full');
+            
+            // --- Check if there are any unasked questions left in this theme ---
+            const availableQuestions = quizData[themeName].filter(q => !askedQuestions.has(q.question));
+            
+            if (availableQuestions.length === 0) {
+                button.disabled = true; // Disable if no questions left
+                button.innerText += " (Complete!)";
+                button.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                allQuestionsAsked = false; // Found at least one available question
+            }
+            
+            button.addEventListener('click', () => {
+                selectQuestionFromTheme(themeName);
+            });
+            
+            quizSetButtons.appendChild(button);
+        });
+
+        // --- Add a "Finish Quiz" button ---
+        if (totalQuestionsAnswered > 0) { // Only show after 1+ questions
+            const finishButton = document.createElement('button');
+            finishButton.innerText = "Finish Quest & See Score";
+            // Use different styling to distinguish it
+            finishButton.classList.add('bg-yellow-600', 'hover:bg-yellow-500', 'text-white', 'ff9-font', 'text-xl', 'font-bold', 'py-3', 'px-8', 'rounded-lg', 'w-full', 'mt-4');
+            finishButton.addEventListener('click', showResults);
+            quizSetButtons.appendChild(finishButton);
+        }
+        
+        // --- If all questions from all sets are asked, end the quiz
+        if (allQuestionsAsked && totalQuestionsAnswered > 0) {
+            showResults();
+        }
+    }
+
+    // --- NEW: This function picks a question and starts the question screen
+    function selectQuestionFromTheme(themeName) {
+        playSound(sfxStart);
+        
+        // Find an unasked question from the chosen theme
+        const availableQuestions = quizData[themeName].filter(q => !askedQuestions.has(q.question));
+        
+        if (availableQuestions.length > 0) {
+            // Pick a random one from the available list
+            currentQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+            
+            // Add its text to the 'asked' set to prevent repeats
+            askedQuestions.add(currentQuestion.question);
+            
+            // Show the quiz screen
             quizSelectionScreen.classList.add('hidden'); 
-            endScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
-            nextBtn.classList.add('hidden');
             showQuestion();
         }
+    }
 
-        function showQuestion() {
-            resetState();
-            const question = selectedQuestions[currentQuestionIndex];
-            questionText.innerText = question.question;
+    // --- CHANGED: This function now resets session state and shows category selection
+    function startQuiz() {
+        currentSessionScore = 0;
+        maxSessionScore = 0;
+        totalQuestionsAnswered = 0;
+        askedQuestions.clear(); // Clear the set of asked questions
 
-            const questionNumber = currentQuestionIndex + 1;
-            questionCounter.innerText = `Question ${questionNumber} of ${selectedQuestions.length}`;
-            progressBar.style.width = `${(questionNumber / selectedQuestions.length) * 100}%`;
+        quizScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        quizSelectionScreen.classList.remove('hidden'); // Show category selection
+        
+        populateQuizSetButtons(); // Create the first set of category buttons
+    }
 
-            // --- SHUFFLE ANSWERS (using new function) ---
-            const shuffledAnswers = shuffleArray(question.answers);
+    // --- CHANGED: This function now just shows the single 'currentQuestion'
+    function showQuestion() {
+        resetState();
+        questionText.innerText = currentQuestion.question;
 
-            shuffledAnswers.forEach(answer => { 
-                const button = document.createElement('button');
-                button.innerText = answer.text;
-                button.classList.add('answer-btn', 'p-4', 'rounded-lg', 'text-lg');
-                if (answer.correct) {
-                    button.dataset.correct = answer.correct;
-                }
-                button.addEventListener('click', selectAnswer);
-                answerButtons.appendChild(button);
-            });
+        // --- Update progress text (progress bar is hidden) ---
+        progressContainer.classList.remove('hidden'); // Show it
+        questionCounter.innerText = `Question ${totalQuestionsAnswered + 1}`;
+        document.querySelector('.progress-bar-bg').classList.add('hidden'); // Hide bar
+
+        // --- Shuffle answers for the current question ---
+        const shuffledAnswers = shuffleArray(currentQuestion.answers);
+
+        shuffledAnswers.forEach(answer => { 
+            const button = document.createElement('button');
+            button.innerText = answer.text;
+            button.classList.add('answer-btn', 'p-4', 'rounded-lg', 'text-lg');
+            if (answer.correct) {
+                button.dataset.correct = answer.correct;
+            }
+            button.addEventListener('click', selectAnswer);
+            answerButtons.appendChild(button);
+        });
+    }
+    
+    // --- REMOVED: showNextQuestion() is no longer needed ---
+
+    function resetState() {
+        nextBtn.classList.add('hidden');
+        while (answerButtons.firstChild) {
+            answerButtons.removeChild(answerButtons.firstChild);
+        }
+    }
+
+    function selectAnswer(e) {
+        const selectedBtn = e.target;
+        const isCorrect = selectedBtn.dataset.correct === 'true';
+
+        // Get theme from the *current question* to check for bonus
+        const questionTheme = currentQuestion.theme;
+        const pointsPossible = (currentPlayerName !== questionTheme) ? 3 : 1;
+        
+        // --- Add to session max score *regardless* of answer ---
+        maxSessionScore += pointsPossible;
+
+        if (isCorrect) {
+            // --- Add to session *and* persistent score if correct ---
+            currentSessionScore += pointsPossible; 
+            playerScores[currentPlayerName] += pointsPossible; 
+            
+            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); 
+            updateScoreDisplay(); 
+
+            selectedBtn.classList.add('correct');
+            playSound(sfxCorrect);
+        } else {
+            selectedBtn.classList.add('incorrect');
+            playSound(sfxIncorrect);
         }
         
-        function showNextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < selectedQuestions.length) {
-                showQuestion();
-            } else {
-                showResults();
+        // Increment total questions *after* answering
+        totalQuestionsAnswered++;
+
+        Array.from(answerButtons.children).forEach(button => {
+            if (button.dataset.correct === 'true') {
+                button.classList.add('correct');
             }
-        }
+            button.disabled = true;
+            button.classList.remove('hover:bg-blue-500');
+        });
 
-        function resetState() {
-            nextBtn.classList.add('hidden');
-            while (answerButtons.firstChild) {
-                answerButtons.removeChild(answerButtons.firstChild);
-            }
-        }
+        nextBtn.classList.remove('hidden');
+    }
 
-        function selectAnswer(e) {
-            const selectedBtn = e.target;
-            const isCorrect = selectedBtn.dataset.correct === 'true';
+    function showResults() {
+        quizScreen.classList.add('hidden');
+        quizSelectionScreen.classList.add('hidden'); // Hide category screen
+        endScreen.classList.remove('hidden');
 
-            // --- CHANGED: Get the theme from the *current question*
-            const questionTheme = selectedQuestions[currentQuestionIndex].theme;
-
-            if (isCorrect) {
-                // --- CHANGED: REAL-TIME SCORE LOGIC based on question's theme
-                const pointsEarned = (currentPlayerName !== questionTheme) ? 3 : 1;
-                score += pointsEarned; 
-                playerScores[currentPlayerName] += pointsEarned; 
-                
-                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores)); 
-                updateScoreDisplay(); 
-                // --- END ---
-
-                selectedBtn.classList.add('correct');
-                playSound(sfxCorrect);
-            } else {
-                selectedBtn.classList.add('incorrect');
-                playSound(sfxIncorrect);
-            }
-
-            Array.from(answerButtons.children).forEach(button => {
-                if (button.dataset.correct === 'true') {
-                    button.classList.add('correct');
-                }
-                button.disabled = true;
-                button.classList.remove('hover:bg-blue-500');
-            });
-
-            nextBtn.classList.remove('hidden');
-        }
-
-        function showResults() {
-            quizScreen.classList.add('hidden');
-            endScreen.classList.remove('hidden');
-
-            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-            updateScoreDisplay();
-
-            // --- CHANGED: Calculate Max Score based on the dynamic points of each question
-            let calculatedMaxScore = 0;
-            selectedQuestions.forEach(question => {
-                const points = (currentPlayerName !== question.theme) ? 3 : 1;
-                calculatedMaxScore += points;
-            });
-            // --- END ---
-
-            scoreText.innerText = `${score} / ${calculatedMaxScore}`;
-            
-            const percentage = (score / calculatedMaxScore) * 100;
-            if (percentage >= 50) {
-                playSound(sfxEnd);
-            }
-
-            let feedback = '';
-            if (percentage === 100) {
-                feedback = "Perfect Score! You're a true master!";
-            } else if (percentage >= 75) {
-                feedback = "Excellent! A fantastic result.";
-            } else if (percentage >= 50) {
-                feedback = "Not bad! A solid effort.";
-            } else {
-                feedback = "Better luck next time! Keep trying.";
-            }
-            scoreFeedback.innerText = feedback;
-        }
-
-        // --- INITIALIZATION ---
+        localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
         updateScoreDisplay();
-        loadAllQuizData(); // <-- This is the starting point!
-    });
-    </script>
+
+        // --- Show session score ---
+        scoreText.innerText = `${currentSessionScore} / ${maxSessionScore}`;
+        
+        // Prevent divide-by-zero if user finishes with 0 questions
+        const percentage = (maxSessionScore > 0) ? (currentSessionScore / maxSessionScore) * 100 : 0;
+        
+        if (percentage >= 50) {
+            playSound(sfxEnd);
+        }
+
+        let feedback = '';
+        if (totalQuestionsAnswered === 0) {
+            feedback = "You didn't answer any questions!";
+        } else if (percentage === 100) {
+            feedback = "Perfect Score! You're a true master!";
+        } else if (percentage >= 75) {
+            feedback = "Excellent! A fantastic result.";
+        } else if (percentage >= 50) {
+            feedback = "Not bad! A solid effort.";
+        } else {
+            feedback = "Better luck next time! Keep trying.";
+        }
+        scoreFeedback.innerText = feedback;
+    }
+
+    // --- INITIALIZATION ---
+    progressContainer.classList.add('hidden'); // Hide progress bar by default
+    updateScoreDisplay();
+    loadAllQuizData();
+});
+</script>
 </body>
 </html>
+
 
 
