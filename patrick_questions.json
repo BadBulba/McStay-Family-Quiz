@@ -198,9 +198,7 @@
       { "text": "Axel, Roxas, Xion", "correct": false },
       { "text": "Eraqus, Xehanort, Yen Sid", "correct": false }
     ]
-  }
-]
-[
+  },
   {
     "question": "In Stargate SG-1, what is the name of the race that created the Stargates?",
     "answers": [
@@ -355,9 +353,7 @@
       { "text": "Babylon 5", "correct": false },
       { "text": "The Spacedock", "correct": false }
     ]
-  }
-]
-[
+  },
   {
     "question": "In The Dresden Files, what is the name of the spirit of intellect that lives in a skull in Harry's basement?",
     "answers": [
@@ -465,9 +461,7 @@
       { "text": "Nakorm", "correct": false },
       { "text": "Miranda", "correct": false }
     ]
-  }
-]
-[
+  },
   {
     "question": "In Fullmetal Alchemist, what is the 'First Law of Equivalent Exchange'?",
     "answers": [
@@ -755,9 +749,7 @@
       { "text": "A dog", "correct": false },
       { "text": "A fox", "correct": false }
     ]
-  }
-]
-[
+  },
   {
     "question": "Which Pokémon makes this high-pitched cry?",
     "audioSrc": "sounds/PikachuCry.mp3",
@@ -957,9 +949,7 @@
       { "text": "TIE Fighter", "correct": true },
       { "text": "Speeder Bike", "correct": false }
     ]
-  }
-]
-[
+  },
   {
     "question": "Which Final Fantasy protagonist is shown in this image?",
     "imageSrc": "images/Zidane.jpg",
@@ -1159,9 +1149,7 @@
       { "text": "Jakku", "correct": false },
       { "text": "Geonosis", "correct": false }
     ]
-  }
-]
-[
+  },
   {
     "question": "In FF9, what is the exact name of the fictional play performed by Tantalus at the start of the game?",
     "answers": [
