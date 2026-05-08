@@ -457,9 +457,7 @@
       { "text": "Owl", "correct": false },
       { "text": "Rabbit", "correct": false }
     ]
-  }
-]
-[
+  },
   {
     "question": "In Angus, Thongs and Perfect Snogging, what is the name of the 'Perfect' boy Georgia likes?",
     "answers": [
