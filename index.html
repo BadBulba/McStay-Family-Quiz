@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Fantasy IX - A Trivia Challenge</title>
+    <title>Final Fantasy IX - Ultimate Trivia Quest</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -21,105 +19,85 @@
             background-attachment: fixed;
         }
         .ff9-font { font-family: 'Cinzel Decorative', cursive; }
-        
         .quiz-container {
-            background: linear-gradient(180deg, rgba(18, 28, 80, 0.95) 0%, rgba(10, 15, 45, 0.95) 100%);
-            border: 3px double #a4b7d8;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(164, 183, 216, 0.3);
-            backdrop-filter: blur(8px);
+            background-color: rgba(18, 28, 80, 0.85);
+            border: 2px solid #a4b7d8;
+            box-shadow: 0 0 20px rgba(164, 183, 216, 0.5), inset 0 0 15px rgba(18, 28, 80, 0.7);
+            backdrop-filter: blur(5px);
         }
-
         .btn-primary {
-            background: linear-gradient(180deg, #3b5998 0%, #2a3f6d 100%);
-            border: 1px solid #a4b7d8;
-            transition: all 0.2s ease;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            background-color: #3b5998;
+            border: 2px solid #a4b7d8;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px #2a3f6d;
         }
-        .btn-primary:hover:not(:disabled) {
-            filter: brightness(1.2);
-            transform: scale(1.02);
-        }
-        .btn-primary:active:not(:disabled) { transform: scale(0.98); }
-
+        .btn-primary:hover { background-color: #4c72c0; transform: translateY(-2px); }
         .answer-btn {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid #6a82b3;
-            transition: 0.2s;
+            background-color: rgba(42, 63, 109, 0.7);
+            border: 2px solid #6a82b3;
+            transition: all 0.3s ease;
         }
-        .answer-btn:hover:not(:disabled) { background-color: rgba(164, 183, 216, 0.2); }
-        
-        .correct { background-color: #22c55e !important; border-color: #f0e8d8 !important; color: white; }
-        .incorrect { background-color: #ef4444 !important; border-color: #f0e8d8 !important; color: white; }
-
-        #persistent-scores-container {
-            background: rgba(10, 15, 45, 0.8);
-            border: 1px solid #a4b7d8;
-        }
+        .answer-btn.correct { background-color: #22c55e; border-color: #f0e8d8; }
+        .answer-btn.incorrect { background-color: #ef4444; border-color: #f0e8d8; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <button id="back-to-select-btn" class="hidden btn-primary ff9-font absolute top-5 left-5 py-2 px-4 rounded-lg z-20 text-xs md:text-base">Change Hero</button>
+    <button id="back-to-select-btn" class="hidden btn-primary ff9-font absolute top-5 left-5 py-2 px-4 rounded-lg z-20 text-sm">Hero Select</button>
 
-    <div id="persistent-scores-container" class="hidden md:block absolute top-5 right-5 z-20 text-right p-4 rounded-lg ff9-font">
-        <h3 class="text-yellow-300 text-lg mb-2">Party Points</h3>
-        <p class="text-sm">Patrick: <span id="patrick-score" class="text-white">0</span></p>
-        <p class="text-sm">Hannah: <span id="hannah-score" class="text-white">0</span></p>
-        <p class="text-sm">Jillian: <span id="jillian-score" class="text-white">0</span></p>
-        <div class="mt-4">
-            <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.2" class="w-20 cursor-pointer">
+    <div id="persistent-scores-container" class="absolute top-5 right-5 z-20 text-right p-4 rounded-lg quiz-container ff9-font">
+        <h3 class="text-yellow-300 text-lg mb-2">Total Scores</h3>
+        <p class="text-sm">Patrick: <span id="patrick-score">0</span></p>
+        <p class="text-sm">Hannah: <span id="hannah-score">0</span></p>
+        <p class="text-sm">Jillian: <span id="jillian-score">0</span></p>
+        <div class="mt-3">
+            <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.2" class="w-24">
         </div>
     </div>
     
-    <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-xl p-6 md:p-10 text-center relative">
-        <!-- Title Screen -->
-        <div id="title-screen">
-            <div id="loading-overlay" class="absolute inset-0 bg-indigo-950 flex flex-col items-center justify-center z-30 rounded-xl">
-                <h2 class="ff9-font text-2xl text-yellow-300 animate-bounce">Loading World Map...</h2>
-            </div>
-            <h1 class="ff9-font text-4xl md:text-6xl font-bold text-yellow-300 mb-4">Final Fantasy IX</h1>
-            <p class="mb-10 text-stone-300 italic">"To be a target of trivia is a fate I do not wish upon anyone."</p>
+    <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-2xl p-6 md:p-8 text-center">
+        <div class="relative z-10">
             
-            <h2 class="ff9-font text-xl mb-6 text-blue-200">Select Your Hero</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <button data-name="patrick" class="name-btn btn-primary ff9-font py-4 rounded-lg">Patrick</button>
-                <button data-name="hannah" class="name-btn btn-primary ff9-font py-4 rounded-lg">Hannah</button>
-                <button data-name="jillian" class="name-btn btn-primary ff9-font py-4 rounded-lg">Jillian</button>
+            <div id="title-screen">
+                <div id="loading-overlay" class="absolute inset-0 bg-gray-900 bg-opacity-90 flex flex-col items-center justify-center z-30 rounded-2xl">
+                    <h2 class="ff9-font text-2xl text-yellow-300 animate-pulse">Loading Quests...</h2>
+                </div>
+                <h1 class="ff9-font text-3xl md:text-5xl font-bold text-yellow-300 mb-8">Select Your Hero</h1>
+                <div id="name-selection-buttons" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <button data-name="patrick" class="name-btn btn-primary ff9-font py-3 rounded-lg">Patrick</button>
+                    <button data-name="hannah" class="name-btn btn-primary ff9-font py-3 rounded-lg">Hannah</button>
+                    <button data-name="jillian" class="name-btn btn-primary ff9-font py-3 rounded-lg">Jillian</button>
+                </div>
+                <button id="reset-scores-btn" class="text-stone-400 mt-8 text-xs underline">Reset All Scores</button>
             </div>
-            <button id="reset-scores-btn" class="mt-10 text-xs text-stone-500 hover:text-stone-300 underline uppercase tracking-widest">Reset All Save Data</button>
-        </div>
 
-        <!-- Category Selection -->
-        <div id="quiz-selection-screen" class="hidden">
-            <h1 id="quest-log-title" class="ff9-font text-3xl text-yellow-300 mb-8 underline">Quest Log</h1>
-            <div id="quiz-set-buttons" class="space-y-4"></div>
-        </div>
-
-        <!-- Active Quiz -->
-        <div id="quiz-screen" class="hidden">
-            <div id="progress-container" class="mb-6">
-                <span id="question-counter" class="text-xs uppercase tracking-widest text-blue-300"></span>
-                <div id="bonus-indicator" class="hidden text-xs text-yellow-400 font-bold ml-2 animate-pulse">[ 3X BONUS XP ]</div>
+            <div id="quiz-selection-screen" class="hidden">
+                <h1 id="quest-log-title" class="ff9-font text-3xl text-yellow-300 mb-8">Quest Log</h1>
+                <div id="quiz-set-buttons" class="grid grid-cols-1 gap-4"></div>
             </div>
-            <h2 id="question-text" class="text-xl md:text-2xl font-medium mb-8 leading-relaxed"></h2>
-            
-            <audio id="question-audio-player" class="w-full mb-8" controls></audio>
 
-            <div id="answer-buttons" class="grid grid-cols-1 gap-3"></div>
-            <button id="next-btn" class="btn-primary ff9-font py-3 px-12 rounded-lg mt-8 hidden">Continue</button>
-        </div>
+            <div id="quiz-screen" class="hidden">
+                <p id="question-counter" class="text-sm text-stone-300 mb-2"></p>
+                
+                <!-- NEW: Question Image Element -->
+                <img id="question-image" class="w-full max-h-64 object-contain mb-6 rounded-lg border-2 border-blue-400 hidden" src="" alt="Quiz Visual">
+                
+                <h2 id="question-text" class="text-2xl font-bold mb-6"></h2>
+                <audio id="question-audio-player" class="w-full mb-6 hidden" controls></audio>
+                <div id="answer-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <button id="next-btn" class="btn-primary ff9-font py-3 px-8 rounded-lg mt-8 w-full hidden">Next Question</button>
+            </div>
 
-        <!-- End Screen -->
-        <div id="end-screen" class="hidden">
-            <h1 class="ff9-font text-5xl text-yellow-300 mb-4">Victory!</h1>
-            <p class="text-xl text-stone-300 mb-2">Quest Points Earned:</p>
-            <p id="score-text" class="text-6xl font-bold mb-6 text-white">0 / 0</p>
-            <p id="score-feedback" class="text-lg italic mb-10 text-blue-200"></p>
-            <button id="restart-btn" class="btn-primary ff9-font py-4 px-10 rounded-lg">Return to Alexandria</button>
+            <div id="end-screen" class="hidden">
+                <h1 class="ff9-font text-4xl text-yellow-300 mb-4">Quest Complete!</h1>
+                <p id="score-text" class="text-5xl font-bold mb-8"></p>
+                <p id="score-feedback" class="text-lg mb-8"></p>
+                <button id="restart-btn" class="btn-primary ff9-font py-3 px-8 rounded-lg w-full">Return to Title</button>
+            </div>
         </div>
     </div>
-    
-    <!-- Audio Assets -->
+
+    <!-- Audio assets -->
     <audio id="sfx-menu" src="sounds/Select.mp3"></audio>
     <audio id="sfx-correct" src="sounds/Select.mp3"></audio>
     <audio id="sfx-incorrect" src="sounds/Cancel.mp3"></audio>
@@ -129,227 +107,181 @@
 
     <script>
     window.addEventListener('load', () => {
-        // Elements
-        const screens = {
-            title: document.getElementById('title-screen'),
-            select: document.getElementById('quiz-selection-screen'),
-            quiz: document.getElementById('quiz-screen'),
-            end: document.getElementById('end-screen')
-        };
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const questionText = document.getElementById('question-text');
-        const answerButtons = document.getElementById('answer-buttons');
+        const titleScreen = document.getElementById('title-screen');
+        const quizSelectionScreen = document.getElementById('quiz-selection-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const endScreen = document.getElementById('end-screen');
+        const questionImage = document.getElementById('question-image');
+        const questionAudioPlayer = document.getElementById('question-audio-player');
         const nextBtn = document.getElementById('next-btn');
-        const audioPlayer = document.getElementById('question-audio-player');
-        const bonusTag = document.getElementById('bonus-indicator');
-
-        // State
+        const bgm = document.getElementById('bgm');
+        
         let quizData = { patrick: [], hannah: [], jillian: [] };
         let askedQuestions = new Set();
-        let currentQuestion = null;
+        let currentQuestion;
         let currentPlayerName = '';
         let currentSessionScore = 0;
         let maxSessionScore = 0;
         let totalQuestionsAnswered = 0;
         let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
 
-        async function loadData() {
+        async function loadAllQuizData() {
             try {
-                const files = ['patrick', 'hannah', 'jillian'];
-                const results = await Promise.all(files.map(f => fetch(`${f}_questions.json`).then(r => r.json())));
-                files.forEach((f, i) => quizData[f] = results[i].map(q => ({ ...q, theme: f })));
-                loadingOverlay.classList.add('hidden');
-            } catch (e) {
-                loadingOverlay.innerHTML = "<p class='text-red-400'>Error: Could not find question scrolls.</p>";
-            }
+                const [p, h, j] = await Promise.all([
+                    fetch('patrick_questions.json').then(r => r.json()),
+                    fetch('hannah_questions.json').then(r => r.json()),
+                    fetch('jillian_questions.json').then(r => r.json())
+                ]);
+                quizData.patrick = p.map(q => ({...q, theme: 'patrick'}));
+                quizData.hannah = h.map(q => ({...q, theme: 'hannah'}));
+                quizData.jillian = j.map(q => ({...q, theme: 'jillian'}));
+                document.getElementById('loading-overlay').classList.add('hidden');
+            } catch (e) { console.error("Load failed", e); }
         }
 
-        function shuffle(arr) {
-            if (!arr) return [];
-            let n = [...arr];
-            for (let i = n.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [n[i], n[j]] = [n[j], n[i]];
-            }
-            return n;
+        function playSound(s) { s.currentTime = 0; s.play().catch(e => {}); }
+
+        function updateScoreDisplay() {
+            document.getElementById('patrick-score').innerText = playerScores.patrick;
+            document.getElementById('hannah-score').innerText = playerScores.hannah;
+            document.getElementById('jillian-score').innerText = playerScores.jillian;
         }
 
-        function play(sound) {
-            sound.currentTime = 0;
-            sound.play().catch(() => {});
-        }
-
-        // Selection
-        document.querySelectorAll('.name-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                currentPlayerName = e.target.dataset.name;
-                play(document.getElementById('sfx-menu'));
-                
-                const bgm = document.getElementById('bgm');
-                bgm.volume = document.getElementById('volume-slider').value;
-                bgm.play().catch(() => {});
-
-                document.getElementById('quest-log-title').innerText = `${currentPlayerName.toUpperCase()}'S QUEST LOG`;
-                screens.title.classList.add('hidden');
-                document.getElementById('back-to-select-btn').classList.remove('hidden');
-                startQuiz();
-            });
-        });
-
-        function startQuiz() {
-            currentSessionScore = 0; maxSessionScore = 0; totalQuestionsAnswered = 0;
-            askedQuestions.clear();
-            screens.quiz.classList.add('hidden');
-            screens.end.classList.add('hidden');
-            screens.select.classList.remove('hidden');
-            renderCategories();
-        }
-
-        function renderCategories() {
+        function populateQuizSetButtons() {
             const container = document.getElementById('quiz-set-buttons');
             container.innerHTML = '';
-            
             Object.keys(quizData).forEach(theme => {
-                const available = quizData[theme].filter(q => !askedQuestions.has(q.question));
                 const btn = document.createElement('button');
-                btn.className = 'btn-primary ff9-font py-4 px-6 rounded-lg w-full text-left flex justify-between items-center';
-                btn.innerHTML = `<span>${theme.toUpperCase()}'S TRIVIA</span> <span class="text-xs opacity-50">${available.length} Left</span>`;
-                
-                if (available.length === 0) {
-                    btn.disabled = true;
-                    btn.classList.add('opacity-30', 'cursor-not-allowed');
-                } else {
-                    btn.onclick = () => {
-                        currentQuestion = available[Math.floor(Math.random() * available.length)];
-                        askedQuestions.add(currentQuestion.question);
-                        screens.select.classList.add('hidden');
-                        screens.quiz.classList.remove('hidden');
-                        showQuestion();
-                    };
-                }
+                btn.className = 'btn-primary ff9-font py-3 rounded-lg capitalize';
+                btn.innerText = `${theme}'s Quest`;
+                const available = quizData[theme].filter(q => !askedQuestions.has(q.question));
+                if (available.length === 0) { btn.disabled = true; btn.classList.add('opacity-50'); }
+                btn.onclick = () => {
+                    currentQuestion = available[Math.floor(Math.random() * available.length)];
+                    askedQuestions.add(currentQuestion.question);
+                    quizSelectionScreen.classList.add('hidden');
+                    quizScreen.classList.remove('hidden');
+                    showQuestion();
+                };
                 container.appendChild(btn);
             });
-
             if (totalQuestionsAnswered > 0) {
                 const finish = document.createElement('button');
-                finish.className = 'w-full mt-6 py-2 text-yellow-500 ff9-font border border-yellow-900 rounded hover:bg-yellow-900/20';
-                finish.innerText = "Complete Quest";
+                finish.className = 'bg-yellow-600 text-white ff9-font py-3 rounded-lg mt-4';
+                finish.innerText = "Finish Quest & See Score";
                 finish.onclick = showResults;
                 container.appendChild(finish);
             }
         }
 
         function showQuestion() {
-            nextBtn.classList.add('hidden');
-            answerButtons.innerHTML = '';
-            audioPlayer.classList.add('hidden');
-            audioPlayer.pause();
-            audioPlayer.src = '';
-            
-            questionText.innerText = currentQuestion.question;
+            resetState();
+            document.getElementById('question-text').innerText = currentQuestion.question;
             document.getElementById('question-counter').innerText = `Question ${totalQuestionsAnswered + 1}`;
 
-            // Bonus logic visual
-            if (currentPlayerName !== currentQuestion.theme) {
-                bonusTag.classList.remove('hidden');
-            } else {
-                bonusTag.classList.add('hidden');
+            if (currentQuestion.imageSrc) {
+                questionImage.src = currentQuestion.imageSrc;
+                questionImage.classList.remove('hidden');
             }
-
             if (currentQuestion.audioSrc) {
-                audioPlayer.src = currentQuestion.audioSrc;
-                audioPlayer.classList.remove('hidden');
-                document.getElementById('bgm').pause();
+                questionAudioPlayer.src = currentQuestion.audioSrc;
+                questionAudioPlayer.classList.remove('hidden');
+                bgm.pause();
             }
 
-            shuffle(currentQuestion.answers).forEach(ans => {
+            [...currentQuestion.answers].sort(() => Math.random() - 0.5).forEach(ans => {
                 const b = document.createElement('button');
-                b.className = 'answer-btn p-4 rounded-lg text-left transition-all';
                 b.innerText = ans.text;
+                b.className = 'answer-btn p-4 rounded-lg';
                 if (ans.correct) b.dataset.correct = "true";
-                b.onclick = handleAnswer;
-                answerButtons.appendChild(b);
+                b.onclick = selectAnswer;
+                document.getElementById('answer-buttons').appendChild(b);
             });
         }
 
-        function handleAnswer(e) {
-            audioPlayer.pause();
-            const selected = e.target;
-            const isCorrect = selected.dataset.correct === "true";
+        function selectAnswer(e) {
+            questionAudioPlayer.pause();
+            const btn = e.target;
+            const correct = btn.dataset.correct === 'true';
             const points = (currentPlayerName !== currentQuestion.theme) ? 3 : 1;
-
             maxSessionScore += points;
-            if (isCorrect) {
+
+            if (correct) {
                 currentSessionScore += points;
                 playerScores[currentPlayerName] += points;
-                selected.classList.add('correct');
-                play(document.getElementById('sfx-correct'));
+                btn.classList.add('correct');
+                playSound(document.getElementById('sfx-correct'));
             } else {
-                selected.classList.add('incorrect');
-                play(document.getElementById('sfx-incorrect'));
+                btn.classList.add('incorrect');
+                playSound(document.getElementById('sfx-incorrect'));
             }
 
             totalQuestionsAnswered++;
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-            updateScores();
+            updateScoreDisplay();
 
-            Array.from(answerButtons.children).forEach(btn => {
-                btn.disabled = true;
-                if (btn.dataset.correct === "true") btn.classList.add('correct');
+            Array.from(document.getElementById('answer-buttons').children).forEach(b => {
+                if (b.dataset.correct === 'true') b.classList.add('correct');
+                b.disabled = true;
             });
             nextBtn.classList.remove('hidden');
         }
 
+        function resetState() {
+            nextBtn.classList.add('hidden');
+            document.getElementById('answer-buttons').innerHTML = '';
+            questionImage.classList.add('hidden');
+            questionImage.src = '';
+            questionAudioPlayer.classList.add('hidden');
+            questionAudioPlayer.pause();
+            questionAudioPlayer.src = '';
+        }
+
         function showResults() {
-            screens.quiz.classList.add('hidden');
-            screens.select.classList.add('hidden');
-            screens.end.classList.remove('hidden');
-            document.getElementById('bgm').play();
-
+            quizScreen.classList.add('hidden');
+            quizSelectionScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            bgm.play();
             document.getElementById('score-text').innerText = `${currentSessionScore} / ${maxSessionScore}`;
-            const pct = (currentSessionScore / maxSessionScore) * 100 || 0;
-            
-            let msg = "Try again, kupo!";
-            if (pct === 100) msg = "Perfect! You're a Legend of Gaia!";
-            else if (pct >= 70) msg = "Impressive skill!";
-            else if (pct >= 40) msg = "A valiant effort.";
-            
-            document.getElementById('score-feedback').innerText = msg;
-            if (pct >= 50) play(document.getElementById('sfx-end'));
+            updateScoreDisplay();
         }
 
-        function updateScores() {
-            document.getElementById('patrick-score').innerText = playerScores.patrick;
-            document.getElementById('hannah-score').innerText = playerScores.hannah;
-            document.getElementById('jillian-score').innerText = playerScores.jillian;
+        // Setup Hero Select
+        document.querySelectorAll('#name-selection-buttons button').forEach(btn => {
+            btn.onclick = (e) => {
+                currentPlayerName = e.target.dataset.name;
+                titleScreen.classList.add('hidden');
+                document.getElementById('back-to-select-btn').classList.remove('hidden');
+                bgm.volume = document.getElementById('volume-slider').value;
+                bgm.play();
+                startQuiz();
+            };
+        });
+
+        function startQuiz() {
+            currentSessionScore = 0; maxSessionScore = 0; totalQuestionsAnswered = 0;
+            askedQuestions.clear();
+            quizSelectionScreen.classList.remove('hidden');
+            populateQuizSetButtons();
         }
 
-        // Global button listeners
         nextBtn.onclick = () => {
-            play(document.getElementById('sfx-menu'));
-            screens.quiz.classList.add('hidden');
-            screens.select.classList.remove('hidden');
-            document.getElementById('bgm').play();
-            renderCategories();
+            quizScreen.classList.add('hidden');
+            quizSelectionScreen.classList.remove('hidden');
+            bgm.play();
+            populateQuizSetButtons();
         };
 
         document.getElementById('restart-btn').onclick = () => location.reload();
         document.getElementById('back-to-select-btn').onclick = () => location.reload();
-        
         document.getElementById('reset-scores-btn').onclick = () => {
-            if(confirm("Erase all progress?")) {
-                playerScores = { patrick: 0, hannah: 0, jillian: 0 };
-                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-                updateScores();
-            }
+            playerScores = { patrick: 0, hannah: 0, jillian: 0 };
+            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+            updateScoreDisplay();
         };
-
-        document.getElementById('volume-slider').oninput = (e) => {
-            document.getElementById('bgm').volume = e.target.value;
-        };
-
-        loadData();
-        updateScores();
+        
+        loadAllQuizData();
+        updateScoreDisplay();
     });
     </script>
 </body>
