@@ -952,7 +952,7 @@
   },
   {
     "question": "Which Final Fantasy protagonist is shown in this image?",
-    "imageSrc": "images/Zidane.jpg",
+    "imageSrc": "images/Zidane.png",
     "answers": [
       { "text": "Cloud Strife", "correct": false },
       { "text": "Zidane Tribal", "correct": true },
@@ -962,7 +962,7 @@
   },
   {
     "question": "Identify this legendary Keyblade from Kingdom Hearts!",
-    "imageSrc": "images/Oathkeeper.jpg",
+    "imageSrc": "images/Oathkeeper.png",
     "answers": [
       { "text": "Oblivion", "correct": false },
       { "text": "Kingdom Key", "correct": false },
@@ -972,7 +972,7 @@
   },
   {
     "question": "What is the name of this Stargate SG-1 vessel?",
-    "imageSrc": "images/Prometheus.jpg",
+    "imageSrc": "images/Prometheus.png",
     "answers": [
       { "text": "The Daedalus", "correct": false },
       { "text": "The Prometheus", "correct": true },
@@ -992,7 +992,7 @@
   },
   {
     "question": "Identify this specific Pokémon silhouette!",
-    "imageSrc": "images/MewtwoSilhouette.jpg",
+    "imageSrc": "images/MewtwoSilhouette.png",
     "answers": [
       { "text": "Frieza", "correct": false },
       { "text": "Lucario", "correct": false },
@@ -1012,7 +1012,7 @@
   },
   {
     "question": "What is the name of this Star Wars bounty hunter's ship?",
-    "imageSrc": "images/Slave1.jpg",
+    "imageSrc": "images/Slave1.webp",
     "answers": [
       { "text": "Razor Crest", "correct": false },
       { "text": "Slave I", "correct": true },
@@ -1022,7 +1022,7 @@
   },
   {
     "question": "In the Dresden Files, which symbol is etched into Harry’s silver pentacle?",
-    "imageSrc": "images/DresdenPentacle.jpg",
+    "imageSrc": "images/DresdenPentacle.png",
     "answers": [
       { "text": "A Five-Pointed Star", "correct": true },
       { "text": "The White Council Eye", "correct": false },
@@ -1032,7 +1032,7 @@
   },
   {
     "question": "Which Bleach captain owns this Zanpakutō?",
-    "imageSrc": "images/Senbonzakura.jpg",
+    "imageSrc": "images/Senbonzakura.png",
     "answers": [
       { "text": "Kenpachi Zaraki", "correct": false },
       { "text": "Byakuya Kuchiki", "correct": true },
@@ -1041,18 +1041,8 @@
     ]
   },
   {
-    "question": "Identify this Command Command icon from FF7!",
-    "imageSrc": "images/MimeMateria.jpg",
-    "answers": [
-      { "text": "Mime", "correct": true },
-      { "text": "Slash-All", "correct": false },
-      { "text": "Double-Cut", "correct": false },
-      { "text": "Enemy Skill", "correct": false }
-    ]
-  },
-  {
     "question": "Which Naruto clan does this eye technique belong to?",
-    "imageSrc": "images/Sharingan.jpg",
+    "imageSrc": "images/Sharingan.svg",
     "answers": [
       { "text": "Hyuga", "correct": false },
       { "text": "Uzumaki", "correct": false },
@@ -1062,7 +1052,7 @@
   },
   {
     "question": "What is the name of the 'Forbidden' world shown in this KH1 image?",
-    "imageSrc": "images/EndOfTheWorld.jpg",
+    "imageSrc": "images/EndOfTheWorld.png",
     "answers": [
       { "text": "Hollow Bastion", "correct": false },
       { "text": "End of the World", "correct": true },
@@ -1071,18 +1061,8 @@
     ]
   },
   {
-    "question": "Identify this specific Tsurani soldier armor from 'Magician'!",
-    "imageSrc": "images/TsuraniArmor.jpg",
-    "answers": [
-      { "text": "Midkemian Plate", "correct": false },
-      { "text": "Tsurani Lacquered Hide", "correct": true },
-      { "text": "Kelewan Silk Armor", "correct": false },
-      { "text": "Valheru Dragonscale", "correct": false }
-    ]
-  },
-  {
     "question": "In Death Note, which character is shown in this silhouette?",
-    "imageSrc": "images/RyukSilhouette.jpg",
+    "imageSrc": "images/RyukSilhouette.png",
     "answers": [
       { "text": "Rem", "correct": false },
       { "text": "L", "correct": false },
@@ -1092,7 +1072,7 @@
   },
   {
     "question": "Which Code Geass Knightmare Frame is this?",
-    "imageSrc": "images/Lancelot.jpg",
+    "imageSrc": "images/Lancelot.png",
     "answers": [
       { "text": "Guren Mk-II", "correct": false },
       { "text": "Lancelot", "correct": true },
@@ -1102,7 +1082,7 @@
   },
   {
     "question": "Identify this One Piece Jolly Roger!",
-    "imageSrc": "images/LawFlag.jpg",
+    "imageSrc": "images/LawFlag.png",
     "answers": [
       { "text": "Straw Hat Pirates", "correct": false },
       { "text": "Heart Pirates", "correct": true },
@@ -1112,7 +1092,7 @@
   },
   {
     "question": "Which Stargate glyph represents Earth (Point of Origin)?",
-    "imageSrc": "images/EarthGlyph.jpg",
+    "imageSrc": "images/EarthGlyph.png",
     "answers": [
       { "text": "The Pyramid with a Sun", "correct": true },
       { "text": "The Circle with a Line", "correct": false },
@@ -1132,7 +1112,7 @@
   },
   {
     "question": "In Gurren Lagann, what is the name of this mecha?",
-    "imageSrc": "images/GurrenLagann.jpg",
+    "imageSrc": "images/GurrenLagann.png",
     "answers": [
       { "text": "Lagann", "correct": false },
       { "text": "Gurren", "correct": false },
@@ -1142,7 +1122,7 @@
   },
   {
     "question": "Which Star Wars planet is shown with two suns?",
-    "imageSrc": "images/Tatooine.jpg",
+    "imageSrc": "images/Tatooine.webp",
     "answers": [
       { "text": "Hoth", "correct": false },
       { "text": "Tatooine", "correct": true },
