@@ -1161,3 +1161,141 @@
     ]
   }
 ]
+[
+  {
+    "question": "In FF9, what is the exact name of the fictional play performed by Tantalus at the start of the game?",
+    "answers": [
+      { "text": "I Want to be Your Canary", "correct": true },
+      { "text": "The Girl from Alexandria", "correct": false },
+      { "text": "The Legend of Enuo", "correct": false },
+      { "text": "Love in the Time of Mist", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Trek: TNG, what is the registry number of the USS Enterprise-D?",
+    "answers": [
+      { "text": "NCC-1701-A", "correct": false },
+      { "text": "NCC-1017", "correct": false },
+      { "text": "NCC-1701-D", "correct": true },
+      { "text": "NX-01", "correct": false }
+    ]
+  },
+  {
+    "question": "In Raymond E. Feist's lore, what was the name of the Valheru who rode the dragon Guandur?",
+    "answers": [
+      { "text": "Ashen-Shugar", "correct": true },
+      { "text": "Draken-Korin", "correct": false },
+      { "text": "Alma-Lodaka", "correct": false },
+      { "text": "Tomas", "correct": false }
+    ]
+  },
+  {
+    "question": "In the Dresden Files, what is the true name of the Archive?",
+    "answers": [
+      { "text": "Mab", "correct": false },
+      { "text": "Ivy", "correct": true },
+      { "text": "Lasciel", "correct": false },
+      { "text": "Anastasia", "correct": false }
+    ]
+  },
+  {
+    "question": "Which of these Pokémon was the first to be legally 'shiny' in the anime via a dedicated episode?",
+    "answers": [
+      { "text": "Red Gyarados", "correct": false },
+      { "text": "Shiny Noctowl", "correct": true },
+      { "text": "Pink Butterfree", "correct": false },
+      { "text": "Crystal Onix", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Wars, what is the name of the ancient Sith world where the Rule of Two was created?",
+    "answers": [
+      { "text": "Korriban", "correct": false },
+      { "text": "Exegol", "correct": false },
+      { "text": "Moraband (Korriban)", "correct": true },
+      { "text": "Ziost", "correct": false }
+    ]
+  },
+  {
+    "question": "In Stargate SG-1, how many years was Teal'c trapped in a virtual reality loop in the episode 'Avatar'?",
+    "answers": [
+      { "text": "Several months", "correct": false },
+      { "text": "Infinite loops (time not specified)", "correct": false },
+      { "text": "The equivalent of several years", "correct": true },
+      { "text": "50 years", "correct": false }
+    ]
+  },
+  {
+    "question": "In Kingdom Hearts, who was the original Master of the Keyblade that Master Xehanort studied under?",
+    "answers": [
+      { "text": "Master Eraqus", "correct": false },
+      { "text": "The Master of Masters", "correct": false },
+      { "text": "Ansem the Wise", "correct": false },
+      { "text": "Master Odin", "correct": true }
+    ]
+  },
+  {
+    "question": "In Fullmetal Alchemist: Brotherhood, what is the true identity of the Homunculus 'Pride'?",
+    "answers": [
+      { "text": "King Bradley", "correct": false },
+      { "text": "Selim Bradley", "correct": true },
+      { "text": "Father", "correct": false },
+      { "text": "Van Hohenheim", "correct": false }
+    ]
+  },
+  {
+    "question": "In One Piece, what is the name of the sword Zoro 'inherited' from Kuina?",
+    "answers": [
+      { "text": "Sandai Kitetsu", "correct": false },
+      { "text": "Shusui", "correct": false },
+      { "text": "Wado Ichimonji", "correct": true },
+      { "text": "Enma", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Trek, what is the name of the traditional Klingon bladed weapon with three points of contact?",
+    "answers": [
+      { "text": "Bat'leth", "correct": true },
+      { "text": "Mek'leth", "correct": false },
+      { "text": "D'k tahg", "correct": false },
+      { "text": "Gin'tak", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this specific musical leitmotif's origin!",
+    "audioSrc": "sounds/LiberiFatali.mp3",
+    "answers": [
+      { "text": "FF8 Opening", "correct": true },
+      { "text": "FF9 Crystal World", "correct": false },
+      { "text": "KH Hollow Bastion", "correct": false },
+      { "text": "FF7 Northern Cave", "correct": false }
+    ]
+  },
+  {
+    "question": "In A Certain Magical Index, what is the name of the secret organization Touma belongs to in the later novels?",
+    "answers": [
+      { "text": "GROUP", "correct": false },
+      { "text": "SCHOOL", "correct": false },
+      { "text": "Kamisato Faction", "correct": true },
+      { "text": "ITEM", "correct": false }
+    ]
+  },
+  {
+    "question": "In the Dresden Files, which Fallen Angel is trapped inside the coin Harry touches in 'Death Masks'?",
+    "answers": [
+      { "text": "Ursiel", "correct": false },
+      { "text": "Lasciel", "correct": true },
+      { "text": "Anduriel", "correct": false },
+      { "text": "Namshiel", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Wars, what is the name of the planet where Obi-Wan Kenobi was born?",
+    "answers": [
+      { "text": "Stewjon", "correct": true },
+      { "text": "Coruscant", "correct": false },
+      { "text": "Alderaan", "correct": false },
+      { "text": "Mandalore", "correct": false }
+    ]
+  }
+]
