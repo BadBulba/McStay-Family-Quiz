@@ -1,14 +1,23 @@
 [
-    {
-        "question": "What is the name of the princess of Alexandria?",
-        "answers": [
-            { "text": "Beatrix", "correct": false },
-            { "text": "Freya", "correct": false },
-            { "text": "Garnet Til Alexandros XVII", "correct": true },
-            { "text": "Eiko", "correct": false }
-        ]
-    },
-    {
+  {
+    "question": "In FF9, what is the name of the Eidolon that destroys Alexandria?",
+    "answers": [
+      { "text": "Alexander", "correct": false },
+      { "text": "Bahamut", "correct": true },
+      { "text": "Odin", "correct": false },
+      { "text": "Atomos", "correct": false }
+    ]
+  },
+  {
+    "question": "Which FF7 character was a former member of the Turks?",
+    "answers": [
+      { "text": "Cloud Strife", "correct": false },
+      { "text": "Cid Highwind", "correct": false },
+      { "text": "Vincent Valentine", "correct": true },
+      { "text": "Barret Wallace", "correct": false }
+    ]
+  },
+  {
     "question": "Which area is this theme from?",
     "audioSrc": "sounds/VermilionCity.mp3",
     "answers": [
@@ -17,68 +26,1138 @@
       { "text": "Pallet Town", "correct": false },
       { "text": "Cinnabar Island", "correct": false }
     ]
-    },
-    {
-        "question": "What is Zidane's thieving troupe called?",
-        "answers": [
-            { "text": "The Vipers", "correct": false },
-            { "text": "Tantalus", "correct": true },
-            { "text": "The Red Wings", "correct": false },
-            { "text": "AVALANCHE", "correct": false }
-        ]
-    },
-    {
-        "question": "Which character is a Dragoon from Burmecia?",
-        "answers": [
-            { "text": "Amarant", "correct": false },
-            { "text": "Steiner", "correct": false },
-            { "text": "Quina", "correct": false },
-            { "text": "Freya Crescent", "correct": true }
-        ]
-    },
-    {
-        "question": "Vivi is what type of being?",
-        "answers": [
-            { "text": "A prototype Black Mage", "correct": true },
-            { "text": "A Genome", "correct": false },
-            { "text": "A Summoner", "correct": false },
-            { "text": "A Moogle", "correct": false }
-        ]
-    },
-    {
-        "question": "What is the name of the main antagonist who works for Kuja?",
-        "answers": [
-            { "text": "Sephiroth", "correct": false },
-            { "text": "Garland", "correct": false },
-            { "text": "Queen Brahne", "correct": false },
-            { "text": "Zorn and Thorn", "correct": true }
-        ]
-    },
-    {
-        "question": "The first city the party explores after the Evil Forest is...",
-        "answers": [
-            { "text": "Lindblum", "correct": false },
-            { "text": "Dali", "correct": true },
-            { "text": "Treno", "correct": false },
-            { "text": "Cleyra", "correct": false }
-        ]
-    },
-    {
-        "question": "What must Quina Quen eat to learn a Blue Magic spell?",
-        "answers": [
-            { "text": "A specific gem", "correct": false },
-            { "text": "A magic scroll", "correct": false },
-            { "text": "An enemy", "correct": true },
-            { "text": "A frog", "correct": false }
-        ]
-    },
-    {
-        "question": "Adelbert Steiner holds what title in the Alexandrian army?",
-        "answers": [
-            { "text": "General", "correct": false },
-            { "text": "Captain of the Knights of Pluto", "correct": true },
-            { "text": "Lord Regent", "correct": false },
-            { "text": "Chief of the Guard", "correct": false }
-        ]
-    }
+  },
+  {
+    "question": "In FF10, what sport is Tidus a professional player of?",
+    "answers": [
+      { "text": "Sphere Break", "correct": false },
+      { "text": "Blitzball", "correct": true },
+      { "text": "Triple Triad", "correct": false },
+      { "text": "Chocobo Racing", "correct": false }
+    ]
+  },
+  {
+    "question": "In Kingdom Hearts, what is the name of Sora's home world?",
+    "answers": [
+      { "text": "Traverse Town", "correct": false },
+      { "text": "Twilight Town", "correct": false },
+      { "text": "Radiant Garden", "correct": false },
+      { "text": "Destiny Islands", "correct": true }
+    ]
+  },
+  {
+    "question": "Which Pokemon is known as the 'Genetic Pokemon'?",
+    "answers": [
+      { "text": "Ditto", "correct": false },
+      { "text": "Mewtwo", "correct": true },
+      { "text": "Arceus", "correct": false },
+      { "text": "Deoxys", "correct": false }
+    ]
+  },
+  {
+    "question": "In FF6, which character can use the 'Blitz' command?",
+    "answers": [
+      { "text": "Sabin Rene Figaro", "correct": true },
+      { "text": "Edgar Roni Figaro", "correct": false },
+      { "text": "Cyan Garamonde", "correct": false },
+      { "text": "Locke Cole", "correct": false }
+    ]
+  },
+  {
+    "question": "Who is the main antagonist of Kingdom Hearts 1?",
+    "answers": [
+      { "text": "Xemnas", "correct": false },
+      { "text": "Xehanort", "correct": false },
+      { "text": "Ansem, Seeker of Darkness", "correct": true },
+      { "text": "Xigbar", "correct": false }
+    ]
+  },
+  {
+    "question": "Which legendary Pokemon was the mascot for Pokemon Silver?",
+    "answers": [
+      { "text": "Ho-Oh", "correct": false },
+      { "text": "Lugia", "correct": true },
+      { "text": "Suicune", "correct": false },
+      { "text": "Celebi", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this iconic battle theme!",
+    "audioSrc": "sounds/ThoseWhoFight.mp3",
+    "answers": [
+      { "text": "FF7 - Those Who Fight", "correct": true },
+      { "text": "FF8 - Force Your Way", "correct": false },
+      { "text": "FF10 - Battle Theme", "correct": false },
+      { "text": "Kingdom Hearts - Night of Fate", "correct": false }
+    ]
+  },
+  {
+    "question": "In FF10, who is the 'Final Summon' meant to defeat?",
+    "answers": [
+      { "text": "Seymour Guado", "correct": false },
+      { "text": "Sin", "correct": true },
+      { "text": "Yu Yevon", "correct": false },
+      { "text": "Jecht", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of the opera Celes performs in FF6?",
+    "answers": [
+      { "text": "Maria and Draco", "correct": true },
+      { "text": "The Dream Oath", "correct": false },
+      { "text": "Aria di Mezzo Carattere", "correct": false },
+      { "text": "The Falcon's Flight", "correct": false }
+    ]
+  },
+  {
+    "question": "Which city is known as the 'City of Scholars' in FF9?",
+    "answers": [
+      { "text": "Lindblum", "correct": false },
+      { "text": "Daguerreo", "correct": true },
+      { "text": "Esthar", "correct": false },
+      { "text": "Treno", "correct": false }
+    ]
+  },
+  {
+    "question": "What item is used to evolve Eevee into Jolteon?",
+    "answers": [
+      { "text": "Thunder Stone", "correct": true },
+      { "text": "Sun Stone", "correct": false },
+      { "text": "Moon Stone", "correct": false },
+      { "text": "Electricizer", "correct": false }
+    ]
+  },
+  {
+    "question": "In Kingdom Hearts 2, what is Roxas's title within Organization XIII?",
+    "answers": [
+      { "text": "The Key of Destiny", "correct": true },
+      { "text": "The Luna Diviner", "correct": false },
+      { "text": "The Graceful Dahlia", "correct": false },
+      { "text": "The Whirlwind of Darkness", "correct": false }
+    ]
+  },
+  {
+    "question": "In FF7, Cloud's ultimate weapon is named...",
+    "answers": [
+      { "text": "Excalibur", "correct": false },
+      { "text": "Ragnarok", "correct": false },
+      { "text": "Ultima Weapon", "correct": true },
+      { "text": "Masamune", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Pokemon type is Immune to Psychic moves?",
+    "answers": [
+      { "text": "Steel", "correct": false },
+      { "text": "Dark", "correct": true },
+      { "text": "Ghost", "correct": false },
+      { "text": "Bug", "correct": false }
+    ]
+  },
+  {
+    "question": "In FF9, what is the 'friendly' version of the Jabberwock looking for?",
+    "answers": [
+      { "text": "Ore", "correct": false },
+      { "text": "Emerald", "correct": true },
+      { "text": "Moonstone", "correct": false },
+      { "text": "Diamond", "correct": false }
+    ]
+  },
+  {
+    "question": "Who is the 'Legendary Guardian' that joins Yuna's pilgrimage in FF10?",
+    "answers": [
+      { "text": "Wakka", "correct": false },
+      { "text": "Auron", "correct": true },
+      { "text": "Kimahri", "correct": false },
+      { "text": "Braska", "correct": false }
+    ]
+  },
+  {
+    "question": "In FF6, what is Kefka's role before he becomes the God of Magic?",
+    "answers": [
+      { "text": "Imperial General", "correct": false },
+      { "text": "Court Mage", "correct": true },
+      { "text": "King of Figaro", "correct": false },
+      { "text": "High Priest", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Pokemon was the first ever designed by the creators?",
+    "answers": [
+      { "text": "Pikachu", "correct": false },
+      { "text": "Bulbasaur", "correct": false },
+      { "text": "Rhydon", "correct": true },
+      { "text": "Arceus", "correct": false }
+    ]
+  },
+  {
+    "question": "In Kingdom Hearts, what are the names of the three 'Keyblade Heroes' from Birth by Sleep?",
+    "answers": [
+      { "text": "Sora, Riku, Kairi", "correct": false },
+      { "text": "Terra, Aqua, Ventus", "correct": true },
+      { "text": "Axel, Roxas, Xion", "correct": false },
+      { "text": "Eraqus, Xehanort, Yen Sid", "correct": false }
+    ]
+  }
+]
+[
+  {
+    "question": "In Stargate SG-1, what is the name of the race that created the Stargates?",
+    "answers": [
+      { "text": "The Goa'uld", "correct": false },
+      { "text": "The Asgard", "correct": false },
+      { "text": "The Ancients", "correct": true },
+      { "text": "The Nox", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of the home world of the Wookiees in Star Wars?",
+    "answers": [
+      { "text": "Endor", "correct": false },
+      { "text": "Kashyyyk", "correct": true },
+      { "text": "Felucia", "correct": false },
+      { "text": "Geonosis", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Trek: TNG, which species is governed by the 'Rules of Acquisition'?",
+    "answers": [
+      { "text": "The Klingons", "correct": false },
+      { "text": "The Cardassians", "correct": false },
+      { "text": "The Romulans", "correct": false },
+      { "text": "The Ferengi", "correct": true }
+    ]
+  },
+  {
+    "question": "Identify this iconic sci-fi sound effect!",
+    "audioSrc": "sounds/Lightsaber.mp3",
+    "answers": [
+      { "text": "Lightsaber Ignition", "correct": true },
+      { "text": "TIE Fighter Flyby", "correct": false },
+      { "text": "Stargate Kawoosh", "correct": false },
+      { "text": "Phaser Fire", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the address of the Stargate Command (SGC) in the Cheyenne Mountain Complex?",
+    "answers": [
+      { "text": "Area 51", "correct": false },
+      { "text": "P3X-984", "correct": false },
+      { "text": "Sub-level 28", "correct": true },
+      { "text": "Site Alpha", "correct": false }
+    ]
+  },
+  {
+    "question": "Who was the creator of the Clone Army on Kamino in Star Wars?",
+    "answers": [
+      { "text": "Sifo-Dyas", "correct": true },
+      { "text": "Count Dooku", "correct": false },
+      { "text": "Palpatine", "correct": false },
+      { "text": "Jango Fett", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Trek: Voyager, which Borg designation belongs to Seven of Nine?",
+    "answers": [
+      { "text": "Tertiary Adjunct of Unimatrix 01", "correct": true },
+      { "text": "Secondary Drone of Unimatrix 12", "correct": false },
+      { "text": "Primary Adjunct of the Collective", "correct": false },
+      { "text": "Drone 7 of 9", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of Jack O'Neill's favorite hobby in Stargate?",
+    "answers": [
+      { "text": "Golfing through the Gate", "correct": false },
+      { "text": "Astronomy", "correct": false },
+      { "text": "Fishing", "correct": true },
+      { "text": "Chess", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Star Wars movie features the first appearance of Boba Fett (chronologically by release)?",
+    "answers": [
+      { "text": "A New Hope", "correct": false },
+      { "text": "The Star Wars Holiday Special", "correct": true },
+      { "text": "The Empire Strikes Back", "correct": false },
+      { "text": "Return of the Jedi", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Trek, what is the 'Prime Directive'?",
+    "answers": [
+      { "text": "Always protect the Captain", "correct": false },
+      { "text": "Non-interference with developing civilizations", "correct": true },
+      { "text": "To seek out new life", "correct": false },
+      { "text": "The requirement to share technology", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of the Goa'uld who lived inside Captain Samantha Carter for a short time?",
+    "answers": [
+      { "text": "Selmak", "correct": false },
+      { "text": "Jolinar of Malkshur", "correct": true },
+      { "text": "Egeria", "correct": false },
+      { "text": "Osiris", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this teleportation sound!",
+    "audioSrc": "sounds/Transporter.mp3",
+    "answers": [
+      { "text": "Star Trek Transporter", "correct": true },
+      { "text": "Stargate Ring Platform", "correct": false },
+      { "text": "Star Wars Hyperjump", "correct": false },
+      { "text": "TARDIS Landing", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Wars, what is the name of the ship Han Solo won from Lando Calrissian?",
+    "answers": [
+      { "text": "The Slave I", "correct": false },
+      { "text": "The Ghost", "correct": false },
+      { "text": "The Millennium Falcon", "correct": true },
+      { "text": "The Ebon Hawk", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Star Trek Captain was the first to face the Borg?",
+    "answers": [
+      { "text": "James T. Kirk", "correct": false },
+      { "text": "Jean-Luc Picard", "correct": true },
+      { "text": "Benjamin Sisko", "correct": false },
+      { "text": "Kathryn Janeway", "correct": false }
+    ]
+  },
+  {
+    "question": "In Stargate SG-1, Teal'c was the First Prime of which System Lord?",
+    "answers": [
+      { "text": "Ba'al", "correct": false },
+      { "text": "Ra", "correct": false },
+      { "text": "Apophis", "correct": true },
+      { "text": "Anubis", "correct": false }
+    ]
+  },
+  {
+    "question": "What is 'Order 66' in the Star Wars universe?",
+    "answers": [
+      { "text": "The protocol to build the Death Star", "correct": false },
+      { "text": "The order to execute all Jedi", "correct": true },
+      { "text": "The invasion of Naboo", "correct": false },
+      { "text": "The destruction of Alderaan", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of the space station in Star Trek: Deep Space Nine?",
+    "answers": [
+      { "text": "Terok Nor", "correct": true },
+      { "text": "Starbase 1", "correct": false },
+      { "text": "Babylon 5", "correct": false },
+      { "text": "The Spacedock", "correct": false }
+    ]
+  }
+]
+[
+  {
+    "question": "In The Dresden Files, what is the name of the spirit of intellect that lives in a skull in Harry's basement?",
+    "answers": [
+      { "text": "Mab", "correct": false },
+      { "text": "Bob", "correct": true },
+      { "text": "Mouse", "correct": false },
+      { "text": "Thomas", "correct": false }
+    ]
+  },
+  {
+    "question": "In Raymond E. Feist's 'Magician', what is Pug’s new name after being trained by the Great Ones of Kelewan?",
+    "answers": [
+      { "text": "Milamber", "correct": true },
+      { "text": "Macros", "correct": false },
+      { "text": "Tomas", "correct": false },
+      { "text": "Arutha", "correct": false }
+    ]
+  },
+  {
+    "question": "In The Dresden Files, Harry is a 'Warden' of which secret location?",
+    "answers": [
+      { "text": "The Nevernever", "correct": false },
+      { "text": "Demonreach", "correct": true },
+      { "text": "The White Council", "correct": false },
+      { "text": "Chichen Itza", "correct": false }
+    ]
+  },
+  {
+    "question": "In the Riftwar Saga, which character gains the powers and memories of an ancient Valheru?",
+    "answers": [
+      { "text": "Jimmy the Hand", "correct": false },
+      { "text": "Pug", "correct": false },
+      { "text": "Tomas", "correct": true },
+      { "text": "Kulgan", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of Harry Dresden's large, grey, temple dog?",
+    "answers": [
+      { "text": "Mister", "correct": false },
+      { "text": "Blue", "correct": false },
+      { "text": "Mouse", "correct": true },
+      { "text": "Cerberus", "correct": false }
+    ]
+  },
+  {
+    "question": "In the 'Magician' books, which alien world is connected to Midkemia via the Rift?",
+    "answers": [
+      { "text": "Kelewan", "correct": true },
+      { "text": "Novindus", "correct": false },
+      { "text": "Tsurani", "correct": false },
+      { "text": "Dasati", "correct": false }
+    ]
+  },
+  {
+    "question": "In The Dresden Files, what is the name of the sword wielded by Sanya, Knight of the Cross?",
+    "answers": [
+      { "text": "Amorrachius", "correct": false },
+      { "text": "Fidelacchius", "correct": false },
+      { "text": "Esperacchius", "correct": true },
+      { "text": "Excalibur", "correct": false }
+    ]
+  },
+  {
+    "question": "In Raymond E. Feist's series, Jimmy the Hand eventually becomes the Duke of which city?",
+    "answers": [
+      { "text": "Crydee", "correct": false },
+      { "text": "Krondor", "correct": true },
+      { "text": "Kesh", "correct": false },
+      { "text": "Rillanon", "correct": false }
+    ]
+  },
+  {
+    "question": "Which member of the Fae Courts is Harry Dresden's godmother?",
+    "answers": [
+      { "text": "Mab", "correct": false },
+      { "text": "Titania", "correct": false },
+      { "text": "Lea (Leanansidhe)", "correct": true },
+      { "text": "Maeve", "correct": false }
+    ]
+  },
+  {
+    "question": "In the Riftwar Cycle, what is the 'Greater Path' of magic?",
+    "answers": [
+      { "text": "Magic based on psychic ability", "correct": false },
+      { "text": "Magic used by the Tsurani Great Ones", "correct": true },
+      { "text": "Traditional Midkemian wizardry", "correct": false },
+      { "text": "The magic of the Elves", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the primary material used in Harry Dresden’s shield bracelet in the later books?",
+    "answers": [
+      { "text": "Silver", "correct": true },
+      { "text": "Copper", "correct": false },
+      { "text": "Iron", "correct": false },
+      { "text": "Gold", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of the mysterious hermit/mage who manipulates events throughout the Riftwar?",
+    "answers": [
+      { "text": "Pug", "correct": false },
+      { "text": "Macros the Black", "correct": true },
+      { "text": "Nakorm", "correct": false },
+      { "text": "Miranda", "correct": false }
+    ]
+  }
+]
+[
+  {
+    "question": "In Fullmetal Alchemist, what is the 'First Law of Equivalent Exchange'?",
+    "answers": [
+      { "text": "Humankind cannot gain anything without first giving something in return", "correct": true },
+      { "text": "Soul for a soul", "correct": false },
+      { "text": "Energy cannot be created or destroyed", "correct": false },
+      { "text": "Nothing is true, everything is permitted", "correct": false }
+    ]
+  },
+  {
+    "question": "In Chobits, what is the name of the 'Persocom' found in the trash by Hideki?",
+    "answers": [
+      { "text": "Freya", "correct": false },
+      { "text": "Sumomo", "correct": false },
+      { "text": "Chii", "correct": true },
+      { "text": "Kotoko", "correct": false }
+    ]
+  },
+  {
+    "question": "In Blood+, what is the name of Saya's twin sister and primary antagonist?",
+    "answers": [
+      { "text": "Julia", "correct": false },
+      { "text": "Diva", "correct": true },
+      { "text": "Lulu", "correct": false },
+      { "text": "Mao", "correct": false }
+    ]
+  },
+  {
+    "question": "In Code Geass, what is Lelouch's secret identity as the leader of the Black Knights?",
+    "answers": [
+      { "text": "L.L.", "correct": false },
+      { "text": "Zero", "correct": true },
+      { "text": "Knight of Seven", "correct": false },
+      { "text": "The Emperor", "correct": false }
+    ]
+  },
+  {
+    "question": "In Death Note, what is the name of the Shinigami who loves apples and follows Light?",
+    "answers": [
+      { "text": "Rem", "correct": false },
+      { "text": "Gelus", "correct": false },
+      { "text": "Ryuk", "correct": true },
+      { "text": "Sidoh", "correct": false }
+    ]
+  },
+  {
+    "question": "In Ouran High School Host Club, Haruhi breaks an expensive vase. How much was it worth?",
+    "answers": [
+      { "text": "8 million yen", "correct": true },
+      { "text": "1 million yen", "correct": false },
+      { "text": "10 million yen", "correct": false },
+      { "text": "500,000 yen", "correct": false }
+    ]
+  },
+  {
+    "question": "In Angel Beats!, what is the name of the group formed to fight against God?",
+    "answers": [
+      { "text": "SSS (Shinda Sekai Sensen)", "correct": true },
+      { "text": "Girls Dead Monster", "correct": false },
+      { "text": "The Afterlife Guild", "correct": false },
+      { "text": "The Shadows", "correct": false }
+    ]
+  },
+  {
+    "question": "In Toradora!, what is Taiga Aisaka's nickname due to her short stature and fierce temper?",
+    "answers": [
+      { "text": "The Little Tiger", "correct": false },
+      { "text": "The Palmtop Tiger", "correct": true },
+      { "text": "Tiger-chan", "correct": false },
+      { "text": "The Pocket Beast", "correct": false }
+    ]
+  },
+  {
+    "question": "In Bleach, what is the name of Ichigo Kurosaki's Zanpakuto?",
+    "answers": [
+      { "text": "Senbonzakura", "correct": false },
+      { "text": "Zangetsu", "correct": true },
+      { "text": "Hyorinmaru", "correct": false },
+      { "text": "Benihime", "correct": false }
+    ]
+  },
+  {
+    "question": "In Naruto, who was the sensei of Team 7 (Naruto, Sasuke, and Sakura)?",
+    "answers": [
+      { "text": "Jiraiya", "correct": false },
+      { "text": "Iruka Umino", "correct": false },
+      { "text": "Kakashi Hatake", "correct": true },
+      { "text": "Might Guy", "correct": false }
+    ]
+  },
+  {
+    "question": "In One Piece, what is the name of the skeleton musician who ate the Revive-Revive Fruit?",
+    "answers": [
+      { "text": "Laboon", "correct": false },
+      { "text": "Brook", "correct": true },
+      { "text": "Franky", "correct": false },
+      { "text": "Jinbe", "correct": false }
+    ]
+  },
+  {
+    "question": "In D.Gray-man, what is the name of Allen Walker's anti-Akuma weapon?",
+    "answers": [
+      { "text": "Innocence", "correct": false },
+      { "text": "Cross Grave", "correct": false },
+      { "text": "Crown Clown", "correct": true },
+      { "text": "Mugen", "correct": false }
+    ]
+  },
+  {
+    "question": "In A Certain Magical Index, what is the name of Touma Kamijou's unique right hand ability?",
+    "answers": [
+      { "text": "Imagine Breaker", "correct": true },
+      { "text": "Railgun", "correct": false },
+      { "text": "Vector Transformation", "correct": false },
+      { "text": "Meltdowner", "correct": false }
+    ]
+  },
+  {
+    "question": "In Gurren Lagann, what is the name of the drill that Simon uses to pilot Lagann?",
+    "answers": [
+      { "text": "The Giga Drill", "correct": false },
+      { "text": "The Core Drill", "correct": true },
+      { "text": "The Spiral Drill", "correct": false },
+      { "text": "The Heaven Piercer", "correct": false }
+    ]
+  },
+  {
+    "question": "In Tsubasa Reservoir Chronicle, the feathers they are collecting represent Sakura's...",
+    "answers": [
+      { "text": "Magic powers", "correct": false },
+      { "text": "Memories", "correct": true },
+      { "text": "Life force", "correct": false },
+      { "text": "Emotions", "correct": false }
+    ]
+  },
+  {
+    "question": "In xxxHolic, what is the 'price' Watanuki pays to Yuko to stop seeing spirits?",
+    "answers": [
+      { "text": "His eyesight", "correct": false },
+      { "text": "His name", "correct": false },
+      { "text": "Working as her housekeeper/cook", "correct": true },
+      { "text": "His memories of Himawari", "correct": false }
+    ]
+  },
+  {
+    "question": "In Naruto, what is the name of the Nine-Tailed Fox sealed inside Naruto?",
+    "answers": [
+      { "text": "Shukaku", "correct": false },
+      { "text": "Kurama", "correct": true },
+      { "text": "Gyuki", "correct": false },
+      { "text": "Matatabi", "correct": false }
+    ]
+  },
+  {
+    "question": "In Death Note, what is L's real name?",
+    "answers": [
+      { "text": "Lawliet", "correct": true },
+      { "text": "Lind L. Tailor", "correct": false },
+      { "text": "Light Yagami", "correct": false },
+      { "text": "Near", "correct": false }
+    ]
+  },
+  {
+    "question": "In Fullmetal Alchemist, what is the forbidden act that Edward and Alphonse attempted?",
+    "answers": [
+      { "text": "Gold Transmutation", "correct": false },
+      { "text": "Human Transmutation", "correct": true },
+      { "text": "Soul Binding", "correct": false },
+      { "text": "Chimera Creation", "correct": false }
+    ]
+  },
+  {
+    "question": "In Bleach, what is the final release form of a Zanpakuto called?",
+    "answers": [
+      { "text": "Shikai", "correct": false },
+      { "text": "Bankai", "correct": true },
+      { "text": "Resurrección", "correct": false },
+      { "text": "Vollständig", "correct": false }
+    ]
+  },
+  {
+    "question": "In Gurren Lagann, what is Kamina's catchphrase about Simon?",
+    "answers": [
+      { "text": "Believe in me!", "correct": false },
+      { "text": "Believe in the you that believes in yourself!", "correct": true },
+      { "text": "Just do it!", "correct": false },
+      { "text": "Row row fight the power!", "correct": false }
+    ]
+  },
+  {
+    "question": "In Ouran High School Host Club, which twin is known as the 'Little Devil' type?",
+    "answers": [
+      { "text": "Kaoru", "correct": false },
+      { "text": "Hikaru", "correct": false },
+      { "text": "Both Hikaru and Kaoru", "correct": true },
+      { "text": "Tamaki", "correct": false }
+    ]
+  },
+  {
+    "question": "In Toradora!, what is Ryuuji's obsession because of his scary eyes?",
+    "answers": [
+      { "text": "Cooking", "correct": false },
+      { "text": "Cleaning", "correct": true },
+      { "text": "Sewing", "correct": false },
+      { "text": "Gardening", "correct": false }
+    ]
+  },
+  {
+    "question": "In A Certain Magical Index, how many books of forbidden magic are stored in Index's mind?",
+    "answers": [
+      { "text": "1,000", "correct": false },
+      { "text": "10,300", "correct": false },
+      { "text": "103,000", "correct": true },
+      { "text": "1,000,000", "correct": false }
+    ]
+  },
+  {
+    "question": "In D.Gray-man, who is the creator of the Akuma and the main antagonist?",
+    "answers": [
+      { "text": "Tyki Mikk", "correct": false },
+      { "text": "The Earl of Millennium", "correct": true },
+      { "text": "Road Kamelot", "correct": false },
+      { "text": "Mana Walker", "correct": false }
+    ]
+  },
+  {
+    "question": "In Code Geass, what is the power of Lelouch's Geass?",
+    "answers": [
+      { "text": "The Power of Absolute Obedience", "correct": true },
+      { "text": "The Power of Telepathy", "correct": false },
+      { "text": "The Power of Time Manipulation", "correct": false },
+      { "text": "The Power of Memory Erasure", "correct": false }
+    ]
+  },
+  {
+    "question": "In Blood+, what weapon does Saya use to kill Chiropterans?",
+    "answers": [
+      { "text": "A specialized gun", "correct": false },
+      { "text": "A katana infused with her blood", "correct": true },
+      { "text": "Her bare hands", "correct": false },
+      { "text": "A silver crossbow", "correct": false }
+    ]
+  },
+  {
+    "question": "In One Piece, what was the first bounty placed on Monkey D. Luffy?",
+    "answers": [
+      { "text": "10,000,000 Berries", "correct": false },
+      { "text": "30,000,000 Berries", "correct": true },
+      { "text": "100,000,000 Berries", "correct": false },
+      { "text": "1,000,000 Berries", "correct": false }
+    ]
+  },
+  {
+    "question": "In Chobits, Hideki's friend Shinbo has a mobile Persocom. What is her name?",
+    "answers": [
+      { "text": "Yuzuki", "correct": false },
+      { "text": "Sumomo", "correct": true },
+      { "text": "Hibiya", "correct": false },
+      { "text": "Minoru", "correct": false }
+    ]
+  },
+  {
+    "question": "In Tsubasa Reservoir Chronicle, who is the shopkeeper of the World between Worlds?",
+    "answers": [
+      { "text": "Clow Reed", "correct": false },
+      { "text": "Yuko Ichihara", "correct": true },
+      { "text": "Mokona", "correct": false },
+      { "text": "Fei-Wang Reed", "correct": false }
+    ]
+  },
+  {
+    "question": "In Angel Beats!, what instrument does Masami Iwasawa play?",
+    "answers": [
+      { "text": "Drums", "correct": false },
+      { "text": "Bass", "correct": false },
+      { "text": "Guitar", "correct": true },
+      { "text": "Piano", "correct": false }
+    ]
+  },
+  {
+    "question": "In xxxHolic, what animal is Mokona Modoki based on?",
+    "answers": [
+      { "text": "A cat", "correct": false },
+      { "text": "A rabbit/manju bun", "correct": true },
+      { "text": "A dog", "correct": false },
+      { "text": "A fox", "correct": false }
+    ]
+  }
+]
+[
+  {
+    "question": "Which Pokémon makes this high-pitched cry?",
+    "audioSrc": "sounds/PikachuCry.mp3",
+    "answers": [
+      { "text": "Pikachu", "correct": true },
+      { "text": "Raichu", "correct": false },
+      { "text": "Mimikyu", "correct": false },
+      { "text": "Pachirisu", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify the Anime character who shouts this catchphrase!",
+    "audioSrc": "sounds/BelieveIt.mp3",
+    "answers": [
+      { "text": "Luffy", "correct": false },
+      { "text": "Naruto Uzumaki", "correct": true },
+      { "text": "Natsu Dragneel", "correct": false },
+      { "text": "Ichigo Kurosaki", "correct": false }
+    ]
+  },
+  {
+    "question": "From which Sci-Fi series is this 'Red Alert' siren?",
+    "audioSrc": "sounds/StarTrekRedAlert.mp3",
+    "answers": [
+      { "text": "Star Wars", "correct": false },
+      { "text": "Stargate SG-1", "correct": false },
+      { "text": "Star Trek", "correct": true },
+      { "text": "Battlestar Galactica", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Organization XIII member is speaking in this clip?",
+    "audioSrc": "sounds/GotItMemorized.mp3",
+    "answers": [
+      { "text": "Xigbar", "correct": false },
+      { "text": "Saïx", "correct": false },
+      { "text": "Axel", "correct": true },
+      { "text": "Demyx", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this specific Final Fantasy victory fanfare!",
+    "audioSrc": "sounds/FF7Fanfare.mp3",
+    "answers": [
+      { "text": "FF6 Victory", "correct": false },
+      { "text": "FF7 Victory", "correct": true },
+      { "text": "FF9 Victory", "correct": false },
+      { "text": "FF10 Victory", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Star Wars droid is making these beeps?",
+    "audioSrc": "sounds/R2D2.mp3",
+    "answers": [
+      { "text": "BB-8", "correct": false },
+      { "text": "C-3PO", "correct": false },
+      { "text": "R2-D2", "correct": true },
+      { "text": "Chopper", "correct": false }
+    ]
+  },
+  {
+    "question": "This 'Kawoosh' sound belongs to which piece of technology?",
+    "audioSrc": "sounds/StargateKawoosh.mp3",
+    "answers": [
+      { "text": "The Stargate", "correct": true },
+      { "text": "A Warp Drive", "correct": false },
+      { "text": "A Transporter", "correct": false },
+      { "text": "A Flux Capacitor", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Pokémon's cry sounds like it is saying its own name in a deep voice?",
+    "audioSrc": "sounds/CharizardCry.mp3",
+    "answers": [
+      { "text": "Dragonite", "correct": false },
+      { "text": "Charizard", "correct": true },
+      { "text": "Blastoise", "correct": false },
+      { "text": "Gyarados", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify the spell being cast in this anime clip!",
+    "audioSrc": "sounds/Kamehameha.mp3",
+    "answers": [
+      { "text": "Rasengan", "correct": false },
+      { "text": "Kamehameha", "correct": true },
+      { "text": "Getsuga Tensho", "correct": false },
+      { "text": "Giga Drill Break", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Star Trek computer voice is this?",
+    "audioSrc": "sounds/MajelBarrett.mp3",
+    "answers": [
+      { "text": "The Federation Computer", "correct": true },
+      { "text": "HAL 9000", "correct": false },
+      { "text": "Jarvis", "correct": false },
+      { "text": "The Borg Collective", "correct": false }
+    ]
+  },
+  {
+    "question": "This music plays in which iconic FF7 location?",
+    "audioSrc": "sounds/OneWingedAngel.mp3",
+    "answers": [
+      { "text": "Midgar Slums", "correct": false },
+      { "text": "Golden Saucer", "correct": false },
+      { "text": "The Final Battle (Sephiroth)", "correct": true },
+      { "text": "Cosmo Canyon", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Stargate SG-1 character is known for saying 'Indeed'?",
+    "audioSrc": "sounds/Indeed.mp3",
+    "answers": [
+      { "text": "Jack O'Neill", "correct": false },
+      { "text": "Daniel Jackson", "correct": false },
+      { "text": "Teal'c", "correct": true },
+      { "text": "Bra'tac", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify the sound of this Star Wars weapon firing!",
+    "audioSrc": "sounds/BlasterFire.mp3",
+    "answers": [
+      { "text": "Bowcaster", "correct": false },
+      { "text": "Blaster Pistol", "correct": true },
+      { "text": "Lightsaber", "correct": false },
+      { "text": "Thermal Detonator", "correct": false }
+    ]
+  },
+  {
+    "question": "This eerie laughter belongs to which anime antagonist?",
+    "audioSrc": "sounds/LightLaugh.mp3",
+    "answers": [
+      { "text": "Kefka Palazzo", "correct": false },
+      { "text": "Light Yagami", "correct": true },
+      { "text": "Orochimaru", "correct": false },
+      { "text": "Aizen", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Disney character's voice is this from Kingdom Hearts?",
+    "answers": [
+      { "text": "Goofy", "correct": true },
+      { "text": "Donald Duck", "correct": false },
+      { "text": "Mickey Mouse", "correct": false },
+      { "text": "Pete", "correct": false }
+    ],
+    "audioSrc": "sounds/Hyuck.mp3"
+  },
+  {
+    "question": "Identify the opening theme of this anime!",
+    "audioSrc": "sounds/Tank.mp3",
+    "answers": [
+      { "text": "Cowboy Bebop", "correct": true },
+      { "text": "Code Geass", "correct": false },
+      { "text": "Bleach", "correct": false },
+      { "text": "Fullmetal Alchemist", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Pokémon item sound effect is this?",
+    "audioSrc": "sounds/HealingMachine.mp3",
+    "answers": [
+      { "text": "Using a Potion", "correct": false },
+      { "text": "Pokémon Center Healing", "correct": true },
+      { "text": "Level Up", "correct": false },
+      { "text": "Evolution", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this Stargate 'Dialing' sound!",
+    "audioSrc": "sounds/DHD.mp3",
+    "answers": [
+      { "text": "Dial-Home Device (DHD)", "correct": true },
+      { "text": "Transporter Room", "correct": false },
+      { "text": "Bridge of the Enterprise", "correct": false },
+      { "text": "The Force", "correct": false }
+    ]
+  },
+  {
+    "question": "Which FF10 character's theme song is this?",
+    "audioSrc": "sounds/ToZanarkand.mp3",
+    "answers": [
+      { "text": "Yuna", "correct": false },
+      { "text": "Tidus", "correct": true },
+      { "text": "Auron", "correct": false },
+      { "text": "Rikku", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this specific Star Wars vehicle sound!",
+    "audioSrc": "sounds/TieFighter.mp3",
+    "answers": [
+      { "text": "X-Wing", "correct": false },
+      { "text": "Millennium Falcon", "correct": false },
+      { "text": "TIE Fighter", "correct": true },
+      { "text": "Speeder Bike", "correct": false }
+    ]
+  }
+]
+[
+  {
+    "question": "Which Final Fantasy protagonist is shown in this image?",
+    "imageSrc": "images/Zidane.jpg",
+    "answers": [
+      { "text": "Cloud Strife", "correct": false },
+      { "text": "Zidane Tribal", "correct": true },
+      { "text": "Tidus", "correct": false },
+      { "text": "Squall Leonhart", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this legendary Keyblade from Kingdom Hearts!",
+    "imageSrc": "images/Oathkeeper.jpg",
+    "answers": [
+      { "text": "Oblivion", "correct": false },
+      { "text": "Kingdom Key", "correct": false },
+      { "text": "Oathkeeper", "correct": true },
+      { "text": "Ultima Weapon", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of this Stargate SG-1 vessel?",
+    "imageSrc": "images/Prometheus.jpg",
+    "answers": [
+      { "text": "The Daedalus", "correct": false },
+      { "text": "The Prometheus", "correct": true },
+      { "text": "The Odyssey", "correct": false },
+      { "text": "The Korolev", "correct": false }
+    ]
+  },
+  {
+    "question": "In Star Trek, what class of starship is the USS Enterprise-D?",
+    "imageSrc": "images/EnterpriseD.jpg",
+    "answers": [
+      { "text": "Constitution Class", "correct": false },
+      { "text": "Galaxy Class", "correct": true },
+      { "text": "Sovereign Class", "correct": false },
+      { "text": "Intrepid Class", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this specific Pokémon silhouette!",
+    "imageSrc": "images/MewtwoSilhouette.jpg",
+    "answers": [
+      { "text": "Frieza", "correct": false },
+      { "text": "Lucario", "correct": false },
+      { "text": "Mewtwo", "correct": true },
+      { "text": "Alakazam", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Anime character wears this specific red automail arm?",
+    "imageSrc": "images/EdwardArm.jpg",
+    "answers": [
+      { "text": "Alphonse Elric", "correct": false },
+      { "text": "Edward Elric", "correct": true },
+      { "text": "Van Hohenheim", "correct": false },
+      { "text": "Roy Mustang", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of this Star Wars bounty hunter's ship?",
+    "imageSrc": "images/Slave1.jpg",
+    "answers": [
+      { "text": "Razor Crest", "correct": false },
+      { "text": "Slave I", "correct": true },
+      { "text": "Hounds Tooth", "correct": false },
+      { "text": "Punishing One", "correct": false }
+    ]
+  },
+  {
+    "question": "In the Dresden Files, which symbol is etched into Harry’s silver pentacle?",
+    "imageSrc": "images/DresdenPentacle.jpg",
+    "answers": [
+      { "text": "A Five-Pointed Star", "correct": true },
+      { "text": "The White Council Eye", "correct": false },
+      { "text": "A Winter Snowflake", "correct": false },
+      { "text": "A Dragon", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Bleach captain owns this Zanpakutō?",
+    "imageSrc": "images/Senbonzakura.jpg",
+    "answers": [
+      { "text": "Kenpachi Zaraki", "correct": false },
+      { "text": "Byakuya Kuchiki", "correct": true },
+      { "text": "Toshiro Hitsugaya", "correct": false },
+      { "text": "Gin Ichimaru", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this Command Command icon from FF7!",
+    "imageSrc": "images/MimeMateria.jpg",
+    "answers": [
+      { "text": "Mime", "correct": true },
+      { "text": "Slash-All", "correct": false },
+      { "text": "Double-Cut", "correct": false },
+      { "text": "Enemy Skill", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Naruto clan does this eye technique belong to?",
+    "imageSrc": "images/Sharingan.jpg",
+    "answers": [
+      { "text": "Hyuga", "correct": false },
+      { "text": "Uzumaki", "correct": false },
+      { "text": "Uchiha", "correct": true },
+      { "text": "Senju", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the name of the 'Forbidden' world shown in this KH1 image?",
+    "imageSrc": "images/EndOfTheWorld.jpg",
+    "answers": [
+      { "text": "Hollow Bastion", "correct": false },
+      { "text": "End of the World", "correct": true },
+      { "text": "The World That Never Was", "correct": false },
+      { "text": "Keyblade Graveyard", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this specific Tsurani soldier armor from 'Magician'!",
+    "imageSrc": "images/TsuraniArmor.jpg",
+    "answers": [
+      { "text": "Midkemian Plate", "correct": false },
+      { "text": "Tsurani Lacquered Hide", "correct": true },
+      { "text": "Kelewan Silk Armor", "correct": false },
+      { "text": "Valheru Dragonscale", "correct": false }
+    ]
+  },
+  {
+    "question": "In Death Note, which character is shown in this silhouette?",
+    "imageSrc": "images/RyukSilhouette.jpg",
+    "answers": [
+      { "text": "Rem", "correct": false },
+      { "text": "L", "correct": false },
+      { "text": "Ryuk", "correct": true },
+      { "text": "Sidoh", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Code Geass Knightmare Frame is this?",
+    "imageSrc": "images/Lancelot.jpg",
+    "answers": [
+      { "text": "Guren Mk-II", "correct": false },
+      { "text": "Lancelot", "correct": true },
+      { "text": "Shinkirō", "correct": false },
+      { "text": "Gawain", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this One Piece Jolly Roger!",
+    "imageSrc": "images/LawFlag.jpg",
+    "answers": [
+      { "text": "Straw Hat Pirates", "correct": false },
+      { "text": "Heart Pirates", "correct": true },
+      { "text": "Whitebeard Pirates", "correct": false },
+      { "text": "Red Hair Pirates", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Stargate glyph represents Earth (Point of Origin)?",
+    "imageSrc": "images/EarthGlyph.jpg",
+    "answers": [
+      { "text": "The Pyramid with a Sun", "correct": true },
+      { "text": "The Circle with a Line", "correct": false },
+      { "text": "The Three Dots", "correct": false },
+      { "text": "The Orion Constellation", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this Aeon from Final Fantasy X!",
+    "imageSrc": "images/Anima.jpg",
+    "answers": [
+      { "text": "Ifrit", "correct": false },
+      { "text": "Bahamut", "correct": false },
+      { "text": "Anima", "correct": true },
+      { "text": "Valefor", "correct": false }
+    ]
+  },
+  {
+    "question": "In Gurren Lagann, what is the name of this mecha?",
+    "imageSrc": "images/GurrenLagann.jpg",
+    "answers": [
+      { "text": "Lagann", "correct": false },
+      { "text": "Gurren", "correct": false },
+      { "text": "Gurren Lagann", "correct": true },
+      { "text": "Arc Gurren", "correct": false }
+    ]
+  },
+  {
+    "question": "Which Star Wars planet is shown with two suns?",
+    "imageSrc": "images/Tatooine.jpg",
+    "answers": [
+      { "text": "Hoth", "correct": false },
+      { "text": "Tatooine", "correct": true },
+      { "text": "Jakku", "correct": false },
+      { "text": "Geonosis", "correct": false }
+    ]
+  }
 ]
