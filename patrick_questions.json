@@ -1021,13 +1021,13 @@
     ]
   },
   {
-    "question": "In the Dresden Files, which symbol is etched into Harry’s silver pentacle?",
+    "question": "What character is depicted above?",
     "imageSrc": "images/DresdenPentacle.png",
     "answers": [
-      { "text": "A Five-Pointed Star", "correct": true },
-      { "text": "The White Council Eye", "correct": false },
-      { "text": "A Winter Snowflake", "correct": false },
-      { "text": "A Dragon", "correct": false }
+      { "text": "Harry Dresden", "correct": true },
+      { "text": "Jeff Johanson", "correct": false },
+      { "text": "Dave Davidson", "correct": false },
+      { "text": "Abigail Williams", "correct": false }
     ]
   },
   {
