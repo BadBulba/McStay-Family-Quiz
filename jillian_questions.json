@@ -1015,5 +1015,127 @@
       { "text": "Belgravia House", "correct": false },
       { "text": "Piccadilly Place", "correct": false }
     ]
+  },
+  [
+  {
+    "question": "In Victoria Holt's gothic romance novel 'The Night of the Seventh Moon', what country does the protagonist Lora Keller travel to when her ordeal begins?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "England", "correct": false },
+      { "text": "Germany", "correct": true },
+      { "text": "Austria", "correct": false },
+      { "text": "Switzerland", "correct": false }
+    ]
+  },
+  {
+    "question": "In 'The Night of the Seventh Moon', which legendary mythological figure is the ancient festival of the 'Seventh Moon' dedicated to?",
+    "difficulty": "Hard",
+    "answers": [
+      { "text": "The Moon Goddess Selene", "correct": false },
+      { "text": "The Wild Huntsman (Manni)", "correct": true },
+      { "text": "The Forest King", "correct": false },
+      { "text": "Freya, Goddess of Love", "correct": false }
+    ]
+  },
+  {
+    "question": "In the 'Night of the Seventh Moon', what is the name of the mysterious mountain villa where Lora finds herself trapped after losing consciousness?",
+    "difficulty": "Hard",
+    "answers": [
+      { "text": "Schloss Fels", "correct": false },
+      { "text": "The House of the Seven Moons", "correct": true },
+      { "text": "Blackwood Manor", "correct": false },
+      { "text": "The Hunter's Lodge", "correct": false }
+    ]
+  },
+  {
+    "question": "In LJ Ross's famous DCI Ryan mystery series, what is the title of the very first bestselling book?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Bamburgh", "correct": false },
+      { "text": "Holy Island", "correct": true },
+      { "text": "Sycamore Gap", "correct": false },
+      { "text": "The Hermitage", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the primary profession of Dr. Anna Taylor, DCI Ryan's romantic partner in the LJ Ross novels?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "Forensic Pathologist", "correct": false },
+      { "text": "Criminal Psychologist", "correct": false },
+      { "text": "University Archaeologist/Historian", "correct": true },
+      { "text": "Defense Attorney", "correct": false }
+    ]
+  },
+  {
+    "question": "In the LJ Ross book 'Sycamore Gap', what specific historical landmark runs directly alongside the location where the skeleton is found?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Hadrian's Wall", "correct": true },
+      { "text": "The Antonine Wall", "correct": false },
+      { "text": "Bamburgh Castle", "correct": false },
+      { "text": "Durham Cathedral", "correct": false }
+    ]
+  },
+  {
+    "question": "In LJ Ross's book 'The Hermitage', which historic Northumberland village sets the primary stage for the murder investigation?",
+    "difficulty": "Hard",
+    "answers": [
+      { "text": "Alnwick", "correct": false },
+      { "text": "Warkworth", "correct": true },
+      { "text": "Hexham", "correct": false },
+      { "text": "Seahouses", "correct": false }
+    ]
+  },
+  {
+    "question": "In Richard Osman's 'The Thursday Murder Club', what is the name of the luxury retirement village where the main characters live?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Shady Pines", "correct": false },
+      { "text": "Coopers Chase", "correct": true },
+      { "text": "Sunnyvale Retirement", "correct": false },
+      { "text": "Meadowbrook Village", "correct": false }
+    ]
+  },
+  {
+    "question": "Which member of the Thursday Murder Club was a former spy/intelligence operative, providing the group with lethal field skills?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Joyce Meadowcroft", "correct": false },
+      { "text": "Elizabeth Best", "correct": true },
+      { "text": "Ron Ritchie", "correct": false },
+      { "text": "Ibrahim Arif", "correct": false }
+    ]
+  },
+  {
+    "question": "In 'The Thursday Murder Club', what was Ibrahim Arif’s career before he retired to the village?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "Psychiatrist", "correct": true },
+      { "text": "Trade Union Leader", "correct": false },
+      { "text": "Nurse", "correct": false },
+      { "text": "Police Detective", "correct": false }
+    ]
+  },
+  {
+    "question": "Who originally founded the Thursday Murder Club at the retirement community alongside Elizabeth before becoming too ill to continue?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "Penny Gray", "correct": true },
+      { "text": "Donna De Freitas", "correct": false },
+      { "text": "Chris Hudson", "correct": false },
+      { "text": "Joanna Meadowcroft", "correct": false }
+    ]
+  },
+  {
+    "question": "In the third book of the series, 'The Bullet That Missed', what is the name of the old, unsolved case of a news reporter that the club re-opens?",
+    "difficulty": "Hard",
+    "answers": [
+      { "text": "The Mystery of Tony Curran", "correct": false },
+      { "text": "The Disappearance of Bethany Waites", "correct": true },
+      { "text": "The Murder of Ian Ventham", "correct": false },
+      { "text": "The Diamond Heist", "correct": false }
+    ]
   }
+]
 ]
