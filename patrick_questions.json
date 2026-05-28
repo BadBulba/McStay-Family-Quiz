@@ -1401,5 +1401,206 @@
       { "text": "Alderaan", "correct": false },
       { "text": "Mandalore", "correct": false }
     ]
+  },
+  [
+  {
+    "question": "In Granblue Fantasy, what is the name of the massive, floating whale Primal Beast that guards the Zinkenstill region?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "Tiamat", "correct": false },
+      { "text": "Colossus", "correct": false },
+      { "text": "Yggdrasil", "correct": false },
+      { "text": "Tiamat Omega", "correct": false },
+      { "text": "Proto Bahamut", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this Granblue Fantasy character from their character select art!",
+    "imageSrc": "images/GranblueNarmaya.png",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "Katalina", "correct": false },
+      { "text": "Narmaya", "correct": true },
+      { "text": "Ferry", "correct": false },
+      { "text": "Cagliostro", "correct": false }
+    ]
+  },
+  {
+    "question": "In Fate/Stay Night, what is the true identity of the Servant 'Archer' from the Fifth Holy Grail War?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Gilgamesh", "correct": false },
+      { "text": "Emiya Shirou (Future Self)", "correct": true },
+      { "text": "Cu Chulainn", "correct": false },
+      { "text": "Sasaki Kojirou", "correct": false }
+    ]
+  },
+  {
+    "question": "In Fate/Stay Night (Heaven's Feel route), what is the true name of the shadow-like entity consuming the Servants?",
+    "difficulty": "Hard",
+    "answers": [
+      { "text": "Angra Mainyu", "correct": true },
+      { "text": "Koto Mine", "correct": false },
+      { "text": "Zouken Matou", "correct": false },
+      { "text": "Justeaze Lizrich von Einzbern", "correct": false }
+    ]
+  },
+  {
+    "question": "Which 2000-2010 anime series features a group of teenagers using 'Evokers' to summon their inner Personas?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Persona 4: The Animation", "correct": false },
+      { "text": "Persona 3 The Movie", "correct": false },
+      { "text": "Persona: Trinity Soul", "correct": true },
+      { "text": "Darker than Black", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this legendary 2000s anime opening theme!",
+    "audioSrc": "sounds/GurenNoYumiya.mp3",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Attack on Titan - Guren no Yumiya", "correct": true },
+      { "text": "Code Geass - Colors", "correct": false },
+      { "text": "Guilty Crown - My Dearest", "correct": false },
+      { "text": "Death Note - the WORLD", "correct": false }
+    ]
+  },
+  {
+    "question": "In the 2007 anime 'Lucky Star', what is Konata Izumi's self-proclaimed favorite video game genre?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "MMORPGs", "correct": true },
+      { "text": "Fighting Games", "correct": false },
+      { "text": "Visual Novels", "correct": false },
+      { "text": "Rhythm Games", "correct": false }
+    ]
+  },
+  {
+    "question": "In Final Fantasy XIV: Endwalker, what is the exact name of the final zone located at the absolute edge of the universe?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "Ultima Thule", "correct": true },
+      { "text": "Amaurot", "correct": false },
+      { "text": "The Tempest", "correct": false },
+      { "text": "Elpis", "correct": false }
+    ]
+  },
+  {
+    "question": "Which character is speaking in this emotional Final Fantasy XIV voice clip?",
+    "audioSrc": "sounds/EmetSelchSpeech.mp3",
+    "difficulty": "Hard",
+    "answers": [
+      { "text": "Lahabrea", "correct": false },
+      { "text": "Elidibus", "correct": false },
+      { "text": "Emet-Selch", "correct": true },
+      { "text": "Zenos yae Galvus", "correct": false }
+    ]
+  },
+  {
+    "question": "In Final Fantasy XIV: A Realm Reborn, what is the name of the elite group of mercenaries led by Minfilia Warde?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "The Scions of the Seventh Dawn", "correct": true },
+      { "text": "The Immortal Flames", "correct": false },
+      { "text": "The Maelstrom", "correct": false },
+      { "text": "The Crystal Braves", "correct": false }
+    ]
+  },
+  {
+    "question": "In Satisfactory, what is the base resource extraction rate of a Mk.1 Miner sitting on a 'Pure' resource node?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "30 items/min", "correct": false },
+      { "text": "60 items/min", "correct": false },
+      { "text": "120 items/min", "correct": true },
+      { "text": "240 items/min", "correct": false }
+    ]
+  },
+  {
+    "question": "What alien creature from Satisfactory is shown roaming around the factory floors in this image?",
+    "imageSrc": "images/SpaceGiraffeTick.png",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Fluffy-Tailed Hog", "correct": false },
+      { "text": "Space Giraffe-Tick-Penguin-Whale", "correct": true },
+      { "text": "Lizard Doggo", "correct": false },
+      { "text": "Plasma Spitter", "correct": false }
+    ]
+  },
+  {
+  {
+    "question": "Which Pokémon generation introduced the 'Ability' mechanic, completely shifting the competitive landscape?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Generation II", "correct": false },
+      { "text": "Generation III", "correct": true },
+      { "text": "Generation IV", "correct": false },
+      { "text": "Generation V", "correct": false }
+    ]
+  },
+  {
+    "question": "Identify this specific Pokémon from its Generation 1 sprite outline!",
+    "imageSrc": "images/Gen1GengarSprite.png",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Haunter", "correct": false },
+      { "text": "Gengar", "correct": true },
+      { "text": "Clefable", "correct": false },
+      { "text": "Nidoking", "correct": false }
+    ]
+  },
+  {
+    "question": "In competitive Pokémon, what is the exact base accuracy of the move 'Focus Blast'?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "85%", "correct": false },
+      { "text": "80%", "correct": false },
+      { "text": "75%", "correct": false },
+      { "text": "70%", "correct": true }
+    ]
+  },
+  {
+    "question": "In the original Yu-Gi-Oh! anime, what card did Seto Kaiba tear up in the first episode to ensure it could never be used against him?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Exodia the Forbidden One", "correct": false },
+      { "text": "Blue-Eyes White Dragon", "correct": true },
+      { "text": "Red-Eyes Black Dragon", "correct": false },
+      { "text": "Dark Magician", "correct": false }
+    ]
+  },
+  {
+    "question": "Which iconic Yu-Gi-Oh! trap card is being triggered in this card artwork?",
+    "imageSrc": "images/MirrorForceCard.png",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "Trap Hole", "correct": false },
+      { "text": "Mirror Force", "correct": true },
+      { "text": "Magic Cylinder", "correct": false },
+      { "text": "Torrential Tribute", "correct": false }
+    ]
+  },
+  {
+    "question": "In the Yu-Gi-Oh! TCG, what is the max number of copies of a 'Limited' card allowed in a standard legal Deck?",
+    "difficulty": "Easy",
+    "answers": [
+      { "text": "0", "correct": false },
+      { "text": "1", "correct": true },
+      { "text": "2", "correct": false },
+      { "text": "3", "correct": false }
+    ]
+  },
+  {
+    "question": "What is the exact English name of the signature Duel Monsters card used by Maximillion Pegasus that allows him to steal or warp enemy monsters?",
+    "difficulty": "Medium",
+    "answers": [
+      { "text": "Toon World", "correct": false },
+      { "text": "Relinquished", "correct": false },
+      { "text": "Thousand-Eyes Restrict", "correct": false },
+      { "text": "Comic Hand", "correct": false },
+      { "text": "Eyes Restrict", "correct": false }
+    ]
   }
+]
 ]
