@@ -1594,7 +1594,7 @@
     "difficulty": "Medium",
     "answers": [
       { "text": "Toon World", "correct": false },
-      { "text": "Relinquished", "correct": false },
+      { "text": "Relinquished", "correct": true },
       { "text": "Thousand-Eyes Restrict", "correct": false },
       { "text": "Comic Hand", "correct": false },
       { "text": "Eyes Restrict", "correct": false }
