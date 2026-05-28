@@ -1,6 +1,7 @@
 [
   {
     "question": "In Harry Potter, what are the three objects that make up the Deathly Hallows?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Wand, the Stone, and the Cloak", "correct": true },
       { "text": "The Cup, the Diadem, and the Locket", "correct": false },
@@ -10,6 +11,7 @@
   },
   {
     "question": "Which Simpsons character always says 'Excellent' while steepening his fingers?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Ned Flanders", "correct": false },
       { "text": "Principal Skinner", "correct": false },
@@ -20,6 +22,7 @@
   {
     "question": "Identify this magical theme!",
     "audioSrc": "sounds/HedwigsTheme.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Harry Potter", "correct": true },
       { "text": "Disney Castle", "correct": false },
@@ -29,6 +32,7 @@
   },
   {
     "question": "In The Sims 4, what is the name of the 'Goth' family's daughter?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Bella", "correct": false },
       { "text": "Cassandra", "correct": true },
@@ -38,6 +42,7 @@
   },
   {
     "question": "In Spongebob, what is the secret ingredient in a Krabby Patty?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Plankton", "correct": false },
       { "text": "Love", "correct": false },
@@ -47,6 +52,7 @@
   },
   {
     "question": "In Twilight, what is the name of the 'leader' of the Volturi?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Marcus", "correct": false },
       { "text": "Caius", "correct": false },
@@ -56,6 +62,7 @@
   },
   {
     "question": "In Beauty and the Beast, Belle's father Maurice is an...",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Artist", "correct": false },
       { "text": "Inventor", "correct": true },
@@ -66,6 +73,7 @@
   {
     "question": "Identify the coffee shop where the Friends gang always hangs out!",
     "imageSrc": "images/CentralPerk.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Monk's Diner", "correct": false },
       { "text": "The Cheesecake Factory", "correct": false },
@@ -75,6 +83,7 @@
   },
   {
     "question": "In Supernatural, what is the name of the demon with yellow eyes who killed Mary Winchester?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Crowley", "correct": false },
       { "text": "Azazel", "correct": true },
@@ -84,6 +93,7 @@
   },
   {
     "question": "What kind of animal is Eeyore in Winnie the Pooh?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Pig", "correct": false },
       { "text": "A Donkey", "correct": true },
@@ -93,6 +103,7 @@
   },
   {
     "question": "In Infinity Nikki, what is the main mechanic of the game?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Cooking and Farming", "correct": false },
       { "text": "Changing Outfits to solve puzzles", "correct": true },
@@ -102,6 +113,7 @@
   },
   {
     "question": "In Lilo & Stitch, Lilo defines 'Ohana' as what?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Friendship", "correct": false },
       { "text": "Family", "correct": true },
@@ -111,6 +123,7 @@
   },
   {
     "question": "In The Conjuring, what is the last name of the real-life paranormal investigators?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Lamberts", "correct": false },
       { "text": "The Hodgsons", "correct": false },
@@ -121,6 +134,7 @@
   {
     "question": "Who made this iconic laugh?",
     "audioSrc": "sounds/SpongebobLaugh.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Patrick Star", "correct": false },
       { "text": "Squidward", "correct": false },
@@ -130,6 +144,7 @@
   },
   {
     "question": "In Animal Crossing, what do you use to dig up fossils?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Shovel", "correct": true },
       { "text": "A Net", "correct": false },
@@ -139,6 +154,7 @@
   },
   {
     "question": "In Angus, Thongs and Perfect Snogging, what is the name of Georgia's cat?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Libby", "correct": false },
       { "text": "Angus", "correct": true },
@@ -148,6 +164,7 @@
   },
   {
     "question": "In Firefly, what is the name of the ship?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Enterprise", "correct": false },
       { "text": "Serenity", "correct": true },
@@ -157,6 +174,7 @@
   },
   {
     "question": "In Nightmare Before Christmas, Jack Skellington is known as the...",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Pumpkin King", "correct": true },
       { "text": "Skeleton Lord", "correct": false },
@@ -167,6 +185,7 @@
   {
     "question": "Identify this 'gibberish' language!",
     "audioSrc": "sounds/SimlishHello.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Minion-speak", "correct": false },
       { "text": "Simlish", "correct": true },
@@ -176,6 +195,7 @@
   },
   {
     "question": "In Friends, Joey Tribbiani is famous for which catchphrase?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "How you doin'?", "correct": true },
       { "text": "Pivot!", "correct": false },
@@ -185,6 +205,7 @@
   },
   {
     "question": "In The Sims 3, what city is the default world?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Willow Creek", "correct": false },
       { "text": "Sunset Valley", "correct": true },
@@ -194,6 +215,7 @@
   },
   {
     "question": "In Harry Potter, which animal represents the Hufflepuff house?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Lion", "correct": false },
       { "text": "A Snake", "correct": false },
@@ -203,6 +225,7 @@
   },
   {
     "question": "What color is Stitch in Disney's Lilo & Stitch?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Purple", "correct": false },
       { "text": "Blue", "correct": true },
@@ -213,6 +236,7 @@
   {
     "question": "Identify this silhouette from Halloween Town!",
     "imageSrc": "images/JackSkellington.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Grinch", "correct": false },
       { "text": "Oogie Boogie", "correct": false },
@@ -222,6 +246,7 @@
   },
   {
     "question": "In The Host, why are the 'Souls' taking over human bodies?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "They want to destroy Earth", "correct": false },
       { "text": "They believe humans are too violent", "correct": true },
@@ -231,6 +256,7 @@
   },
   {
     "question": "In The Simpsons, what is the name of the neighbor Homer loves to hate?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Barney Gumble", "correct": false },
       { "text": "Ned Flanders", "correct": true },
@@ -240,6 +266,7 @@
   },
   {
     "question": "In Twilight, what makes the Cullens' skin sparkle in the sunlight?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Glitter", "correct": false },
       { "text": "Magic spells", "correct": false },
@@ -249,6 +276,7 @@
   },
   {
     "question": "Which Supernatural character says: 'I'm the one who gripped you tight and raised you from perdition'?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Bobby Singer", "correct": false },
       { "text": "Sam Winchester", "correct": false },
@@ -258,6 +286,7 @@
   },
   {
     "question": "In Animal Crossing, what is the name of the owl who is afraid of bugs?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Celeste", "correct": false },
       { "text": "Blathers", "correct": true },
@@ -267,6 +296,7 @@
   },
   {
     "question": "In Friends, how many times has Ross Geller been married?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "One", "correct": false },
       { "text": "Two", "correct": false },
@@ -277,6 +307,7 @@
   {
     "question": "Identify this house from The Simpsons!",
     "imageSrc": "images/SimpsonHouse.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Griffin House", "correct": false },
       { "text": "742 Evergreen Terrace", "correct": true },
@@ -286,6 +317,7 @@
   },
   {
     "question": "In Spongebob, where does Sandy Cheeks come from?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Ocean", "correct": false },
       { "text": "Texas", "correct": true },
@@ -295,6 +327,7 @@
   },
   {
     "question": "In Harry Potter, what is the platform number for the Hogwarts Express?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "9", "correct": false },
       { "text": "10", "correct": false },
@@ -304,6 +337,7 @@
   },
   {
     "question": "In Winnie the Pooh, what is Tigger's favorite thing to do?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Eat Honey", "correct": false },
       { "text": "Sleep", "correct": false },
@@ -313,6 +347,7 @@
   },
   {
     "question": "Which Disney movie features the song 'A Whole New World'?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Aladdin", "correct": true },
       { "text": "The Little Mermaid", "correct": false },
@@ -322,6 +357,7 @@
   },
   {
     "question": "In The Sims, what is the cheat code used to get 50,000 Simoleons?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Klapaucius", "correct": false },
       { "text": "Rosebud", "correct": false },
@@ -332,6 +368,7 @@
   {
     "question": "Identify this fashion star!",
     "imageSrc": "images/NikkiIcon.jpg",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Barbie", "correct": false },
       { "text": "Nikki", "correct": true },
@@ -341,6 +378,7 @@
   },
   {
     "question": "In Twilight, what is Bella's father's name?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Billy", "correct": false },
       { "text": "Charlie", "correct": true },
@@ -350,6 +388,7 @@
   },
   {
     "question": "In Angus, Thongs and Perfect Snogging, Georgia dresses up as what for a party?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A Cat", "correct": false },
       { "text": "An Olive", "correct": true },
@@ -359,6 +398,7 @@
   },
   {
     "question": "In The Conjuring 2, what is the name of the demonic nun?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Valak", "correct": true },
       { "text": "Annabelle", "correct": false },
@@ -369,6 +409,7 @@
   {
     "question": "Identify this classic TV theme!",
     "audioSrc": "sounds/FriendsIntro.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Seinfeld", "correct": false },
       { "text": "Friends", "correct": true },
@@ -378,6 +419,7 @@
   },
   {
     "question": "In Spongebob, what kind of house does Spongebob live in?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Rock", "correct": false },
       { "text": "An Easter Island Head", "correct": false },
@@ -387,6 +429,7 @@
   },
   {
     "question": "In Firefly, what is the name of the captain played by Nathan Fillion?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Jayne Cobb", "correct": false },
       { "text": "Malcolm Reynolds", "correct": true },
@@ -396,6 +439,7 @@
   },
   {
     "question": "In Harry Potter, who is the Half-Blood Prince?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Harry Potter", "correct": false },
       { "text": "Severus Snape", "correct": true },
@@ -405,6 +449,7 @@
   },
   {
     "question": "In The Simpsons, what color is Marge Simpson's hair?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Yellow", "correct": false },
       { "text": "Blue", "correct": true },
@@ -414,6 +459,7 @@
   },
   {
     "question": "Which Supernatural brother is the youngest?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Dean", "correct": false },
       { "text": "Sam", "correct": true },
@@ -423,6 +469,7 @@
   },
   {
     "question": "In Beauty and the Beast, how many years does the Beast have until the rose petals fall?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Until his 18th year", "correct": false },
       { "text": "Until his 21st year", "correct": true },
@@ -433,6 +480,7 @@
   {
     "question": "Identify this spooky tune!",
     "audioSrc": "sounds/NightmareIntro.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Corpse Bride", "correct": false },
       { "text": "Nightmare Before Christmas", "correct": true },
@@ -442,6 +490,7 @@
   },
   {
     "question": "In Animal Crossing, what is the name of the dog who performs music on Saturday nights?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Digby", "correct": false },
       { "text": "K.K. Slider", "correct": true },
@@ -451,15 +500,17 @@
   },
   {
     "question": "In Winnie the Pooh, who is Pooh's best friend?",
+    "difficulty": "Easy",
     "answers": [
-      { "text": "Christopher Robin", "correct": true },
-      { "text": "Piglet", "correct": false },
+      { "text": "Christopher Robin", "correct": false },
+      { "text": "Piglet", "correct": true },
       { "text": "Owl", "correct": false },
       { "text": "Rabbit", "correct": false }
     ]
   },
   {
     "question": "In Angus, Thongs and Perfect Snogging, what is the name of the 'Perfect' boy Georgia likes?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Tom", "correct": false },
       { "text": "Robbie", "correct": true },
@@ -469,6 +520,7 @@
   },
   {
     "question": "In The Host, what color are the eyes of a human who has been 'inserted' with a Soul?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Glowing Red", "correct": false },
       { "text": "Pitch Black", "correct": false },
@@ -479,6 +531,7 @@
   {
     "question": "Identify this iconic sitcom clap!",
     "audioSrc": "sounds/FriendsClap.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Two claps", "correct": false },
       { "text": "Three claps", "correct": false },
@@ -488,6 +541,7 @@
   },
   {
     "question": "In Infinity Nikki, what is the name of Nikki's cat-like companion?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Momo", "correct": true },
       { "text": "Luna", "correct": false },
@@ -497,6 +551,7 @@
   },
   {
     "question": "In The Sims 4, which expansion pack introduced the ability to go to University?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Get to Work", "correct": false },
       { "text": "Discover University", "correct": true },
@@ -506,6 +561,7 @@
   },
   {
     "question": "In Twilight, what is the name of the city where Bella moves to live with her father?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Seattle", "correct": false },
       { "text": "Forks", "correct": true },
@@ -516,6 +572,7 @@
   {
     "question": "Identify this Spongebob character's home!",
     "imageSrc": "images/PatrickRock.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Squidward's House", "correct": false },
       { "text": "Spongebob's House", "correct": false },
@@ -525,6 +582,7 @@
   },
   {
     "question": "In Firefly, what is the name of the 'Companions' guild member on the ship?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Kaylee", "correct": false },
       { "text": "Zoe", "correct": false },
@@ -534,6 +592,7 @@
   },
   {
     "question": "In Supernatural, what is the name of the family friend who owns the auto salvage yard?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Bobby Singer", "correct": true },
       { "text": "John Winchester", "correct": false },
@@ -543,6 +602,7 @@
   },
   {
     "question": "In Lilo & Stitch, what is Lilo's favorite hobby besides hula dancing?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Painting", "correct": false },
       { "text": "Surfing", "correct": false },
@@ -552,6 +612,7 @@
   },
   {
     "question": "What does Winnie the Pooh call the 'Heffalumps' and 'Woozles'?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Honey Stealers", "correct": true },
       { "text": "Friends", "correct": false },
@@ -562,6 +623,7 @@
   {
     "question": "Identify this Simpson family pet!",
     "imageSrc": "images/SantaLittleHelper.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Snowball II", "correct": false },
       { "text": "Santa's Little Helper", "correct": true },
@@ -571,6 +633,7 @@
   },
   {
     "question": "In Harry Potter, what is the core of Harry's wand?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Dragon Heartstring", "correct": false },
       { "text": "Unicorn Hair", "correct": false },
@@ -580,6 +643,7 @@
   },
   {
     "question": "In The Conjuring, what is the name of the haunted doll that is kept in a glass case?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Chucky", "correct": false },
       { "text": "Annabelle", "correct": true },
@@ -589,6 +653,7 @@
   },
   {
     "question": "In Friends, what is the name of Phoebe Buffay's most famous song?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Stinky Dog", "correct": false },
       { "text": "Smelly Cat", "correct": true },
@@ -598,6 +663,7 @@
   },
   {
     "question": "In Angus, Thongs and Perfect Snogging, what is Georgia's younger sister named?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Libby", "correct": true },
       { "text": "Jas", "correct": false },
@@ -608,6 +674,7 @@
   {
     "question": "Identify this Animal Crossing building!",
     "imageSrc": "images/NookCranny.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Museum", "correct": false },
       { "text": "Able Sisters", "correct": false },
@@ -617,6 +684,7 @@
   },
   {
     "question": "In The Sims 3, what trait makes a Sim randomly burst into flames or love fire?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Evil", "correct": false },
       { "text": "Pyromaniac (Hidden Trait)", "correct": true },
@@ -626,6 +694,7 @@
   },
   {
     "question": "In Beauty and the Beast, what happens to the Beast if all the rose petals fall?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "He dies", "correct": false },
       { "text": "He stays a beast forever", "correct": true },
@@ -636,6 +705,7 @@
   {
     "question": "Identify this song from The Nightmare Before Christmas!",
     "audioSrc": "sounds/ThisIsHalloween.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "What's This?", "correct": false },
       { "text": "Oogie Boogie's Song", "correct": false },
@@ -645,6 +715,7 @@
   },
   {
     "question": "In Twilight, who is the father of Jacob Black?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Harry Clearwater", "correct": false },
       { "text": "Billy Black", "correct": true },
@@ -654,6 +725,7 @@
   },
   {
     "question": "In Firefly, what is the nickname of the ship's pilot, Hoban Washburne?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Wash", "correct": true },
       { "text": "Captain", "correct": false },
@@ -663,6 +735,7 @@
   },
   {
     "question": "In The Host, what are the 'Seekers' trying to find?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The hidden human resistance", "correct": true },
       { "text": "More Souls", "correct": false },
@@ -672,6 +745,7 @@
   },
   {
     "question": "In Friends, what is Chandler Bing's middle name?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Francis", "correct": false },
       { "text": "Muriel", "correct": true },
@@ -681,6 +755,7 @@
   },
   {
     "question": "In Spongebob, what is the name of Spongebob's pet snail?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Rocky", "correct": false },
       { "text": "Snellie", "correct": false },
@@ -690,6 +765,7 @@
   },
   {
     "question": "In The Sims 4, what color is the 'Ghost' of a Sim who died from anger?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Blue", "correct": false },
       { "text": "Pink", "correct": false },
@@ -699,6 +775,7 @@
   },
   {
     "question": "In Supernatural, what weapon is used to kill almost anything (created by Samuel Colt)?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The Colt", "correct": true },
       { "text": "Ruby's Knife", "correct": false },
@@ -708,6 +785,7 @@
   },
   {
     "question": "In Harry Potter, what is the name of the three-headed dog?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Fang", "correct": false },
       { "text": "Fluffy", "correct": true },
@@ -718,6 +796,7 @@
   {
     "question": "Identify this Infinity Nikki 'dress-up' sound!",
     "audioSrc": "sounds/NikkiMagic.mp3",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Transforming Outfits", "correct": true },
       { "text": "Opening a Chest", "correct": false },
@@ -727,6 +806,7 @@
   },
   {
     "question": "In Winnie the Pooh, which character is very organized and loves his garden?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Piglet", "correct": false },
       { "text": "Owl", "correct": false },
@@ -736,6 +816,7 @@
   },
   {
     "question": "In The Simpsons, what is the name of the clown who hosts a TV show?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Krusty", "correct": true },
       { "text": "Sideshow Bob", "correct": false },
@@ -745,6 +826,7 @@
   },
   {
     "question": "In Twilight, what does the 'Cullen Crest' look like on their jewelry?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "A Wolf", "correct": false },
       { "text": "A Lion, Hand, and Chevron", "correct": true },
@@ -754,6 +836,7 @@
   },
   {
     "question": "In Angus, Thongs and Perfect Snogging, Georgia belongs to a group of friends called what?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The Ace Gang", "correct": true },
       { "text": "The Snoggers", "correct": false },
@@ -764,6 +847,7 @@
   {
     "question": "Identify this spooky Conjuring universe sound!",
     "audioSrc": "sounds/AnnabelleCreak.mp3",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Annabelle's Rocking Chair", "correct": true },
       { "text": "A Ghostly Footstep", "correct": false },
@@ -773,6 +857,7 @@
   },
   {
     "question": "In Animal Crossing, what do you collect to pay off your home loan?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Coins", "correct": false },
       { "text": "Bells", "correct": true },
@@ -782,6 +867,7 @@
   },
   {
     "question": "In Beauty and the Beast, what is the name of the object that was once the head of the kitchen?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Mrs. Potts", "correct": true },
       { "text": "Chip", "correct": false },
@@ -791,6 +877,7 @@
   },
   {
     "question": "In Spongebob, who lives in a rock?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Squidward", "correct": false },
       { "text": "Mr. Krabs", "correct": false },
@@ -801,6 +888,7 @@
   {
     "question": "Identify this Simlish phrase often used for 'Goodbye'!",
     "audioSrc": "sounds/SimlishBye.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Sul Sul", "correct": false },
       { "text": "Dag Dag", "correct": true },
@@ -810,6 +898,7 @@
   },
   {
     "question": "In Harry Potter, what is the name of the street where the Dursleys live?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Grimmauld Place", "correct": false },
       { "text": "Privet Drive", "correct": true },
@@ -819,6 +908,7 @@
   },
   {
     "question": "In The Simpsons, what does Homer say whenever he makes a mistake?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "D'oh!", "correct": true },
       { "text": "Oops!", "correct": false },
@@ -828,6 +918,7 @@
   },
   {
     "question": "In Lilo & Stitch, what is Stitch's only weakness?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Fire", "correct": false },
       { "text": "Ice", "correct": false },
@@ -838,6 +929,7 @@
   {
     "question": "Identify this Supernatural vehicle!",
     "imageSrc": "images/Impala.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Ford Mustang", "correct": false },
       { "text": "Chevy Impala", "correct": true },
@@ -847,6 +939,7 @@
   },
   {
     "question": "In Winnie the Pooh, what is the name of the human boy who visits the woods?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Christopher Robin", "correct": true },
       { "text": "Arthur", "correct": false },
@@ -856,6 +949,7 @@
   },
   {
     "question": "In Twilight, what kind of truck does Bella drive?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Red Chevy Truck", "correct": true },
       { "text": "Blue Ford Truck", "correct": false },
@@ -865,6 +959,7 @@
   },
   {
     "question": "In The Sims 3, what happens to a Sim who stays in the sun too long without protection?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "They turn into a Vampire", "correct": false },
       { "text": "They get a Sunburn", "correct": true },
@@ -874,6 +969,7 @@
   },
   {
     "question": "In Angus, Thongs and Perfect Snogging, Georgia wants to have a party for which birthday?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "13th", "correct": false },
       { "text": "15th", "correct": true },
@@ -884,6 +980,7 @@
   {
     "question": "Identify this Disney Princess item!",
     "imageSrc": "images/RoseJar.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Snow White's Apple", "correct": false },
       { "text": "Cinderella's Slipper", "correct": false },
@@ -893,6 +990,7 @@
   },
   {
     "question": "In Firefly, what is the name of the doctor who is protecting his sister?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Simon Tam", "correct": true },
       { "text": "Derrial Book", "correct": false },
@@ -902,6 +1000,7 @@
   },
   {
     "question": "In Harry Potter, what is the name of the giant spider in the Forbidden Forest?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Aragog", "correct": true },
       { "text": "Shelob", "correct": false },
@@ -911,6 +1010,7 @@
   },
   {
     "question": "In Friends, which character was a paleontologist?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Joey", "correct": false },
       { "text": "Chandler", "correct": false },
