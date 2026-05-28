@@ -960,7 +960,7 @@
     "difficulty": "Hard",
     "answers": [
       { "text": "Peter", "correct": false },
-      { "text": "Gordon", "correct": true },
+      { "text": "Nick", "correct": true },
       { "text": "Charles", "correct": false },
       { "text": "Barnaby", "correct": false }
     ]
