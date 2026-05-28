@@ -131,20 +131,39 @@
         let maxSessionScore = 0;
         let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
 
-        async function loadAllQuizData() {
+async function loadAllQuizData() {
             try {
-                const [p, h, j] = await Promise.all([
-                    fetch('patrick_questions.json').then(r => r.json()),
-                    fetch('hannah_questions.json').then(r => r.json()),
-                    fetch('jillian_questions.json').then(r => r.json())
-                ]);
+                // Helper function to check files one by one
+                const fetchAndParse = async (filename) => {
+                    try {
+                        const response = await fetch(filename);
+                        const text = await response.text();
+                        return JSON.parse(text);
+                    } catch (err) {
+                        console.error(`🚨 FATAL TYPO IN FILE: ${filename} 🚨`);
+                        throw err; // Stop loading and trigger the red error screen
+                    }
+                };
+
+                // Load them individually so we know who the culprit is
+                const p = await fetchAndParse('patrick_questions.json');
+                const h = await fetchAndParse('hannah_questions.json');
+                const j = await fetchAndParse('jillian_questions.json');
+
                 quizData.patrick = p.map(q => ({...q, theme: 'patrick'}));
                 quizData.hannah = h.map(q => ({...q, theme: 'hannah'}));
                 quizData.jillian = j.map(q => ({...q, theme: 'jillian'}));
+                
                 document.getElementById('loading-overlay').classList.add('hidden');
+                
             } catch (e) { 
                 console.error("Load failed", e); 
-                document.getElementById('loading-overlay').innerHTML = '<h2 class="text-red-400">Failed to load quests.</h2>';
+                document.getElementById('loading-overlay').innerHTML = `
+                    <div class="text-center">
+                        <h2 class="ff9-font text-3xl text-red-400 mb-4">Quest Data Corrupted!</h2>
+                        <p class="text-white text-lg">Press <strong>F12</strong> to open the console and see exactly which file is broken.</p>
+                    </div>
+                `;
             }
         }
 
