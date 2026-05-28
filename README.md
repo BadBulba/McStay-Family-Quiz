@@ -31,7 +31,8 @@ To add new content, edit the relevant `.json` file. Use the following structure:
     { "text": "Wrong Answer", "correct": false }
   ]
 }
-
+```
+```
 2. Visual Question
 
 Add an imageSrc field. Ensure the file is inside the /images folder.
@@ -48,7 +49,8 @@ JSON
     { "text": "Wrong Answer", "correct": false }
   ]
 }
-
+```
+```
 3. Audio Question
 
 Add an audioSrc field. Ensure the file is inside the /sounds folder.
@@ -65,7 +67,7 @@ JSON
     { "text": "Wrong Answer", "correct": false }
   ]
 }
-
+```
 ⚠️ Important Rules for Data
 
     Case Sensitivity: Filenames must match exactly (e.g., Zidane.png is not zidane.png).
