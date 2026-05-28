@@ -1041,8 +1041,8 @@
     "question": "In the 'Night of the Seventh Moon', what is the name of the mysterious mountain villa where Lora finds herself trapped after losing consciousness?",
     "difficulty": "Hard",
     "answers": [
-      { "text": "Schloss Fels", "correct": false },
-      { "text": "The House of the Seven Moons", "correct": true },
+      { "text": "Schloss Fels", "correct": true },
+      { "text": "The House of the Seven Moons", "correct": false },
       { "text": "Blackwood Manor", "correct": false },
       { "text": "The Hunter's Lodge", "correct": false }
     ]
