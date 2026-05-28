@@ -1295,10 +1295,10 @@
     "question": "Which of these Pokémon was the first to be legally 'shiny' in the anime via a dedicated episode?",
     "difficulty": "Hard",
     "answers": [
-      { "text": "Red Gyarados", "correct": false },
-      { "text": "Shiny Noctowl", "correct": true },
-      { "text": "Pink Butterfree", "correct": false },
-      { "text": "Crystal Onix", "correct": false }
+      { "text": "Gyarados", "correct": false },
+      { "text": "Noctowl", "correct": false },
+      { "text": "Butterfree", "correct": true },
+      { "text": "Onix", "correct": false }
     ]
   },
   {
