@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ultimate Trivia Quest</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -10,18 +9,21 @@
         body { font-family: 'Inter', sans-serif; color: #f0e8d8; background-color: #1a237e; background-image: url('https://www.transparenttextures.com/patterns/diagmonds.png'), radial-gradient(ellipse at center, #303f9f 0%, #1a237e 100%); background-attachment: fixed; }
         .ff9-font { font-family: 'Cinzel Decorative', cursive; }
         .quiz-container { background-color: rgba(18, 28, 80, 0.85); border: 2px solid #a4b7d8; box-shadow: 0 0 20px rgba(164, 183, 216, 0.5); backdrop-filter: blur(5px); }
-        .btn-primary { background-color: #3b5998; border: 2px solid #a4b7d8; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background-color: #3b5998; border: 2px solid #a4b7d8; transition: all 0.2s; }
         .btn-primary:hover:not(:disabled) { background-color: #4c72c0; }
-        .answer-btn { background-color: rgba(42, 63, 109, 0.8); border: 2px solid #6a82b3; margin-top: 10px; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; }
+        .answer-btn { background-color: rgba(42, 63, 109, 0.8); border: 2px solid #6a82b3; margin-top: 10px; padding: 12px; width: 100%; border-radius: 8px; }
         .correct { background-color: #22c55e !important; }
         .incorrect { background-color: #ef4444 !important; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="absolute top-5 right-5 quiz-container p-4 rounded-lg">
-        <label class="text-xs block mb-1">Volume</label>
-        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.2" class="w-24">
+    <div class="absolute top-5 right-5 quiz-container p-4 rounded-lg ff9-font text-right">
+        <h3 class="text-yellow-300">Total Scores</h3>
+        <p>Patrick: <span id="patrick-score">0</span></p>
+        <p>Hannah: <span id="hannah-score">0</span></p>
+        <p>Jillian: <span id="jillian-score">0</span></p>
+        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.2" class="mt-2 w-20">
     </div>
 
     <div id="quiz-container" class="quiz-container w-full max-w-2xl rounded-2xl p-8 text-center">
@@ -41,10 +43,11 @@
             <div id="flashcard-ui" class="space-y-4">
                 <button id="show-options-btn" class="btn-primary py-3 px-6 rounded-lg w-full">Show Multiple Choice</button>
                 <button id="reveal-btn" class="btn-primary py-3 px-6 rounded-lg w-full">Reveal Answer</button>
-                <div id="manual-grading" class="hidden grid grid-cols-2 gap-4">
-                    <button id="manual-correct" class="btn-primary bg-green-700 py-3 rounded-lg">Got it right (+2pts)</button>
-                    <button id="manual-wrong" class="btn-primary bg-red-700 py-3 rounded-lg">Got it wrong</button>
-                </div>
+            </div>
+            
+            <div id="manual-grading" class="hidden grid grid-cols-2 gap-4">
+                <button id="manual-correct" class="btn-primary bg-green-700 py-3 rounded-lg">Got it right (+2pts)</button>
+                <button id="manual-wrong" class="btn-primary bg-red-700 py-3 rounded-lg">Got it wrong</button>
             </div>
 
             <div id="answer-buttons" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 mt-6"></div>
@@ -56,90 +59,101 @@
 
     <script>
     let quizData = { patrick: [], hannah: [], jillian: [] };
+    let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
     let currentQuestSequence = [], currentQuestionIndex = 0, currentQuestion, currentPlayerName = '', currentSessionScore = 0;
     const bgm = document.getElementById('bgm');
 
-    async function loadAllQuizData() {
-        try {
-            const fetchAndParse = async (f) => { const r = await fetch(f); return JSON.parse(await r.text()); };
-            quizData.patrick = (await fetchAndParse('patrick_questions.json')).map(q => ({...q, theme: 'patrick'}));
-            quizData.hannah = (await fetchAndParse('hannah_questions.json')).map(q => ({...q, theme: 'hannah'}));
-            quizData.jillian = (await fetchAndParse('jillian_questions.json')).map(q => ({...q, theme: 'jillian'}));
-        } catch (e) { console.error("Load failed", e); }
+    window.onload = async () => {
+        // Load data
+        const load = async (f) => await (await fetch(f)).json();
+        quizData.patrick = (await load('patrick_questions.json')).map(q => ({...q, theme: 'patrick'}));
+        quizData.hannah = (await load('hannah_questions.json')).map(q => ({...q, theme: 'hannah'}));
+        quizData.jillian = (await load('jillian_questions.json')).map(q => ({...q, theme: 'jillian'}));
+        updateScoreDisplay();
+    };
+
+    function updateScoreDisplay() {
+        document.getElementById('patrick-score').innerText = playerScores.patrick;
+        document.getElementById('hannah-score').innerText = playerScores.hannah;
+        document.getElementById('jillian-score').innerText = playerScores.jillian;
     }
 
     function buildQuestSequence(theme) {
         const themeQs = quizData[theme];
         currentQuestSequence = [
-            ...themeQs.filter(q => !q.imageSrc && !q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({...q, roundTitle: 'Round 1'})),
-            ...themeQs.filter(q => q.imageSrc).sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({...q, roundTitle: 'Round 2'})),
-            ...themeQs.filter(q => q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({...q, roundTitle: 'Round 3'}))
+            ...themeQs.filter(q => !q.imageSrc && !q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3),
+            ...themeQs.filter(q => q.imageSrc).sort(() => Math.random() - 0.5).slice(0, 3),
+            ...themeQs.filter(q => q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3)
         ];
-        currentQuestSequence.push({ ...themeQs[0], roundTitle: 'Final Boss!', question: "Final Boss Question..." });
-        currentQuestionIndex = 0; currentSessionScore = 0;
+        currentQuestSequence.push({ ...themeQs[0], question: "Final Boss Question..." });
+        currentQuestionIndex = 0;
     }
 
     function showNextQuestion() {
         currentQuestion = currentQuestSequence[currentQuestionIndex];
         document.getElementById('question-text').innerText = currentQuestion.question;
-        document.getElementById('round-indicator').innerText = currentQuestion.roundTitle;
-        
         document.getElementById('flashcard-ui').classList.remove('hidden');
         document.getElementById('answer-buttons').classList.add('hidden');
+        document.getElementById('manual-grading').classList.add('hidden');
         document.getElementById('next-btn').classList.add('hidden');
-
-        document.getElementById('show-options-btn').onclick = () => {
-            document.getElementById('flashcard-ui').classList.add('hidden');
-            document.getElementById('answer-buttons').classList.remove('hidden');
-            renderMultipleChoice();
-        };
-
-        document.getElementById('reveal-btn').onclick = () => {
-            const ans = currentQuestion.answers.find(a => a.correct).text;
-            document.getElementById('question-text').innerText += `\n\nAnswer: ${ans}`;
-            document.getElementById('flashcard-ui').classList.add('hidden');
-            document.getElementById('manual-grading').classList.remove('hidden');
-        };
-
-        document.getElementById('manual-correct').onclick = () => finish(true, true);
-        document.getElementById('manual-wrong').onclick = () => finish(false, true);
     }
 
-    function renderMultipleChoice() {
+    document.getElementById('show-options-btn').onclick = () => {
+        document.getElementById('flashcard-ui').classList.add('hidden');
+        document.getElementById('answer-buttons').classList.remove('hidden');
         const area = document.getElementById('answer-buttons');
         area.innerHTML = '';
         currentQuestion.answers.forEach(ans => {
             const b = document.createElement('button');
             b.innerText = ans.text; b.className = 'answer-btn';
-            b.onclick = () => { finish(ans.correct, false); b.classList.add(ans.correct ? 'correct' : 'incorrect'); };
+            b.onclick = () => {
+                if (ans.correct) { currentSessionScore += (currentPlayerName !== currentQuestion.theme ? 3 : 1); playerScores[currentPlayerName] += (currentPlayerName !== currentQuestion.theme ? 3 : 1); b.classList.add('correct'); }
+                else b.classList.add('incorrect');
+                updateScoreDisplay();
+                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+                document.getElementById('next-btn').classList.remove('hidden');
+            };
             area.appendChild(b);
         });
-    }
+    };
 
-    function finish(isCorrect, isManual) {
-        if (isCorrect) currentSessionScore += (isManual ? 2 : 1);
-        document.getElementById('answer-buttons').classList.add('hidden');
+    document.getElementById('reveal-btn').onclick = () => {
+        document.getElementById('question-text').innerText += "\n\nAnswer: " + currentQuestion.answers.find(a => a.correct).text;
+        document.getElementById('flashcard-ui').classList.add('hidden');
+        document.getElementById('manual-grading').classList.remove('hidden');
+    };
+
+    document.getElementById('manual-correct').onclick = () => {
+        currentSessionScore += (currentPlayerName !== currentQuestion.theme ? 4 : 2);
+        playerScores[currentPlayerName] += (currentPlayerName !== currentQuestion.theme ? 4 : 2);
+        finish();
+    };
+
+    document.getElementById('manual-wrong').onclick = finish;
+
+    function finish() {
+        updateScoreDisplay();
+        localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
         document.getElementById('manual-grading').classList.add('hidden');
         document.getElementById('next-btn').classList.remove('hidden');
-        document.getElementById('next-btn').innerText = (currentQuestionIndex === 9) ? "Complete Quest" : "Next Question";
+        document.getElementById('next-btn').innerText = (currentQuestionIndex === 9) ? "Complete" : "Next";
     }
 
     document.querySelectorAll('.name-btn').forEach(btn => btn.onclick = (e) => {
         currentPlayerName = e.target.dataset.name;
         document.getElementById('title-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.remove('hidden');
+        bgm.play();
         buildQuestSequence(currentPlayerName);
         showNextQuestion();
     });
 
     document.getElementById('next-btn').onclick = () => {
         currentQuestionIndex++;
-        (currentQuestionIndex < 10) ? showNextQuestion() : alert("Quest Complete! Score: " + currentSessionScore);
+        (currentQuestionIndex < 10) ? showNextQuestion() : alert("Done! Score: " + currentSessionScore);
     };
 
-    document.getElementById('volume-slider').addEventListener('input', (e) => bgm.volume = e.target.value);
-    
-    loadAllQuizData();
+    document.getElementById('volume-slider').oninput = (e) => bgm.volume = e.target.value;
     </script>
 </body>
 </html>
