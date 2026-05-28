@@ -9,9 +9,9 @@
         body { font-family: 'Inter', sans-serif; color: #f0e8d8; background-color: #1a237e; background-image: url('https://www.transparenttextures.com/patterns/diagmonds.png'), radial-gradient(ellipse at center, #303f9f 0%, #1a237e 100%); background-attachment: fixed; }
         .ff9-font { font-family: 'Cinzel Decorative', cursive; }
         .quiz-container { background-color: rgba(18, 28, 80, 0.85); border: 2px solid #a4b7d8; box-shadow: 0 0 20px rgba(164, 183, 216, 0.5); backdrop-filter: blur(5px); }
-        .btn-primary { background-color: #3b5998; border: 2px solid #a4b7d8; transition: all 0.2s; }
+        .btn-primary { background-color: #3b5998; border: 2px solid #a4b7d8; cursor: pointer; transition: all 0.2s; }
         .btn-primary:hover:not(:disabled) { background-color: #4c72c0; }
-        .answer-btn { background-color: rgba(42, 63, 109, 0.8); border: 2px solid #6a82b3; margin-top: 10px; padding: 12px; width: 100%; border-radius: 8px; }
+        .answer-btn { background-color: rgba(42, 63, 109, 0.8); border: 2px solid #6a82b3; margin-top: 10px; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; }
         .correct { background-color: #22c55e !important; }
         .incorrect { background-color: #ef4444 !important; }
     </style>
@@ -26,7 +26,7 @@
         <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.2" class="mt-2 w-20">
     </div>
 
-    <div id="quiz-container" class="quiz-container w-full max-w-2xl rounded-2xl p-8 text-center">
+    <div id="quiz-container" class="quiz-container w-full max-w-2xl rounded-2xl p-8 text-center shadow-2xl">
         <div id="title-screen">
             <h1 class="ff9-font text-4xl text-yellow-300 mb-8">Ultimate Trivia Quest</h1>
             <div id="name-selection-buttons" class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -38,6 +38,11 @@
 
         <div id="quiz-screen" class="hidden">
             <p id="round-indicator" class="ff9-font text-yellow-300 mb-1"></p>
+            <p id="question-counter" class="text-sm text-stone-300 mb-4"></p>
+            
+            <img id="question-image" class="w-full max-h-64 object-contain mb-6 rounded-lg hidden" src="" alt="Visual">
+            <audio id="question-audio-player" class="w-full mb-6 hidden" controls></audio>
+            
             <h2 id="question-text" class="text-2xl font-bold mb-6 whitespace-pre-wrap"></h2>
             
             <div id="flashcard-ui" class="space-y-4">
@@ -59,12 +64,12 @@
 
     <script>
     let quizData = { patrick: [], hannah: [], jillian: [] };
+    let askedQuestions = new Set(JSON.parse(localStorage.getItem('askedQuestions')) || []);
     let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
     let currentQuestSequence = [], currentQuestionIndex = 0, currentQuestion, currentPlayerName = '', currentSessionScore = 0;
     const bgm = document.getElementById('bgm');
 
     window.onload = async () => {
-        // Load data
         const load = async (f) => await (await fetch(f)).json();
         quizData.patrick = (await load('patrick_questions.json')).map(q => ({...q, theme: 'patrick'}));
         quizData.hannah = (await load('hannah_questions.json')).map(q => ({...q, theme: 'hannah'}));
@@ -81,17 +86,27 @@
     function buildQuestSequence(theme) {
         const themeQs = quizData[theme];
         currentQuestSequence = [
-            ...themeQs.filter(q => !q.imageSrc && !q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3),
-            ...themeQs.filter(q => q.imageSrc).sort(() => Math.random() - 0.5).slice(0, 3),
-            ...themeQs.filter(q => q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3)
+            ...themeQs.filter(q => !q.imageSrc && !q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({...q, roundTitle: 'Round 1'})),
+            ...themeQs.filter(q => q.imageSrc).sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({...q, roundTitle: 'Round 2'})),
+            ...themeQs.filter(q => q.audioSrc).sort(() => Math.random() - 0.5).slice(0, 3).map(q => ({...q, roundTitle: 'Round 3'}))
         ];
-        currentQuestSequence.push({ ...themeQs[0], question: "Final Boss Question..." });
-        currentQuestionIndex = 0;
+        let otherHardQs = [];
+        Object.keys(quizData).forEach(t => { if (t !== theme) otherHardQs = otherHardQs.concat(quizData[t].filter(q => q.difficulty?.toLowerCase() === 'hard')); });
+        currentQuestSequence.push({ ...(otherHardQs[0] || themeQs[0]), roundTitle: 'Final Boss!', question: "Final Boss Question..." });
+        currentQuestionIndex = 0; currentSessionScore = 0;
     }
 
     function showNextQuestion() {
         currentQuestion = currentQuestSequence[currentQuestionIndex];
         document.getElementById('question-text').innerText = currentQuestion.question;
+        document.getElementById('round-indicator').innerText = currentQuestion.roundTitle;
+        document.getElementById('question-counter').innerText = `Question ${currentQuestionIndex + 1} of 10`;
+
+        const img = document.getElementById('question-image');
+        const aud = document.getElementById('question-audio-player');
+        currentQuestion.imageSrc ? (img.src = currentQuestion.imageSrc, img.classList.remove('hidden')) : img.classList.add('hidden');
+        currentQuestion.audioSrc ? (aud.src = currentQuestion.audioSrc, aud.classList.remove('hidden')) : aud.classList.add('hidden');
+        
         document.getElementById('flashcard-ui').classList.remove('hidden');
         document.getElementById('answer-buttons').classList.add('hidden');
         document.getElementById('manual-grading').classList.add('hidden');
@@ -109,9 +124,7 @@
             b.onclick = () => {
                 if (ans.correct) { currentSessionScore += (currentPlayerName !== currentQuestion.theme ? 3 : 1); playerScores[currentPlayerName] += (currentPlayerName !== currentQuestion.theme ? 3 : 1); b.classList.add('correct'); }
                 else b.classList.add('incorrect');
-                updateScoreDisplay();
-                localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-                document.getElementById('next-btn').classList.remove('hidden');
+                finish();
             };
             area.appendChild(b);
         });
@@ -132,8 +145,10 @@
     document.getElementById('manual-wrong').onclick = finish;
 
     function finish() {
-        updateScoreDisplay();
+        askedQuestions.add(currentQuestion.question);
+        localStorage.setItem('askedQuestions', JSON.stringify([...askedQuestions]));
         localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+        updateScoreDisplay();
         document.getElementById('manual-grading').classList.add('hidden');
         document.getElementById('next-btn').classList.remove('hidden');
         document.getElementById('next-btn').innerText = (currentQuestionIndex === 9) ? "Complete" : "Next";
@@ -150,7 +165,7 @@
 
     document.getElementById('next-btn').onclick = () => {
         currentQuestionIndex++;
-        (currentQuestionIndex < 10) ? showNextQuestion() : alert("Done! Score: " + currentSessionScore);
+        (currentQuestionIndex < 10) ? showNextQuestion() : alert("Quest Complete! Final Score: " + currentSessionScore);
     };
 
     document.getElementById('volume-slider').oninput = (e) => bgm.volume = e.target.value;
