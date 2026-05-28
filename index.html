@@ -11,13 +11,18 @@
         .ff9-font { font-family: 'Cinzel Decorative', cursive; }
         .quiz-container { background-color: rgba(18, 28, 80, 0.85); border: 2px solid #a4b7d8; box-shadow: 0 0 20px rgba(164, 183, 216, 0.5); backdrop-filter: blur(5px); }
         .btn-primary { background-color: #3b5998; border: 2px solid #a4b7d8; cursor: pointer; transition: all 0.2s; }
-        .btn-primary:hover { background-color: #4c72c0; }
+        .btn-primary:hover:not(:disabled) { background-color: #4c72c0; }
         .answer-btn { background-color: rgba(42, 63, 109, 0.8); border: 2px solid #6a82b3; margin-top: 10px; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; }
         .correct { background-color: #22c55e !important; }
         .incorrect { background-color: #ef4444 !important; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="absolute top-5 right-5 quiz-container p-4 rounded-lg">
+        <label class="text-xs block mb-1">Volume</label>
+        <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.2" class="w-24">
+    </div>
 
     <div id="quiz-container" class="quiz-container w-full max-w-2xl rounded-2xl p-8 text-center">
         <div id="title-screen">
@@ -47,11 +52,12 @@
         </div>
     </div>
 
+    <audio id="bgm" src="sounds/FBattle.mp3" loop></audio>
+
     <script>
     let quizData = { patrick: [], hannah: [], jillian: [] };
-    let askedQuestions = new Set(JSON.parse(localStorage.getItem('askedQuestions')) || []);
-    let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
     let currentQuestSequence = [], currentQuestionIndex = 0, currentQuestion, currentPlayerName = '', currentSessionScore = 0;
+    const bgm = document.getElementById('bgm');
 
     async function loadAllQuizData() {
         try {
@@ -80,7 +86,6 @@
         
         document.getElementById('flashcard-ui').classList.remove('hidden');
         document.getElementById('answer-buttons').classList.add('hidden');
-        document.getElementById('manual-grading').classList.add('hidden');
         document.getElementById('next-btn').classList.add('hidden');
 
         document.getElementById('show-options-btn').onclick = () => {
@@ -92,7 +97,7 @@
         document.getElementById('reveal-btn').onclick = () => {
             const ans = currentQuestion.answers.find(a => a.correct).text;
             document.getElementById('question-text').innerText += `\n\nAnswer: ${ans}`;
-            document.getElementById('reveal-btn').classList.add('hidden');
+            document.getElementById('flashcard-ui').classList.add('hidden');
             document.getElementById('manual-grading').classList.remove('hidden');
         };
 
@@ -112,12 +117,11 @@
     }
 
     function finish(isCorrect, isManual) {
-        const pts = isManual ? 2 : 1;
-        if (isCorrect) { currentSessionScore += pts; playerScores[currentPlayerName] += pts; }
-        localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+        if (isCorrect) currentSessionScore += (isManual ? 2 : 1);
         document.getElementById('answer-buttons').classList.add('hidden');
         document.getElementById('manual-grading').classList.add('hidden');
         document.getElementById('next-btn').classList.remove('hidden');
+        document.getElementById('next-btn').innerText = (currentQuestionIndex === 9) ? "Complete Quest" : "Next Question";
     }
 
     document.querySelectorAll('.name-btn').forEach(btn => btn.onclick = (e) => {
@@ -130,9 +134,11 @@
 
     document.getElementById('next-btn').onclick = () => {
         currentQuestionIndex++;
-        (currentQuestionIndex < 10) ? showNextQuestion() : alert("Quest Complete!");
+        (currentQuestionIndex < 10) ? showNextQuestion() : alert("Quest Complete! Score: " + currentSessionScore);
     };
 
+    document.getElementById('volume-slider').addEventListener('input', (e) => bgm.volume = e.target.value);
+    
     loadAllQuizData();
     </script>
 </body>
