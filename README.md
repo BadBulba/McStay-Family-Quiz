@@ -33,7 +33,7 @@ To add new content, edit the relevant `.json` file. Use the following structure:
 }
 ```
 
-###2. Visual Question
+### 2. Visual Question
 
 Add an imageSrc field. Ensure the file is inside the /images folder.
 ```JSON
@@ -50,7 +50,7 @@ Add an imageSrc field. Ensure the file is inside the /images folder.
   ]
 }
 ```
-###3. Audio Question
+### 3. Audio Question
 
 Add an audioSrc field. Ensure the file is inside the /sounds folder.
 ```JSON
