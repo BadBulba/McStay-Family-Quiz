@@ -55,6 +55,7 @@
         <div class="mt-3">
             <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.2" class="w-24">
         </div>
+        <button id="reset-all-btn" class="text-stone-400 mt-4 text-xs underline block w-full text-right">Reset All Data</button>
     </div>
     
     <div id="quiz-container" class="quiz-container w-full max-w-2xl mx-auto rounded-2xl p-6 md:p-8 text-center">
@@ -70,7 +71,6 @@
                     <button data-name="hannah" class="name-btn btn-primary ff9-font py-3 rounded-lg">Hannah</button>
                     <button data-name="jillian" class="name-btn btn-primary ff9-font py-3 rounded-lg">Jillian</button>
                 </div>
-                <button id="reset-scores-btn" class="text-stone-400 mt-8 text-xs underline">Reset All Scores</button>
             </div>
 
             <div id="quiz-screen" class="hidden">
@@ -94,13 +94,6 @@
         </div>
     </div>
 
-    <audio id="sfx-menu" src="sounds/Select.mp3"></audio>
-    <audio id="sfx-correct" src="sounds/Select.mp3"></audio>
-    <audio id="sfx-incorrect" src="sounds/Cancel.mp3"></audio>
-    <audio id="sfx-start" src="sounds/Moogle.mp3"></audio>
-    <audio id="sfx-end" src="sounds/Moogle.mp3"></audio>
-    <audio id="bgm" src="sounds/FBattle.mp3" loop></audio>
-
     <script>
     window.addEventListener('load', () => {
         const titleScreen = document.getElementById('title-screen');
@@ -112,38 +105,30 @@
         const bgm = document.getElementById('bgm');
         
         let quizData = { patrick: [], hannah: [], jillian: [] };
-        let askedQuestions = new Set();
+        
+        // PERSISTENT MEMORY: Load asked questions and scores from browser storage
+        let askedQuestions = new Set(JSON.parse(localStorage.getItem('askedQuestions')) || []);
+        let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
+
         let currentQuestSequence = [];
         let currentQuestionIndex = 0;
         let currentQuestion;
         let currentPlayerName = '';
         let currentSessionScore = 0;
         let maxSessionScore = 0;
-        let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
 
         async function loadAllQuizData() {
             try {
-                const fetchAndParse = async (filename) => {
-                    const response = await fetch(filename);
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return JSON.parse(await response.text());
+                const fetchAndParse = async (f) => {
+                    const r = await fetch(f);
+                    return JSON.parse(await r.text());
                 };
-                const p = await fetchAndParse('patrick_questions.json');
-                const h = await fetchAndParse('hannah_questions.json');
-                const j = await fetchAndParse('jillian_questions.json');
-
-                quizData.patrick = p.map(q => ({...q, theme: 'patrick'}));
-                quizData.hannah = h.map(q => ({...q, theme: 'hannah'}));
-                quizData.jillian = j.map(q => ({...q, theme: 'jillian'}));
-                
+                quizData.patrick = (await fetchAndParse('patrick_questions.json')).map(q => ({...q, theme: 'patrick'}));
+                quizData.hannah = (await fetchAndParse('hannah_questions.json')).map(q => ({...q, theme: 'hannah'}));
+                quizData.jillian = (await fetchAndParse('jillian_questions.json')).map(q => ({...q, theme: 'jillian'}));
                 document.getElementById('loading-overlay').classList.add('hidden');
-            } catch (e) { 
-                console.error("Load failed", e);
-                document.body.innerHTML = `<h1 class="text-white text-center mt-20">Quest Data Failed to Load. Check console for details.</h1>`;
-            }
+            } catch (e) { document.body.innerHTML = "<h1>Data Load Failed.</h1>"; }
         }
-
-        function playSound(s) { s.currentTime = 0; s.play().catch(e => {}); }
 
         function updateScoreDisplay() {
             document.getElementById('patrick-score').innerText = playerScores.patrick;
@@ -163,144 +148,81 @@
             const picQs = themeQs.filter(q => q.imageSrc);
             const soundQs = themeQs.filter(q => q.audioSrc);
             
-            const round1Text = getRandomQuestions(textQs, 3).map(q => ({...q, roundTitle: 'Round 1: Text Trivia'}));
-            const round2Pic = getRandomQuestions(picQs, 3).map(q => ({...q, roundTitle: 'Round 2: Picture Identification'}));
-            const round3Sound = getRandomQuestions(soundQs, 3).map(q => ({...q, roundTitle: 'Round 3: Audio Challenge'}));
+            currentQuestSequence = [
+                ...getRandomQuestions(textQs, 3).map(q => ({...q, roundTitle: 'Round 1: Text Trivia'})),
+                ...getRandomQuestions(picQs, 3).map(q => ({...q, roundTitle: 'Round 2: Picture Identification'})),
+                ...getRandomQuestions(soundQs, 3).map(q => ({...q, roundTitle: 'Round 3: Audio Challenge'}))
+            ];
             
             let otherHardQs = [];
             Object.keys(quizData).forEach(t => {
-                if (t !== theme) {
-                    const hardFromTheme = quizData[t].filter(q => q.difficulty?.toLowerCase() === 'hard');
-                    otherHardQs = otherHardQs.concat(hardFromTheme);
-                }
+                if (t !== theme) otherHardQs = otherHardQs.concat(quizData[t].filter(q => q.difficulty?.toLowerCase() === 'hard'));
             });
             
-            if (otherHardQs.length === 0) otherHardQs = textQs;
-            const finalBossQ = getRandomQuestions(otherHardQs, 1).map(q => ({...q, roundTitle: 'Final Boss Question!'}));
+            const finalBoss = getRandomQuestions(otherHardQs.length ? otherHardQs : textQs, 1).map(q => ({...q, roundTitle: 'Final Boss Question!'}));
+            currentQuestSequence.push(...finalBoss);
             
-            currentQuestSequence = [...round1Text, ...round2Pic, ...round3Sound, ...finalBossQ];
-            
-            while (currentQuestSequence.length < 10) {
-                const extraQ = getRandomQuestions(textQs, 1).map(q => ({...q, roundTitle: 'Bonus Round'}));
-                currentQuestSequence.push(extraQ[0]);
-            }
-
             currentQuestionIndex = 0;
-            currentSessionScore = 0; 
-            maxSessionScore = 0;
+            currentSessionScore = 0; maxSessionScore = 0;
         }
 
         function showNextQuestion() {
-            resetState();
+            nextBtn.classList.add('hidden');
+            document.getElementById('answer-buttons').innerHTML = '';
+            questionImage.classList.add('hidden');
+            questionAudioPlayer.classList.add('hidden');
+            
             currentQuestion = currentQuestSequence[currentQuestionIndex];
             askedQuestions.add(currentQuestion.question);
+            localStorage.setItem('askedQuestions', JSON.stringify([...askedQuestions]));
 
-            const roundIndicator = document.getElementById('round-indicator');
-            roundIndicator.innerText = currentQuestion.roundTitle;
-            
-            if (currentQuestionIndex === currentQuestSequence.length - 1) {
-                roundIndicator.classList.add('boss-text');
-            } else {
-                roundIndicator.classList.remove('boss-text');
-            }
-
-            document.getElementById('question-counter').innerText = `Question ${currentQuestionIndex + 1} of ${currentQuestSequence.length}`;
+            document.getElementById('round-indicator').innerText = currentQuestion.roundTitle;
+            document.getElementById('round-indicator').className = `ff9-font text-xl text-yellow-300 mb-1 ${currentQuestionIndex === 9 ? 'boss-text' : ''}`;
+            document.getElementById('question-counter').innerText = `Question ${currentQuestionIndex + 1} of 10`;
             document.getElementById('question-text').innerText = currentQuestion.question;
 
-            if (currentQuestion.imageSrc) {
-                questionImage.src = currentQuestion.imageSrc;
-                questionImage.classList.remove('hidden');
-            }
-            if (currentQuestion.audioSrc) {
-                questionAudioPlayer.src = currentQuestion.audioSrc;
-                questionAudioPlayer.classList.remove('hidden');
-                bgm.pause();
-            }
+            if (currentQuestion.imageSrc) { questionImage.src = currentQuestion.imageSrc; questionImage.classList.remove('hidden'); }
+            if (currentQuestion.audioSrc) { questionAudioPlayer.src = currentQuestion.audioSrc; questionAudioPlayer.classList.remove('hidden'); }
 
             [...currentQuestion.answers].sort(() => Math.random() - 0.5).forEach(ans => {
                 const b = document.createElement('button');
                 b.innerText = ans.text;
                 b.className = 'answer-btn p-4 rounded-lg';
                 if (ans.correct) b.dataset.correct = "true";
-                b.onclick = selectAnswer;
+                b.onclick = (e) => {
+                    const correct = e.target.dataset.correct === 'true';
+                    const pts = (currentPlayerName !== currentQuestion.theme) ? 3 : 1;
+                    maxSessionScore += pts;
+                    if (correct) { currentSessionScore += pts; playerScores[currentPlayerName] += pts; e.target.classList.add('correct'); }
+                    else e.target.classList.add('incorrect');
+                    
+                    localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+                    updateScoreDisplay();
+                    Array.from(document.getElementById('answer-buttons').children).forEach(b => { if (b.dataset.correct === 'true') b.classList.add('correct'); b.disabled = true; });
+                    nextBtn.classList.remove('hidden');
+                    nextBtn.innerText = (currentQuestionIndex === 9) ? "Complete Quest" : "Next Question";
+                };
                 document.getElementById('answer-buttons').appendChild(b);
             });
         }
 
-        function selectAnswer(e) {
-            questionAudioPlayer.pause();
-            const btn = e.target;
-            const correct = btn.dataset.correct === 'true';
-            
-            const points = (currentPlayerName !== currentQuestion.theme) ? 3 : 1;
-            maxSessionScore += points;
-
-            if (correct) {
-                currentSessionScore += points;
-                playerScores[currentPlayerName] += points;
-                btn.classList.add('correct');
-                playSound(document.getElementById('sfx-correct'));
-            } else {
-                btn.classList.add('incorrect');
-                playSound(document.getElementById('sfx-incorrect'));
-            }
-
-            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-            updateScoreDisplay();
-
-            Array.from(document.getElementById('answer-buttons').children).forEach(b => {
-                if (b.dataset.correct === 'true') b.classList.add('correct');
-                b.disabled = true;
-            });
-            nextBtn.classList.remove('hidden');
-            nextBtn.innerText = (currentQuestionIndex === currentQuestSequence.length - 1) ? "Complete Quest" : "Next Question";
-        }
-
-        function resetState() {
-            nextBtn.classList.add('hidden');
-            document.getElementById('answer-buttons').innerHTML = '';
-            questionImage.classList.add('hidden');
-            questionAudioPlayer.classList.add('hidden');
-        }
-
         nextBtn.onclick = () => {
             currentQuestionIndex++;
-            if (currentQuestionIndex < currentQuestSequence.length) {
-                if (bgm.paused) bgm.play();
-                showNextQuestion();
-            } else {
-                showResults();
-            }
+            (currentQuestionIndex < 10) ? showNextQuestion() : (quizScreen.classList.add('hidden'), endScreen.classList.remove('hidden'), document.getElementById('score-text').innerText = `${currentSessionScore} / ${maxSessionScore}`);
         };
 
-        function showResults() {
-            quizScreen.classList.add('hidden');
-            endScreen.classList.remove('hidden');
-            bgm.play();
-            document.getElementById('score-text').innerText = `${currentSessionScore} / ${maxSessionScore}`;
-        }
-
-        document.querySelectorAll('#name-selection-buttons button').forEach(btn => {
-            btn.onclick = (e) => {
-                currentPlayerName = e.target.dataset.name;
-                titleScreen.classList.add('hidden');
-                document.getElementById('back-to-select-btn').classList.remove('hidden');
-                bgm.volume = document.getElementById('volume-slider').value;
-                bgm.play();
-                buildQuestSequence(currentPlayerName);
-                quizScreen.classList.remove('hidden');
-                showNextQuestion();
-            };
+        document.querySelectorAll('.name-btn').forEach(btn => btn.onclick = (e) => {
+            currentPlayerName = e.target.dataset.name;
+            titleScreen.classList.add('hidden');
+            document.getElementById('back-to-select-btn').classList.remove('hidden');
+            buildQuestSequence(currentPlayerName);
+            quizScreen.classList.remove('hidden');
+            showNextQuestion();
         });
 
         document.getElementById('return-log-btn').onclick = () => location.reload();
         document.getElementById('back-to-select-btn').onclick = () => location.reload();
-        document.getElementById('volume-slider').addEventListener('input', (e) => bgm.volume = e.target.value);
-        document.getElementById('reset-scores-btn').onclick = () => {
-            playerScores = { patrick: 0, hannah: 0, jillian: 0 };
-            localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
-            updateScoreDisplay();
-        };
+        document.getElementById('reset-all-btn').onclick = () => { localStorage.clear(); location.reload(); };
         
         loadAllQuizData();
         updateScoreDisplay();
