@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>McStay Family Quiz - Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: #e2e8f0; font-family: sans-serif; }
+        .container { max-width: 850px; margin: 40px auto; padding: 30px; background: #1e293b; border-radius: 12px; border: 1px solid #334155; }
+        code { background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #fbbf24; font-family: monospace; }
+        h1, h2 { color: #fbbf24; }
+        .card { background: #0f172a; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .filename-box { background: #3b82f6; color: white; padding: 10px; border-radius: 6px; font-weight: bold; text-align: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl font-bold mb-6">McStay Family Quiz: Documentation</h1>
+
+        <h2 class="text-2xl font-bold mb-3">Adding Hero Questions</h2>
+        <p class="mb-4 text-slate-300">To add questions for a player, save your JSON content into the specific file for that hero:</p>
+        <ul class="list-disc ml-6 mb-8 space-y-1 text-slate-300">
+            <li><strong>Patrick:</strong> <code>patrick_questions.json</code></li>
+            <li><strong>Hannah:</strong> <code>hannah_questions.json</code></li>
+            <li><strong>Jillian:</strong> <code>jillian_questions.json</code></li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mb-3">Asset Guidelines</h2>
+        <ul class="list-disc ml-6 mb-8 space-y-1 text-slate-300">
+            <li><strong>Images:</strong> Max width 800px. Keep under 500KB.</li>
+            <li><strong>Audio:</strong> Keep clips under 10 seconds. Use .mp3 format.</li>
+            <li><strong>Naming:</strong> Filenames must match JSON entries exactly.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mb-4">Question Structures</h2>
+        <p class="mb-4 text-slate-400 italic">Note: Each question block must be separated by a comma. Do not put a comma after the very last question block in the list.</p>
+        
+        <div class="card">
+            <h3 class="font-bold text-blue-400 mb-2">1. Text Question</h3>
+            <pre class="text-xs"><code>{
+  "question": "What is the capital of France?",
+  "difficulty": "Easy",
+  "answers": [
+    { "text": "London", "correct": false },
+    { "text": "Paris", "correct": true }
+  ]
+},</code></pre>
+        </div>
+
+        <div class="card">
+            <h3 class="font-bold text-blue-400 mb-2">2. Visual Question</h3>
+            <pre class="text-xs"><code>{
+  "question": "Identify this item:",
+  "imageSrc": "images/filename.png",
+  "answers": [
+    { "text": "Correct Answer", "correct": true },
+    { "text": "Wrong Answer", "correct": false }
+  ]
+},</code></pre>
+        </div>
+
+        <div class="card">
+            <h3 class="font-bold text-blue-400 mb-2">3. Audio Question</h3>
+            <pre class="text-xs"><code>{
+  "question": "Name this sound effect:",
+  "audioSrc": "sounds/filename.mp3",
+  "answers": [
+    { "text": "Wrong Answer", "correct": false },
+    { "text": "Correct Answer", "correct": true }
+  ]
+}</code></pre>
+        </div>
+    </div>
+</body>
+</html>
