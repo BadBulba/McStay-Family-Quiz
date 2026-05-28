@@ -1066,8 +1066,8 @@
     "answers": [
       { "text": "Jumped from a high-rise building using only a raincoat", "correct": false },
       { "text": "Reattached his own arm using a staple gun", "correct": false },
-      { "text": "Consumed enough micro-chips to build a computer", "correct": false },
-      { "text": "Walked through a... clearing of an active minefield with an inverted map", "correct": true }
+      { "text": "Consumed enough micro-chips to build a computer", "correct": true },
+      { "text": "Walked through a clearing of an active minefield with an inverted map", "correct": false }
     ]
   },
   {
