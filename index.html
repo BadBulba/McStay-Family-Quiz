@@ -116,4 +116,45 @@
         };
 
         document.getElementById('manual-correct').onclick = () => gradeAnswer(true, true);
-        document.getElementById('manual-wrong').onclick = () =>
+        document.getElementById('manual-wrong').onclick = () => gradeAnswer(false, true);
+    }
+
+    function gradeAnswer(isCorrect, isManual) {
+        const pts = isManual ? (currentPlayerName !== currentQuestion.theme ? 4 : 2) : (currentPlayerName !== currentQuestion.theme ? 3 : 1);
+        maxSessionScore += pts;
+        if (isCorrect) { currentSessionScore += pts; playerScores[currentPlayerName] += pts; }
+        localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+        document.getElementById('next-btn').classList.remove('hidden');
+        document.getElementById('next-btn').innerText = (currentQuestionIndex === 9) ? "Complete Quest" : "Next Question";
+        document.getElementById('manual-grading').classList.add('hidden');
+        document.getElementById('answer-buttons').classList.add('hidden');
+    }
+
+    function renderMultipleChoice() {
+        const area = document.getElementById('answer-buttons');
+        area.innerHTML = '';
+        currentQuestion.answers.forEach(ans => {
+            const b = document.createElement('button');
+            b.innerText = ans.text; b.className = 'answer-btn';
+            b.onclick = () => { gradeAnswer(ans.correct, false); b.classList.add(ans.correct ? 'correct' : 'incorrect'); };
+            area.appendChild(b);
+        });
+    }
+
+    document.querySelectorAll('.name-btn').forEach(btn => btn.onclick = (e) => {
+        currentPlayerName = e.target.dataset.name;
+        document.getElementById('title-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        buildQuestSequence(currentPlayerName);
+        showNextQuestion();
+    });
+
+    document.getElementById('next-btn').onclick = () => {
+        currentQuestionIndex++;
+        (currentQuestionIndex < 10) ? showNextQuestion() : alert(`Score: ${currentSessionScore}/${maxSessionScore}`);
+    };
+
+    loadAllQuizData();
+    </script>
+</body>
+</html>
