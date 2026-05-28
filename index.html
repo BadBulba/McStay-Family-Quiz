@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <script>
+<script>
     let quizData = { patrick: [], hannah: [], jillian: [] };
     let askedQuestions = new Set(JSON.parse(localStorage.getItem('askedQuestions')) || []);
     let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
@@ -63,13 +63,7 @@
             quizData.patrick = (await fetchAndParse('patrick_questions.json')).map(q => ({...q, theme: 'patrick'}));
             quizData.hannah = (await fetchAndParse('hannah_questions.json')).map(q => ({...q, theme: 'hannah'}));
             quizData.jillian = (await fetchAndParse('jillian_questions.json')).map(q => ({...q, theme: 'jillian'}));
-        } catch (e) { document.body.innerHTML = "<h1>Error Loading Data</h1>"; }
-    }
-
-    function getRandomQuestions(array, count) {
-        let available = array.filter(q => !askedQuestions.has(q.question));
-        if (available.length < count) available = [...array]; 
-        return available.sort(() => Math.random() - 0.5).slice(0, count);
+        } catch (e) { console.error("Load failed", e); }
     }
 
     function buildQuestSequence(theme) {
@@ -86,21 +80,22 @@
         currentQuestionIndex = 0; currentSessionScore = 0; maxSessionScore = 0;
     }
 
+    function getRandomQuestions(array, count) {
+        let available = array.filter(q => !askedQuestions.has(q.question));
+        if (available.length < count) available = [...array]; 
+        return available.sort(() => Math.random() - 0.5).slice(0, count);
+    }
+
     function showNextQuestion() {
+        // Reset UI
         document.getElementById('flashcard-ui').classList.remove('hidden');
-        document.getElementById('show-options-btn').classList.remove('hidden');
-        document.getElementById('manual-answer-area').classList.remove('hidden');
-        document.getElementById('manual-grading').classList.add('hidden');
         document.getElementById('answer-buttons').classList.add('hidden');
         document.getElementById('next-btn').classList.add('hidden');
         
         currentQuestion = currentQuestSequence[currentQuestionIndex];
-        askedQuestions.add(currentQuestion.question);
-        localStorage.setItem('askedQuestions', JSON.stringify([...askedQuestions]));
-
+        document.getElementById('question-text').innerText = currentQuestion.question;
         document.getElementById('round-indicator').innerText = currentQuestion.roundTitle;
         document.getElementById('question-counter').innerText = `Question ${currentQuestionIndex + 1} of 10`;
-        document.getElementById('question-text').innerText = currentQuestion.question;
 
         document.getElementById('show-options-btn').onclick = () => {
             document.getElementById('flashcard-ui').classList.add('hidden');
@@ -111,23 +106,26 @@
         document.getElementById('reveal-btn').onclick = () => {
             const correctAns = currentQuestion.answers.find(a => a.correct).text;
             document.getElementById('question-text').innerText += `\n\nAnswer: ${correctAns}`;
-            document.getElementById('manual-answer-area').classList.add('hidden');
+            document.getElementById('flashcard-ui').classList.add('hidden');
             document.getElementById('manual-grading').classList.remove('hidden');
         };
 
-        document.getElementById('manual-correct').onclick = () => gradeAnswer(true, true);
-        document.getElementById('manual-wrong').onclick = () => gradeAnswer(false, true);
+        document.getElementById('manual-correct').onclick = () => finishQuestion(true, true);
+        document.getElementById('manual-wrong').onclick = () => finishQuestion(false, true);
     }
 
-    function gradeAnswer(isCorrect, isManual) {
+    function finishQuestion(isCorrect, isManual) {
         const pts = isManual ? (currentPlayerName !== currentQuestion.theme ? 4 : 2) : (currentPlayerName !== currentQuestion.theme ? 3 : 1);
-        maxSessionScore += pts;
         if (isCorrect) { currentSessionScore += pts; playerScores[currentPlayerName] += pts; }
+        maxSessionScore += pts;
+        
+        askedQuestions.add(currentQuestion.question);
+        localStorage.setItem('askedQuestions', JSON.stringify([...askedQuestions]));
         localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
+        
+        document.getElementById('manual-grading').classList.add('hidden');
         document.getElementById('next-btn').classList.remove('hidden');
         document.getElementById('next-btn').innerText = (currentQuestionIndex === 9) ? "Complete Quest" : "Next Question";
-        document.getElementById('manual-grading').classList.add('hidden');
-        document.getElementById('answer-buttons').classList.add('hidden');
     }
 
     function renderMultipleChoice() {
@@ -136,7 +134,7 @@
         currentQuestion.answers.forEach(ans => {
             const b = document.createElement('button');
             b.innerText = ans.text; b.className = 'answer-btn';
-            b.onclick = () => { gradeAnswer(ans.correct, false); b.classList.add(ans.correct ? 'correct' : 'incorrect'); };
+            b.onclick = () => { finishQuestion(ans.correct, false); b.classList.add(ans.correct ? 'correct' : 'incorrect'); };
             area.appendChild(b);
         });
     }
@@ -151,7 +149,7 @@
 
     document.getElementById('next-btn').onclick = () => {
         currentQuestionIndex++;
-        (currentQuestionIndex < 10) ? showNextQuestion() : alert(`Score: ${currentSessionScore}/${maxSessionScore}`);
+        (currentQuestionIndex < 10) ? showNextQuestion() : alert(`Quest Complete! Score: ${currentSessionScore}/${maxSessionScore}`);
     };
 
     loadAllQuizData();
