@@ -1,6 +1,7 @@
 [
   {
     "question": "In James Bond, what is 007's signature drink order?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Gin and Tonic, stirred", "correct": false },
       { "text": "Vesper Martini, shaken not stirred", "correct": true },
@@ -10,6 +11,7 @@
   },
   {
     "question": "In Indiana Jones and the Raiders of the Lost Ark, what is Indy famously afraid of?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Spiders", "correct": false },
       { "text": "Heights", "correct": false },
@@ -19,6 +21,7 @@
   },
   {
     "question": "In the original Sabrina (1954), which actress played the title role of Sabrina Fairchild?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Grace Kelly", "correct": false },
       { "text": "Audrey Hepburn", "correct": true },
@@ -28,6 +31,7 @@
   },
   {
     "question": "In National Treasure, where is the map hidden that Ben Gates is looking for?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "On the back of the Declaration of Independence", "correct": true },
       { "text": "Inside the Liberty Bell", "correct": false },
@@ -38,6 +42,7 @@
   {
     "question": "Identify this ABBA hit!",
     "audioSrc": "sounds/DancingQueen.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Mamma Mia", "correct": false },
       { "text": "Dancing Queen", "correct": true },
@@ -47,6 +52,7 @@
   },
   {
     "question": "In Miracle on 34th Street, what is the name of the man who claims to be the real Santa Claus?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Kris Kringle", "correct": true },
       { "text": "Nicholas St. North", "correct": false },
@@ -56,6 +62,7 @@
   },
   {
     "question": "In Midsomer Murders, what is the name of the main Detective Chief Inspector in the early seasons?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Tom Barnaby", "correct": true },
       { "text": "John Barnaby", "correct": false },
@@ -65,6 +72,7 @@
   },
   {
     "question": "In Disney's Robin Hood, what kind of animal is Robin Hood?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Bear", "correct": false },
       { "text": "A Badger", "correct": false },
@@ -75,6 +83,7 @@
   {
     "question": "Identify this classic TV theme!",
     "audioSrc": "sounds/RosemaryAndThyme.mp3",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Midsomer Murders", "correct": false },
       { "text": "Rosemary & Thyme", "correct": true },
@@ -84,6 +93,7 @@
   },
   {
     "question": "In Hercule Poirot (David Suchet series), what does Poirot call his 'little grey cells'?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "His muscles", "correct": false },
       { "text": "His brain", "correct": true },
@@ -93,6 +103,7 @@
   },
   {
     "question": "Crossword Clue: A 4-letter word for 'a performance in an opera' (starts with A).",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Song", "correct": false },
       { "text": "Solo", "correct": false },
@@ -102,6 +113,7 @@
   },
   {
     "question": "In Disney’s Alice in Wonderland, what does the Mad Hatter celebrate instead of a Birthday?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Very Merry Unbirthday", "correct": true },
       { "text": "The Tea Party Anniversary", "correct": false },
@@ -111,6 +123,7 @@
   },
   {
     "question": "In Basil the Great Mouse Detective, who is Basil’s arch-nemesis?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Professor Ratigan", "correct": true },
       { "text": "Fidget", "correct": false },
@@ -121,6 +134,7 @@
   {
     "question": "Identify this Bon Jovi anthem!",
     "audioSrc": "sounds/LivinOnAPrayer.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "You Give Love a Bad Name", "correct": false },
       { "text": "Always", "correct": false },
@@ -130,6 +144,7 @@
   },
   {
     "question": "In Home Alone, where is the family going on vacation when they leave Kevin behind?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "London", "correct": false },
       { "text": "Paris", "correct": true },
@@ -139,6 +154,7 @@
   },
   {
     "question": "In Disney's Robin Hood, who is the greedy Prince who sucks his thumb?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Prince John", "correct": true },
       { "text": "King Richard", "correct": false },
@@ -148,6 +164,7 @@
   },
   {
     "question": "What is the name of James Bond's gadget-master at MI6?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "M", "correct": false },
       { "text": "Q", "correct": true },
@@ -157,6 +174,7 @@
   },
   {
     "question": "In Indiana Jones, what is Indy's weapon of choice?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Sword", "correct": false },
       { "text": "A Bullwhip", "correct": true },
@@ -166,6 +184,7 @@
   },
   {
     "question": "Which Christmas movie features a boy named Ralphie who wants a Red Ryder BB Gun?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Elf", "correct": false },
       { "text": "A Christmas Story", "correct": true },
@@ -175,6 +194,7 @@
   },
   {
     "question": "In Rosemary & Thyme, what is the shared profession of the two lead characters?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Private Investigators", "correct": false },
       { "text": "Gardeners", "correct": true },
@@ -184,6 +204,7 @@
   },
   {
     "question": "Crossword Clue: A 5-letter word for 'A Belgian detective' (starts with P).",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Peter", "correct": false },
       { "text": "Prior", "correct": false },
@@ -193,6 +214,7 @@
   },
   {
     "question": "In Alice in Wonderland, the Cheshire Cat is known for his iconic...",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Striped tail", "correct": false },
       { "text": "Disappearing grin", "correct": true },
@@ -203,6 +225,7 @@
   {
     "question": "Identify this ABBA song from its intro!",
     "audioSrc": "sounds/MammaMia.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "SOS", "correct": false },
       { "text": "Take a Chance on Me", "correct": false },
@@ -212,6 +235,7 @@
   },
   {
     "question": "In National Treasure, what historical artifact does Ben Gates steal to 'protect' it?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Declaration of Independence", "correct": true },
       { "text": "The Constitution", "correct": false },
@@ -221,6 +245,7 @@
   },
   {
     "question": "In the David Suchet Poirot series, who is Poirot's loyal friend and companion?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Captain Hastings", "correct": true },
       { "text": "Inspector Japp", "correct": false },
@@ -230,6 +255,7 @@
   },
   {
     "question": "In the Poirot episode 'Murder on the Orient Express', where does the train get stuck?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "In a snowdrift", "correct": true },
       { "text": "On a broken bridge", "correct": false },
@@ -239,6 +265,7 @@
   },
   {
     "question": "In Disney's Alice in Wonderland, what color does the Queen of Hearts want her roses painted?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Yellow", "correct": false },
       { "text": "White", "correct": false },
@@ -249,6 +276,7 @@
   {
     "question": "Identify this classic James Bond theme!",
     "audioSrc": "sounds/BondTheme.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Mission Impossible", "correct": false },
       { "text": "James Bond 007", "correct": true },
@@ -258,6 +286,7 @@
   },
   {
     "question": "In National Treasure: Book of Secrets, what famous desk contains a secret compartment?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The Resolute Desk", "correct": true },
       { "text": "The Oval Office Desk", "correct": false },
@@ -267,6 +296,7 @@
   },
   {
     "question": "In Basil the Great Mouse Detective, where does Basil live?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Buckingham Palace", "correct": false },
       { "text": "221½ Baker Street", "correct": true },
@@ -276,6 +306,7 @@
   },
   {
     "question": "In Midsomer Murders, what is the fictional county where all the mysteries take place?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Midsomer", "correct": true },
       { "text": "Yorkshire", "correct": false },
@@ -286,6 +317,7 @@
   {
     "question": "Identify this Bon Jovi hit from its famous guitar 'talk box' intro!",
     "audioSrc": "sounds/YouGiveLoveABadName.mp3",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Wanted Dead or Alive", "correct": false },
       { "text": "Bad Medicine", "correct": false },
@@ -295,6 +327,7 @@
   },
   {
     "question": "In Disney's Robin Hood, who is Robin Hood’s large and loyal best friend?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Little John", "correct": true },
       { "text": "Friar Tuck", "correct": false },
@@ -304,6 +337,7 @@
   },
   {
     "question": "Crossword Clue: A 6-letter word for 'a gemstone often sought by Indiana Jones' (starts with E).",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Earthy", "correct": false },
       { "text": "Emerald", "correct": true },
@@ -313,6 +347,7 @@
   },
   {
     "question": "In Miracle on 34th Street, which department store is at the center of the story?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Gimbels", "correct": false },
       { "text": "Macy's", "correct": true },
@@ -323,6 +358,7 @@
   {
     "question": "Identify this ABBA song that won the Eurovision Song Contest in 1974!",
     "audioSrc": "sounds/Waterloo.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Honey, Honey", "correct": false },
       { "text": "Waterloo", "correct": true },
@@ -332,6 +368,7 @@
   },
   {
     "question": "In the Poirot series, what is the name of Poirot’s efficient and organized secretary?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Miss Lemon", "correct": true },
       { "text": "Miss Marple", "correct": false },
@@ -341,6 +378,7 @@
   },
   {
     "question": "In Indiana Jones and the Last Crusade, what is the 'Holy Grail' actually?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A gold-plated chalice", "correct": false },
       { "text": "The cup of a carpenter", "correct": true },
@@ -350,6 +388,7 @@
   },
   {
     "question": "In Sabrina (1954), where does Sabrina go to culinary school to find herself?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "London", "correct": false },
       { "text": "Rome", "correct": false },
@@ -359,6 +398,7 @@
   },
   {
     "question": "Which Christmas movie features a train that takes children to the North Pole?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Polar Express", "correct": true },
       { "text": "The Holiday Train", "correct": false },
@@ -369,6 +409,7 @@
   {
     "question": "Identify this haunting TV theme performed on a Theremin!",
     "audioSrc": "sounds/MidsomerTheme.mp3",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Doctor Who", "correct": false },
       { "text": "Midsomer Murders", "correct": true },
@@ -378,6 +419,7 @@
   },
   {
     "question": "In Disney's Alice in Wonderland, what does the 'Eat Me' cake do to Alice?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Makes her grow huge", "correct": true },
       { "text": "Makes her shrink small", "correct": false },
@@ -387,6 +429,7 @@
   },
   {
     "question": "In James Bond: Skyfall, what is the name of the Bond family's ancestral estate in Scotland?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Skyfall", "correct": true },
       { "text": "Highlands", "correct": false },
@@ -396,6 +439,7 @@
   },
   {
     "question": "In The Great Mouse Detective, Basil uses a 'bloodhound' to help him track. What is the dog's name?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Toby", "correct": true },
       { "text": "Buster", "correct": false },
@@ -405,6 +449,7 @@
   },
   {
     "question": "Crossword Clue: A 6-letter word for 'The weapon Indy uses' (starts with W).",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Weapon", "correct": false },
       { "text": "Wrench", "correct": false },
@@ -414,6 +459,7 @@
   },
   {
     "question": "In Rosemary & Thyme, what is the first name of Rosemary’s partner?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Laura", "correct": true },
       { "text": "Sarah", "correct": false },
@@ -424,6 +470,7 @@
   {
     "question": "Identify this Poirot theme tune!",
     "audioSrc": "sounds/PoirotTheme.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Sherlock Holmes", "correct": false },
       { "text": "Hercule Poirot", "correct": true },
@@ -433,6 +480,7 @@
   },
   {
     "question": "In Disney's Robin Hood, Alan-a-Dale is what kind of bird?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A Rooster", "correct": true },
       { "text": "An Owl", "correct": false },
@@ -442,6 +490,7 @@
   },
   {
     "question": "In the movie Elf, what are the four main food groups for elves?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Candy, Candy Canes, Candy Corn, and Syrup", "correct": true },
       { "text": "Sugar, Cookies, Cake, and Pie", "correct": false },
@@ -451,6 +500,7 @@
   },
   {
     "question": "In James Bond, what is the name of the criminal organization led by Ernst Stavro Blofeld?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "SPECTRE", "correct": true },
       { "text": "HYDRA", "correct": false },
@@ -460,6 +510,7 @@
   },
   {
     "question": "In Poirot: Death on the Nile, what is the name of the steamer ship?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "The Karnak", "correct": true },
       { "text": "The Resolute", "correct": false },
@@ -470,6 +521,7 @@
   {
     "question": "Identify this image of a famous detective's cane!",
     "imageSrc": "images/PoirotCane.jpg",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Sherlock Holmes", "correct": false },
       { "text": "Hercule Poirot", "correct": true },
@@ -479,6 +531,7 @@
   },
   {
     "question": "In National Treasure, Ben Gates' family is searching for the treasure of which group?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Knights Templar", "correct": true },
       { "text": "The Illuminati", "correct": false },
@@ -488,6 +541,7 @@
   },
   {
     "question": "In Disney's Alice in Wonderland, who is constantly shouting 'Off with their heads!'?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Mad Hatter", "correct": false },
       { "text": "The Queen of Hearts", "correct": true },
@@ -498,6 +552,7 @@
   {
     "question": "Identify this famous car from James Bond!",
     "imageSrc": "images/BondCar.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Aston Martin DB5", "correct": true },
       { "text": "Lotus Esprit", "correct": false },
@@ -507,6 +562,7 @@
   },
   {
     "question": "In The Great Mouse Detective, Professor Ratigan wants to replace the Queen with what?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A Clockwork Robot", "correct": true },
       { "text": "Himself in a dress", "correct": false },
@@ -516,6 +572,7 @@
   },
   {
     "question": "In Miracle on 34th Street, what does Susan finally receive to prove Kris Kringle is Santa?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A doll", "correct": false },
       { "text": "A new house", "correct": true },
@@ -525,6 +582,7 @@
   },
   {
     "question": "Crossword Clue: A 4-letter word for 'A Bond girl played by Ursula Andress' (starts with H).",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Hope", "correct": false },
       { "text": "Honey", "correct": true },
@@ -535,6 +593,7 @@
   {
     "question": "Identify this iconic accessory from Indiana Jones!",
     "imageSrc": "images/IndyHat.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Fedora", "correct": true },
       { "text": "The Panama Hat", "correct": false },
@@ -544,6 +603,7 @@
   },
   {
     "question": "In Disney's Robin Hood, what does Robin Hood use to compete in the archery tournament?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A disguise as a stork", "correct": true },
       { "text": "A magic arrow", "correct": false },
@@ -553,6 +613,7 @@
   },
   {
     "question": "Which Christmas movie is often debated as being a 'Christmas movie' or an 'Action movie'?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Die Hard", "correct": true },
       { "text": "Lethal Weapon", "correct": false },
@@ -562,6 +623,7 @@
   },
   {
     "question": "In Sabrina (1954), what is the last name of the wealthy family Sabrina's father works for?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The Larrabees", "correct": true },
       { "text": "The Rockefellers", "correct": false },
@@ -572,6 +634,7 @@
   {
     "question": "Identify this document from National Treasure!",
     "imageSrc": "images/DeclarationOfIndependence.jpg",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Declaration of Independence", "correct": true },
       { "text": "The Bill of Rights", "correct": false },
@@ -581,6 +644,7 @@
   },
   {
     "question": "In the Poirot series, what is Poirot’s first name?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Hercule", "correct": true },
       { "text": "Hector", "correct": false },
@@ -590,6 +654,7 @@
   },
   {
     "question": "In Disney's Alice in Wonderland, who is always worried about being late?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Mad Hatter", "correct": false },
       { "text": "The White Rabbit", "correct": true },
@@ -599,6 +664,7 @@
   },
   {
     "question": "In James Bond, who is the author of the original 007 books?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Ian Fleming", "correct": true },
       { "text": "John le Carré", "correct": false },
@@ -608,6 +674,7 @@
   },
   {
     "question": "In Disney's Robin Hood, what is the name of the town Robin Hood protects?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Nottingham", "correct": true },
       { "text": "London", "correct": false },
@@ -617,6 +684,7 @@
   },
   {
     "question": "Which Christmas movie features a character named 'The Grinch'?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "How the Grinch Stole Christmas", "correct": true },
       { "text": "Scrooged", "correct": false },
@@ -626,6 +694,7 @@
   },
   {
     "question": "In The Great Mouse Detective, what instrument does Basil play when he's thinking?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Violin", "correct": true },
       { "text": "Piano", "correct": false },
@@ -635,6 +704,7 @@
   },
   {
     "question": "In Midsomer Murders, Tom Barnaby's wife is named...",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Joyce", "correct": true },
       { "text": "Mary", "correct": false },
@@ -644,6 +714,7 @@
   },
   {
     "question": "Crossword Clue: A 5-letter word for 'Indy's profession' (starts with A).",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Author", "correct": false },
       { "text": "Artist", "correct": false },
@@ -653,6 +724,7 @@
   },
   {
     "question": "In the Poirot series, Poirot is from which country?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "France", "correct": false },
       { "text": "Belgium", "correct": true },
@@ -662,6 +734,7 @@
   },
   {
     "question": "In Disney's Alice in Wonderland, what is the name of the giant caterpillar's favorite activity?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Smoking a hookah", "correct": true },
       { "text": "Eating mushrooms", "correct": false },
@@ -671,6 +744,7 @@
   },
   {
     "question": "In James Bond, what does 007's 'Double O' status signify?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A license to kill", "correct": true },
       { "text": "Elite driver training", "correct": false },
@@ -681,6 +755,7 @@
   {
     "question": "Identify this classic Christmas movie character!",
     "imageSrc": "images/KrisKringle.jpg",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Kris Kringle", "correct": true },
       { "text": "Santa Claus", "correct": false },
@@ -690,6 +765,7 @@
   },
   {
     "question": "In the Poirot series, what is the name of Poirot's favorite recurring mystery novelist friend?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Ariadne Oliver", "correct": true },
       { "text": "Agatha Christie", "correct": false },
@@ -699,6 +775,7 @@
   },
   {
     "question": "In Disney's Basil the Great Mouse Detective, what is the name of Basil's associate who acts as the narrator?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Dr. David Q. Dawson", "correct": true },
       { "text": "Dr. Watson", "correct": false },
@@ -708,6 +785,7 @@
   },
   {
     "question": "In the James Bond film Goldfinger, what is the villain's primary obsession?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Diamonds", "correct": false },
       { "text": "Gold", "correct": true },
@@ -717,6 +795,7 @@
   },
   {
     "question": "Which classic Christmas movie features a guardian angel named Clarence trying to earn his wings?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "It's a Wonderful Life", "correct": true },
       { "text": "Miracle on 34th Street", "correct": false },
@@ -726,6 +805,7 @@
   },
   {
     "question": "In Disney's Robin Hood, who is the Sheriff of Nottingham's bumbling wolf deputy?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Sir Hiss", "correct": false },
       { "text": "Trigger", "correct": true },
@@ -735,6 +815,7 @@
   },
   {
     "question": "In National Treasure, Ben Gates finds a code written on the back of which famous document using 'Silence Dogood' letters?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The Declaration of Independence", "correct": true },
       { "text": "The Constitution", "correct": false },
@@ -744,6 +825,7 @@
   },
   {
     "question": "In the Poirot series, what is the name of the detective's valet who is a master of clothing and organization?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "George", "correct": true },
       { "text": "James", "correct": false },
@@ -753,6 +835,7 @@
   },
   {
     "question": "In Disney's Alice in Wonderland, what animal does the Queen of Hearts use as a mallet during croquet?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "A Hedgehog", "correct": false },
       { "text": "A Flamingo", "correct": true },
@@ -762,6 +845,7 @@
   },
   {
     "question": "Crossword Clue: A 6-letter word for 'James Bond's employer' (starts with M).",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Market", "correct": false },
       { "text": "Museum", "correct": false },
@@ -771,6 +855,7 @@
   },
   {
     "question": "In the original Sabrina (1954), what was Sabrina's father's actual job for the Larrabee family?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The Chauffeur", "correct": true },
       { "text": "The Butler", "correct": false },
@@ -780,6 +865,7 @@
   },
   {
     "question": "In Indiana Jones and the Temple of Doom, what are the mystical stones Indy is trying to recover?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Sankara Stones", "correct": true },
       { "text": "Infinity Stones", "correct": false },
@@ -789,6 +875,7 @@
   },
   {
     "question": "In Home Alone 2: Lost in New York, which famous hotel does Kevin stay in?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "The Plaza", "correct": true },
       { "text": "The Ritz", "correct": false },
@@ -799,6 +886,7 @@
   {
     "question": "Identify this specific ABBA hit!",
     "audioSrc": "sounds/TakeAChanceOnMe.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Take a Chance on Me", "correct": true },
       { "text": "Honey, Honey", "correct": false },
@@ -808,6 +896,7 @@
   },
   {
     "question": "In Midsomer Murders, Tom Barnaby's daughter Cully is named after what?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "A village in Switzerland", "correct": true },
       { "text": "A famous flower", "correct": false },
@@ -817,6 +906,7 @@
   },
   {
     "question": "In Disney's Basil the Great Mouse Detective, Ratigan's massive pet cat is named...",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Lucifer", "correct": false },
       { "text": "Felicia", "correct": true },
@@ -826,6 +916,7 @@
   },
   {
     "question": "In James Bond, what is the name of Bond's favorite CIA ally?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "Felix Leiter", "correct": true },
       { "text": "Jack Wade", "correct": false },
@@ -836,6 +927,7 @@
   {
     "question": "Identify this Bon Jovi hit!",
     "audioSrc": "sounds/WantedDeadOrAlive.mp3",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Wanted Dead or Alive", "correct": true },
       { "text": "Blaze of Glory", "correct": false },
@@ -845,6 +937,7 @@
   },
   {
     "question": "In the Poirot story 'Murder on the Links', where does the mystery primarily take place?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A Golf Course in France", "correct": true },
       { "text": "A Country House in England", "correct": false },
@@ -854,6 +947,7 @@
   },
   {
     "question": "In Miracle on 34th Street, what does the judge use as evidence to prove Santa exists?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "U.S. Post Office mail delivery", "correct": true },
       { "text": "A magical reindeer", "correct": false },
@@ -863,6 +957,7 @@
   },
   {
     "question": "In Rosemary & Thyme, what is the name of Laura's ex-husband who was a high-ranking police officer?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Peter", "correct": false },
       { "text": "Gordon", "correct": true },
@@ -873,6 +968,7 @@
   {
     "question": "Identify this specific James Bond gadget image!",
     "imageSrc": "images/BondWatch.jpg",
+    "difficulty": "Medium",
     "answers": [
       { "text": "The Laser Watch", "correct": true },
       { "text": "The Tracking Ring", "correct": false },
@@ -882,6 +978,7 @@
   },
   {
     "question": "In Disney's Robin Hood, what is the name of the snake who serves Prince John?",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Sir Hiss", "correct": true },
       { "text": "Kaa", "correct": false },
@@ -891,6 +988,7 @@
   },
   {
     "question": "Crossword Clue: A 3-letter word for 'Indiana Jones' first name' (starts with I).",
+    "difficulty": "Easy",
     "answers": [
       { "text": "Ian", "correct": false },
       { "text": "Ike", "correct": false },
@@ -900,6 +998,7 @@
   },
   {
     "question": "In the movie The Holiday, where does Amanda (Cameron Diaz) swap houses to spend Christmas?",
+    "difficulty": "Medium",
     "answers": [
       { "text": "A cottage in Surrey, England", "correct": true },
       { "text": "A flat in London", "correct": false },
@@ -909,6 +1008,7 @@
   },
   {
     "question": "In the David Suchet series, Poirot is often seen visiting which high-end London apartment building?",
+    "difficulty": "Hard",
     "answers": [
       { "text": "Whitehaven Mansions", "correct": true },
       { "text": "Baker Street Apartments", "correct": false },
