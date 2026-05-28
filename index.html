@@ -31,7 +31,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px #2a3f6d;
         }
-        .btn-primary:hover { background-color: #4c72c0; transform: translateY(-2px); }
+        .btn-primary:hover:not(:disabled) { background-color: #4c72c0; transform: translateY(-2px); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
         .answer-btn {
             background-color: rgba(42, 63, 109, 0.7);
             border: 2px solid #6a82b3;
@@ -39,6 +40,7 @@
         }
         .answer-btn.correct { background-color: #22c55e; border-color: #f0e8d8; }
         .answer-btn.incorrect { background-color: #ef4444; border-color: #f0e8d8; }
+        .boss-text { color: #f87171; text-shadow: 0 0 10px rgba(239, 68, 68, 0.8); }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -77,9 +79,9 @@
             </div>
 
             <div id="quiz-screen" class="hidden">
-                <p id="question-counter" class="text-sm text-stone-300 mb-2"></p>
+                <p id="round-indicator" class="ff9-font text-xl text-yellow-300 mb-1"></p>
+                <p id="question-counter" class="text-sm text-stone-300 mb-4"></p>
                 
-                <!-- NEW: Question Image Element -->
                 <img id="question-image" class="w-full max-h-64 object-contain mb-6 rounded-lg border-2 border-blue-400 hidden" src="" alt="Quiz Visual">
                 
                 <h2 id="question-text" class="text-2xl font-bold mb-6"></h2>
@@ -90,9 +92,9 @@
 
             <div id="end-screen" class="hidden">
                 <h1 class="ff9-font text-4xl text-yellow-300 mb-4">Quest Complete!</h1>
-                <p id="score-text" class="text-5xl font-bold mb-8"></p>
-                <p id="score-feedback" class="text-lg mb-8"></p>
-                <button id="restart-btn" class="btn-primary ff9-font py-3 px-8 rounded-lg w-full">Return to Title</button>
+                <p class="text-xl mb-2">You scored:</p>
+                <p id="score-text" class="text-5xl font-bold text-yellow-300 mb-8"></p>
+                <button id="return-log-btn" class="btn-primary ff9-font py-3 px-8 rounded-lg w-full mb-4">Take Another Quest</button>
             </div>
         </div>
     </div>
@@ -118,11 +120,15 @@
         
         let quizData = { patrick: [], hannah: [], jillian: [] };
         let askedQuestions = new Set();
+        
+        // NEW: Sequence tracking variables
+        let currentQuestSequence = [];
+        let currentQuestionIndex = 0;
         let currentQuestion;
+        
         let currentPlayerName = '';
         let currentSessionScore = 0;
         let maxSessionScore = 0;
-        let totalQuestionsAnswered = 0;
         let playerScores = JSON.parse(localStorage.getItem('quizPlayerScores')) || { patrick: 0, hannah: 0, jillian: 0 };
 
         async function loadAllQuizData() {
@@ -136,7 +142,10 @@
                 quizData.hannah = h.map(q => ({...q, theme: 'hannah'}));
                 quizData.jillian = j.map(q => ({...q, theme: 'jillian'}));
                 document.getElementById('loading-overlay').classList.add('hidden');
-            } catch (e) { console.error("Load failed", e); }
+            } catch (e) { 
+                console.error("Load failed", e); 
+                document.getElementById('loading-overlay').innerHTML = '<h2 class="text-red-400">Failed to load quests.</h2>';
+            }
         }
 
         function playSound(s) { s.currentTime = 0; s.play().catch(e => {}); }
@@ -147,37 +156,79 @@
             document.getElementById('jillian-score').innerText = playerScores.jillian;
         }
 
+        // Helper to grab random, unasked questions
+        function getRandomQuestions(array, count) {
+            let available = array.filter(q => !askedQuestions.has(q.question));
+            // Failsafe: if we run out of unique questions, reuse old ones
+            if (available.length < count) available = [...array]; 
+            return available.sort(() => Math.random() - 0.5).slice(0, count);
+        }
+
+        function buildQuestSequence(theme) {
+            const themeQs = quizData[theme];
+            
+            // 1. Separate the theme's questions by type
+            const textQs = themeQs.filter(q => !q.imageSrc && !q.audioSrc);
+            const picQs = themeQs.filter(q => q.imageSrc);
+            const soundQs = themeQs.filter(q => q.audioSrc);
+            
+            // 2. Grab 3 of each
+            const round1Text = getRandomQuestions(textQs, 3).map(q => ({...q, roundTitle: 'Round 1: Text Trivia'}));
+            const round2Pic = getRandomQuestions(picQs, 3).map(q => ({...q, roundTitle: 'Round 2: Picture Identification'}));
+            const round3Sound = getRandomQuestions(soundQs, 3).map(q => ({...q, roundTitle: 'Round 3: Audio Challenge'}));
+            
+            // 3. Find 1 Hard question from OTHER themes
+            let otherHardQs = [];
+            Object.keys(quizData).forEach(t => {
+                if (t !== theme) {
+                    const hardFromTheme = quizData[t].filter(q => q.difficulty === 'hard');
+                    otherHardQs = otherHardQs.concat(hardFromTheme);
+                }
+            });
+            const finalBossQ = getRandomQuestions(otherHardQs, 1).map(q => ({...q, roundTitle: 'Final Boss Question!'}));
+            
+            // 4. Assemble the 10-question gauntlet
+            currentQuestSequence = [...round1Text, ...round2Pic, ...round3Sound, ...finalBossQ];
+            currentQuestionIndex = 0;
+            currentSessionScore = 0; 
+            maxSessionScore = 0;
+        }
+
         function populateQuizSetButtons() {
             const container = document.getElementById('quiz-set-buttons');
             container.innerHTML = '';
             Object.keys(quizData).forEach(theme => {
                 const btn = document.createElement('button');
-                btn.className = 'btn-primary ff9-font py-3 rounded-lg capitalize';
-                btn.innerText = `${theme}'s Quest`;
-                const available = quizData[theme].filter(q => !askedQuestions.has(q.question));
-                if (available.length === 0) { btn.disabled = true; btn.classList.add('opacity-50'); }
+                btn.className = 'btn-primary ff9-font py-4 rounded-lg capitalize text-xl';
+                btn.innerText = `Start ${theme}'s Quest`;
+                
                 btn.onclick = () => {
-                    currentQuestion = available[Math.floor(Math.random() * available.length)];
-                    askedQuestions.add(currentQuestion.question);
+                    buildQuestSequence(theme);
                     quizSelectionScreen.classList.add('hidden');
                     quizScreen.classList.remove('hidden');
-                    showQuestion();
+                    showNextQuestion();
                 };
                 container.appendChild(btn);
             });
-            if (totalQuestionsAnswered > 0) {
-                const finish = document.createElement('button');
-                finish.className = 'bg-yellow-600 text-white ff9-font py-3 rounded-lg mt-4';
-                finish.innerText = "Finish Quest & See Score";
-                finish.onclick = showResults;
-                container.appendChild(finish);
-            }
         }
 
-        function showQuestion() {
+        function showNextQuestion() {
             resetState();
+            currentQuestion = currentQuestSequence[currentQuestionIndex];
+            askedQuestions.add(currentQuestion.question); // Mark as asked so we don't repeat it soon
+
+            const roundIndicator = document.getElementById('round-indicator');
+            roundIndicator.innerText = currentQuestion.roundTitle;
+            
+            // Add red glowing text for the final boss question
+            if (currentQuestionIndex === 9) {
+                roundIndicator.classList.add('boss-text');
+            } else {
+                roundIndicator.classList.remove('boss-text');
+            }
+
+            document.getElementById('question-counter').innerText = `Question ${currentQuestionIndex + 1} of 10`;
             document.getElementById('question-text').innerText = currentQuestion.question;
-            document.getElementById('question-counter').innerText = `Question ${totalQuestionsAnswered + 1}`;
 
             if (currentQuestion.imageSrc) {
                 questionImage.src = currentQuestion.imageSrc;
@@ -203,6 +254,8 @@
             questionAudioPlayer.pause();
             const btn = e.target;
             const correct = btn.dataset.correct === 'true';
+            
+            // Dynamic Scoring: 1 pt for your own theme, 3 pts for other themes (including the Final Boss)
             const points = (currentPlayerName !== currentQuestion.theme) ? 3 : 1;
             maxSessionScore += points;
 
@@ -216,7 +269,6 @@
                 playSound(document.getElementById('sfx-incorrect'));
             }
 
-            totalQuestionsAnswered++;
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
             updateScoreDisplay();
 
@@ -224,7 +276,15 @@
                 if (b.dataset.correct === 'true') b.classList.add('correct');
                 b.disabled = true;
             });
+            
             nextBtn.classList.remove('hidden');
+            
+            // Change button text if it's the last question
+            if (currentQuestionIndex === currentQuestSequence.length - 1) {
+                nextBtn.innerText = "Complete Quest";
+            } else {
+                nextBtn.innerText = "Next Question";
+            }
         }
 
         function resetState() {
@@ -237,13 +297,22 @@
             questionAudioPlayer.src = '';
         }
 
+        nextBtn.onclick = () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < currentQuestSequence.length) {
+                // Resume BGM if previous round was an audio question
+                if (bgm.paused) bgm.play();
+                showNextQuestion();
+            } else {
+                showResults();
+            }
+        };
+
         function showResults() {
             quizScreen.classList.add('hidden');
-            quizSelectionScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
             bgm.play();
             document.getElementById('score-text').innerText = `${currentSessionScore} / ${maxSessionScore}`;
-            updateScoreDisplay();
         }
 
         // Setup Hero Select
@@ -254,26 +323,24 @@
                 document.getElementById('back-to-select-btn').classList.remove('hidden');
                 bgm.volume = document.getElementById('volume-slider').value;
                 bgm.play();
-                startQuiz();
+                
+                quizSelectionScreen.classList.remove('hidden');
+                populateQuizSetButtons();
             };
         });
 
-        function startQuiz() {
-            currentSessionScore = 0; maxSessionScore = 0; totalQuestionsAnswered = 0;
-            askedQuestions.clear();
-            quizSelectionScreen.classList.remove('hidden');
-            populateQuizSetButtons();
-        }
+        // Volume control listener
+        document.getElementById('volume-slider').addEventListener('input', (e) => {
+            bgm.volume = e.target.value;
+        });
 
-        nextBtn.onclick = () => {
-            quizScreen.classList.add('hidden');
+        document.getElementById('return-log-btn').onclick = () => {
+            endScreen.classList.add('hidden');
             quizSelectionScreen.classList.remove('hidden');
-            bgm.play();
-            populateQuizSetButtons();
         };
 
-        document.getElementById('restart-btn').onclick = () => location.reload();
         document.getElementById('back-to-select-btn').onclick = () => location.reload();
+        
         document.getElementById('reset-scores-btn').onclick = () => {
             playerScores = { patrick: 0, hannah: 0, jillian: 0 };
             localStorage.setItem('quizPlayerScores', JSON.stringify(playerScores));
