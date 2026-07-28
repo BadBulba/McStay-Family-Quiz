@@ -27,7 +27,7 @@
         }
 
         .ff9-container {
-            max-width: 850px;
+            max-width: 1050px;
             width: 100%;
             text-align: center;
         }
@@ -70,10 +70,10 @@
             font-weight: bold;
         }
 
-        /* Board Grid */
+        /* Board Grid (5 columns now) */
         .board {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 8px;
             background-color: #010206;
             padding: 10px;
@@ -84,12 +84,13 @@
         .category-header {
             background: linear-gradient(to bottom, #183060, #0c1830);
             color: var(--ff9-gold);
-            padding: 12px 8px;
+            padding: 12px 6px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
             text-transform: uppercase;
             border: 1px solid #304c80;
             text-shadow: 1px 1px #000;
@@ -99,11 +100,11 @@
         .clue-cell {
             background: linear-gradient(to bottom, #142850, #081024);
             color: var(--ff9-gold);
-            height: 85px;
+            height: 75px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: bold;
             cursor: pointer;
             border: 1px solid #283c68;
@@ -150,7 +151,7 @@
 
         .modal-content h2 {
             color: var(--ff9-text-white);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             line-height: 1.5;
             margin-bottom: 20px;
             font-weight: normal;
@@ -217,7 +218,7 @@
 
     <div class="ff9-container">
         <h1>MOGNET JEOPARDY</h1>
-        <div class="subtitle">~ Test your knowledge across the Mist Continent ~</div>
+        <div class="subtitle">~ Hardcore Lore Edition ~</div>
         
         <div class="ff9-box score-board">
             Gil (Score): <span id="score">0</span>
@@ -275,6 +276,22 @@
                     { value: 400, question: "What winged, letter-delivering creatures act as your save points and companions?", answer: "Moogles" },
                     { value: 600, question: "What is the name of Zidane's ultimate trance ability/attack?", answer: "Solution 9" }
                 ]
+            },
+            {
+                category: "Enemies & Bosses",
+                clues: [
+                    { value: 200, question: "What is the name of the black mage prototype boss created by Kuja in the Evil Forest?", answer: "Plant Brain" },
+                    { value: 400, question: "Which mechanical boss guards the road to Cleyra inside the sandstorm?", answer: "Antlion" },
+                    { value: 600, question: "What is the true name of the entity serving as the final boss hidden inside the Memoria?", answer: "Necron (Eternal Darkness)" }
+                ]
+            },
+            {
+                category: "Abilities & Synthesis",
+                clues: [
+                    { value: 200, question: "What support ability allows characters to counter physical attacks with a standard strike?", answer: "Counter" },
+                    { value: 400, question: "Which legendary sword can be synthesized using the Excalibur and a Duster?", answer: "Excalibur II" },
+                    { value: 600, question: "What stat-boosting item must be equipped to learn the 'Auto-Life' ability for Eiko or Garnet?", answer: "Robe of Lords" }
+                ]
             }
         ];
 
@@ -294,6 +311,7 @@
         function initBoard() {
             boardElement.innerHTML = "";
             
+            // Render Headers (5 columns)
             gameData.forEach(cat => {
                 const header = document.createElement("div");
                 header.className = "category-header";
@@ -301,6 +319,7 @@
                 boardElement.appendChild(header);
             });
 
+            // Render 3 rows of clues across 5 categories
             for (let i = 0; i < 3; i++) {
                 gameData.forEach((cat, catIndex) => {
                     const clue = cat.clues[i];
@@ -325,7 +344,6 @@
             modalQuestion.innerText = activeClue.data.question;
             modalAnswerText.innerText = activeClue.data.answer;
             
-            // Reset modal states
             hiddenAnswerContainer.style.display = "none";
             revealBtnContainer.style.display = "flex";
             gradingButtons.style.display = "none";
