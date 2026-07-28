@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Fantasy IX - Triple Jeopardy</title>
+    <style>
+        :root {
+            --ff9-window-blue-top: #102048;
+            --ff9-window-blue-bot: #040818;
+            --ff9-gold: #f8e08e;
+            --ff9-bright-gold: #ffcc00;
+            --ff9-text-white: #f0f0f0;
+            --ff9-cursor: #ff8400;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-color: #020208;
+            background-image: radial-gradient(circle, #101c38 0%, #020208 100%);
+            color: var(--ff9-text-white);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .ff9-container {
+            max-width: 850px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--ff9-bright-gold);
+            text-shadow: 2px 2px #000, 0 0 10px rgba(248, 224, 142, 0.4);
+            font-family: Georgia, serif;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: #8da4c4;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* FFIX Style Menu Box */
+        .ff9-box {
+            background: linear-gradient(to bottom, var(--ff9-window-blue-top), var(--ff9-window-blue-bot));
+            border: 3px solid var(--ff9-gold);
+            border-radius: 6px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8), 0 0 10px rgba(16, 32, 72, 0.8);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .score-board {
+            font-size: 1.3rem;
+            display: inline-block;
+            padding: 8px 25px;
+            letter-spacing: 1px;
+        }
+
+        .score-board span {
+            color: var(--ff9-bright-gold);
+            font-weight: bold;
+        }
+
+        /* Board Grid */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background-color: #010206;
+            padding: 10px;
+            border: 2px solid var(--ff9-gold);
+            border-radius: 4px;
+        }
+
+        .category-header {
+            background: linear-gradient(to bottom, #183060, #0c1830);
+            color: var(--ff9-gold);
+            padding: 12px 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            border: 1px solid #304c80;
+            text-shadow: 1px 1px #000;
+            letter-spacing: 1px;
+        }
+
+        .clue-cell {
+            background: linear-gradient(to bottom, #142850, #081024);
+            color: var(--ff9-gold);
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #283c68;
+            transition: all 0.15s ease;
+            text-shadow: 2px 2px #000;
+        }
+
+        .clue-cell:hover:not(.used) {
+            background: linear-gradient(to bottom, #204080, #102040);
+            border-color: var(--ff9-bright-gold);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        .clue-cell.used {
+            background: #04060c;
+            color: #334055;
+            border-color: #101420;
+            cursor: not-allowed;
+            text-shadow: none;
+        }
+
+        /* Modal / Dialog Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 4, 12, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            width: 80%;
+            max-width: 550px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            color: var(--ff9-text-white);
+            font-size: 1.4rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            font-weight: normal;
+            text-align: left;
+            padding-left: 10px;
+            border-left: 4px solid var(--ff9-bright-gold);
+        }
+
+        .modal-content input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            font-size: 1.1rem;
+            font-family: 'Times New Roman', Times, serif;
+            margin-bottom: 20px;
+            border: 2px solid var(--ff9-gold);
+            border-radius: 4px;
+            background: #040818;
+            color: #fff;
+            text-align: center;
+            outline: none;
+        }
+
+        .modal-content input[type="text"]:focus {
+            border-color: var(--ff9-bright-gold);
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+        }
+
+        .ff9-btn {
+            background: linear-gradient(to bottom, #284478, #142448);
+            color: var(--ff9-gold);
+            border: 2px solid var(--ff9-gold);
+            padding: 8px 22px;
+            font-size: 1rem;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            cursor: pointer;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.2s;
+        }
+
+        .ff9-btn:hover {
+            background: linear-gradient(to bottom, #385c9c, #20386c);
+            color: #fff;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ff9-container">
+        <h1>MOGNET JEOPARDY</h1>
+        <div class="subtitle">~ Test your knowledge across the Mist Continent ~</div>
+        
+        <div class="ff9-box score-board">
+            Gil (Score): <span id="score">0</span>
+        </div>
+
+        <div class="board" id="game-board">
+            <!-- Dynamic Grid Generated via JS -->
+        </div>
+    </div>
+
+    <!-- Question Dialog Modal -->
+    <div class="modal" id="question-modal">
+        <div class="ff9-box modal-content">
+            <h2 id="modal-question">Loading query...</h2>
+            <div id="answer-section">
+                <input type="text" id="user-answer" placeholder="Type your answer here..." autocomplete="off">
+                <br>
+                <button class="ff9-btn" onclick="submitAnswer()">Confirm</button>
+            </div>
+            <div class="feedback" id="modal-feedback"></div>
+        </div>
+    </div>
+
+    <script>
+        // FFIX Themed Quiz Data
+        const gameData = [
+            {
+                category: "Gaia & Mist",
+                clues: [
+                    { value: 200, question: "What substance blankets the Mist Continent, spawning monsters when it gathers?", answer: "Mist" },
+                    { value: 400, question: "Name the grand capital city ruled by Queen Brahne.", answer: "Alexandria" },
+                    { value: 600, question: "This massive tree acts as the source of the Mist and connects Terra to Gaia.", answer: "Iifa Tree" }
+                ]
+            },
+            {
+                category: "Party Members",
+                clues: [
+                    { value: 200, question: "He is a young black mage with a mysterious past who questions his own existence.", answer: "Vivi" },
+                    { value: 400, question: "This thief with a tail is a member of the Tantalus theater troupe.", answer: "Zidane" },
+                    { value: 600, question: "A female dragon knight from Burmecia seeking to defend her homeland.", answer: "Freya" }
+                ]
+            },
+            {
+                category: "Treasures & Lore",
+                clues: [
+                    { value: 200, question: "What collectible card game replaces Triple Triad in Final Fantasy IX?", answer: "Tetra Master" },
+                    { value: 400, question: "What winged, letter-delivering creatures act as your save points and companions?", answer: "Moogles" },
+                    { value: 600, question: "What is the name of Zidane's ultimate trance ability/attack?", answer: "Solution 9" }
+                ]
+            }
+        ];
+
+        let score = 0;
+        let activeClue = null;
+
+        const boardElement = document.getElementById("game-board");
+        const scoreElement = document.getElementById("score");
+        const modalElement = document.getElementById("question-modal");
+        const modalQuestion = document.getElementById("modal-question");
+        const userAnswer = document.getElementById("user-answer");
+        const modalFeedback = document.getElementById("modal-feedback");
+        const answerSection = document.getElementById("answer-section");
+
+        function initBoard() {
+            boardElement.innerHTML = "";
+            
+            gameData.forEach(cat => {
+                const header = document.createElement("div");
+                header.className = "category-header";
+                header.innerText = cat.category;
+                boardElement.appendChild(header);
+            });
+
+            for (let i = 0; i < 3; i++) {
+                gameData.forEach((cat, catIndex) => {
+                    const clue = cat.clues[i];
+                    const cell = document.createElement("div");
+                    cell.className = "clue-cell";
+                    cell.innerText = `${clue.value}G`;
+                    
+                    cell.addEventListener("click", () => openClue(catIndex, i, cell));
+                    boardElement.appendChild(cell);
+                });
+            }
+        }
+
+        function openClue(catIndex, clueIndex, cellElement) {
+            if (cellElement.classList.contains("used")) return;
+
+            activeClue = {
+                data: gameData[catIndex].clues[clueIndex],
+                element: cellElement
+            };
+
+            modalQuestion.innerText = activeClue.data.question;
+            userAnswer.value = "";
+            modalFeedback.innerText = "";
+            answerSection.style.display = "block";
+            modalElement.style.display = "flex";
+            userAnswer.focus();
+        }
+
+        function submitAnswer() {
+            const userText = userAnswer.value.trim().toLowerCase();
+            const correctText = activeClue.data.answer.toLowerCase();
+
+            const isCorrect = userText.includes(correctText) || correctText.includes(userText);
+
+            answerSection.style.display = "none";
+
+            if (isCorrect) {
+                score += activeClue.data.value;
+                modalFeedback.style.color = "var(--ff9-bright-gold)";
+                modalFeedback.innerText = `Correct! You obtained ${activeClue.data.value} Gil.`;
+            } else {
+                score -= activeClue.data.value;
+                modalFeedback.style.color = "#ff6666";
+                modalFeedback.innerText = `Missed! The correct answer was: ${activeClue.data.answer}`;
+            }
+
+            scoreElement.innerText = score;
+            activeClue.element.classList.add("used");
+
+            setTimeout(() => {
+                modalElement.style.display = "none";
+                checkGameOver();
+            }, 2200);
+        }
+
+        function checkGameOver() {
+            const remaining = document.querySelectorAll(".clue-cell:not(.used)");
+            if (remaining.length === 0) {
+                setTimeout(() => {
+                    alert(`The journey ends here! Final Gil earned: ${score}G`);
+                }, 500);
+            }
+        }
+
+        userAnswer.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                submitAnswer();
+            }
+        });
+
+        initBoard();
+    </script>
+</body>
+</html>
