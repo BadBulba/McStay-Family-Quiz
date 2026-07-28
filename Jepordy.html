@@ -11,7 +11,6 @@
             --ff9-gold: #f8e08e;
             --ff9-bright-gold: #ffcc00;
             --ff9-text-white: #f0f0f0;
-            --ff9-cursor: #ff8400;
         }
 
         body {
@@ -153,30 +152,27 @@
             color: var(--ff9-text-white);
             font-size: 1.4rem;
             line-height: 1.5;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-weight: normal;
             text-align: left;
             padding-left: 10px;
             border-left: 4px solid var(--ff9-bright-gold);
         }
 
-        .modal-content input[type="text"] {
-            width: 90%;
+        .answer-reveal-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed var(--ff9-gold);
             padding: 10px;
-            font-size: 1.1rem;
-            font-family: 'Times New Roman', Times, serif;
             margin-bottom: 20px;
-            border: 2px solid var(--ff9-gold);
-            border-radius: 4px;
-            background: #040818;
-            color: #fff;
-            text-align: center;
-            outline: none;
+            font-size: 1.2rem;
+            color: var(--ff9-bright-gold);
+            display: none;
         }
 
-        .modal-content input[type="text"]:focus {
-            border-color: var(--ff9-bright-gold);
-            box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
 
         .ff9-btn {
@@ -199,11 +195,21 @@
             color: #fff;
         }
 
+        .ff9-btn.correct {
+            border-color: #66cc66;
+            color: #88ff88;
+        }
+
+        .ff9-btn.incorrect {
+            border-color: #cc6666;
+            color: #ff8888;
+        }
+
         .feedback {
             margin-top: 15px;
             font-size: 1.1rem;
             font-weight: bold;
-            min-height: 30px;
+            min-height: 25px;
         }
     </style>
 </head>
@@ -226,17 +232,25 @@
     <div class="modal" id="question-modal">
         <div class="ff9-box modal-content">
             <h2 id="modal-question">Loading query...</h2>
-            <div id="answer-section">
-                <input type="text" id="user-answer" placeholder="Type your answer here..." autocomplete="off">
-                <br>
-                <button class="ff9-btn" onclick="submitAnswer()">Confirm</button>
+            
+            <div id="hidden-answer-container" class="answer-reveal-box">
+                Answer: <span id="modal-answer-text"></span>
             </div>
+
+            <div id="action-buttons" class="button-group">
+                <button class="ff9-btn" id="reveal-btn" onclick="revealAnswer()">Reveal Answer</button>
+            </div>
+
+            <div id="grading-buttons" class="button-group" style="display: none;">
+                <button class="ff9-btn correct" onclick="markAnswer(true)">Correct (+)</button>
+                <button class="ff9-btn incorrect" onclick="markAnswer(false)">Incorrect (-)</button>
+            </div>
+
             <div class="feedback" id="modal-feedback"></div>
         </div>
     </div>
 
     <script>
-        // FFIX Themed Quiz Data
         const gameData = [
             {
                 category: "Gaia & Mist",
@@ -271,9 +285,11 @@
         const scoreElement = document.getElementById("score");
         const modalElement = document.getElementById("question-modal");
         const modalQuestion = document.getElementById("modal-question");
-        const userAnswer = document.getElementById("user-answer");
+        const modalAnswerText = document.getElementById("modal-answer-text");
+        const hiddenAnswerContainer = document.getElementById("hidden-answer-container");
+        const revealBtnContainer = document.getElementById("action-buttons");
+        const gradingButtons = document.getElementById("grading-buttons");
         const modalFeedback = document.getElementById("modal-feedback");
-        const answerSection = document.getElementById("answer-section");
 
         function initBoard() {
             boardElement.innerHTML = "";
@@ -307,29 +323,34 @@
             };
 
             modalQuestion.innerText = activeClue.data.question;
-            userAnswer.value = "";
+            modalAnswerText.innerText = activeClue.data.answer;
+            
+            // Reset modal states
+            hiddenAnswerContainer.style.display = "none";
+            revealBtnContainer.style.display = "flex";
+            gradingButtons.style.display = "none";
             modalFeedback.innerText = "";
-            answerSection.style.display = "block";
+
             modalElement.style.display = "flex";
-            userAnswer.focus();
         }
 
-        function submitAnswer() {
-            const userText = userAnswer.value.trim().toLowerCase();
-            const correctText = activeClue.data.answer.toLowerCase();
+        function revealAnswer() {
+            hiddenAnswerContainer.style.display = "block";
+            revealBtnContainer.style.display = "none";
+            gradingButtons.style.display = "flex";
+        }
 
-            const isCorrect = userText.includes(correctText) || correctText.includes(userText);
-
-            answerSection.style.display = "none";
+        function markAnswer(isCorrect) {
+            gradingButtons.style.display = "none";
 
             if (isCorrect) {
                 score += activeClue.data.value;
                 modalFeedback.style.color = "var(--ff9-bright-gold)";
-                modalFeedback.innerText = `Correct! You obtained ${activeClue.data.value} Gil.`;
+                modalFeedback.innerText = `Correct! +${activeClue.data.value}G`;
             } else {
                 score -= activeClue.data.value;
                 modalFeedback.style.color = "#ff6666";
-                modalFeedback.innerText = `Missed! The correct answer was: ${activeClue.data.answer}`;
+                modalFeedback.innerText = `Incorrect. -${activeClue.data.value}G`;
             }
 
             scoreElement.innerText = score;
@@ -338,7 +359,7 @@
             setTimeout(() => {
                 modalElement.style.display = "none";
                 checkGameOver();
-            }, 2200);
+            }, 1800);
         }
 
         function checkGameOver() {
@@ -349,12 +370,6 @@
                 }, 500);
             }
         }
-
-        userAnswer.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                submitAnswer();
-            }
-        });
 
         initBoard();
     </script>
